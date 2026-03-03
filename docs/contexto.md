@@ -25,7 +25,32 @@ O grupo de trabalho pode fazer uso de questionários, entrevistas e dados estat�
 > - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
 
 ## Público-Alvo
-Teste
+
+### 1. Definição Geral
+O público-alvo do Pet Flow são pet shops que enfrentam dificuldade na organização de agendamento, controle de serviços (banho e tosa), gestão de clientes e acompanhamento da carga diária de trabalho. Gerando uma maior dificuldade no controle e gestão operacional, portando o Pet Flow busca centralizar as informações e oferecer um controle muito mais simplificado para os pet shops.
+
+### 2. Segmentação
+
+#### 2.1 Segmentação Firmográfica (B2B)
+- Tipo de empresa: Pet Shop
+- Porte: Qualquer porte de empresa (pequeno, médio e grande)
+- Estrutura atual: Gestão manual ou uso de planilhas
+
+#### 2.2 Segmentação Comportamental
+- Usa WhatsApp ou telefone para agendamentos
+- Possui agenda física ou planilha Excel
+- Não possui dashboard operacional
+- Tem dificuldade em visualizar:
+  - Quantos atendimentos faltam no dia
+  - Próximo atendimento
+  - Serviços já concluídos
+- Perde tempo com retrabalho administrativo
+
+#### 2.3 Segmentação Psicográfica
+- Empresário prático
+- Focado em produtividade
+- Busca organização e previsibilidade
+- Sensível a custo, mas valoriza eficiência
 
 # Especificações do Projeto
 
@@ -44,7 +69,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| O sistema deve ser responsivo para rodar em um dispositivos móvel | MÉDIA | 
+|RNF-001| O Pet Flow deve ser responsivo para rodar em um dispositivos móvel | MÉDIA | 
 |RNF-002| Deve processar requisições do usuário em no máximo 3s |  BAIXA | 
 
 Com base nas Histórias de Usuário, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:
@@ -92,7 +117,7 @@ Definição de como o software é estruturado em termos dos componentes que faze
 
 Descreva aqui qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas.
 
-Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o sistema vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
+Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o Pet Flow vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
 
 ## Hospedagem
 
