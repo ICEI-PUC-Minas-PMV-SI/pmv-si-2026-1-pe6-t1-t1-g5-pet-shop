@@ -1,4 +1,4 @@
-# TÍTULO DO PROJETO
+# PET FLOW
 
 `CURSO: Sistemas de Informação`
 
@@ -10,16 +10,17 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 
 ## Integrantes
 
-* [Nome completo do aluno 1](docs/atas/aluno1.md)
-* [Nome completo do aluno 2](docs/atas/aluno2.md)
-* [Nome completo do aluno 3](docs/atas/aluno3.md)
-* [Nome completo do aluno 4](docs/atas/aluno4.md)
-* [Nome completo do aluno 5](docs/atas/aluno5.md)
-* [Nome completo do aluno 6](docs/atas/aluno6.md)
+* [Anna Carolina Saldanha de Lima](docs/atas/aluno1.md)
+* [Cristiano Henrique Amorim](docs/atas/aluno2.md)
+* [Júlia Persson Mascari](docs/atas/aluno3.md)
+* [Lucas Soares dos Reis](docs/atas/aluno4.md)
+* [Natália Kiefer Ferreira](docs/atas/aluno5.md)
+* [Rafael Vinícius da Silva](docs/atas/aluno6.md)
+* [Vinicius Henrique de Oliveira Neves](docs/atas/aluno6.md)
 
 ## Orientador
 
-* Nome completo do professor 1
+* Kleber Jacques Ferreira de Souza
 
 ## 📊 Relatório de Contribuições
 
