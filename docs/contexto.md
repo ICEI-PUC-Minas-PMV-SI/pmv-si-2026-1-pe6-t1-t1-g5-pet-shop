@@ -52,6 +52,14 @@ O público-alvo do Pet Flow são pet shops que enfrentam dificuldade na organiza
 - Busca organização e previsibilidade
 - Sensível a custo, mas valoriza eficiência
 
+### 3. Personas
+
+### 3.1 Isabella Rocha
+![Persona 1](img/persona_01.jpg)
+
+### 3.2 Carlos Mendes
+![Persona 2](img/persona_02.jpg)
+
 # Especificações do Projeto
 
 ## Requisitos
