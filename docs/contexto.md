@@ -78,8 +78,13 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001| Cadastro e login de funcionarios | ALTA | 
-|RF-002| Emitir um relatório de tarefas no mês   | MÉDIA |
+|RF-001| Cadastro e login de usuários | ALTA | 
+|RF-002| Cadastro, edição e exclusão de clientes  | ALTA |
+|RF-003| Cadastro, edição e exclusão de pets  | ALTA |
+|RF-004| Cadastro, edição e exclusão de serviços | ALTA |
+|RF-005| Realizar, editar e cancelar agendamentos | ALTA |
+|RF-006| Controle de entrada e saída de estoque   | MÉDIA |
+|RF-007| Registro de receitas e despesas | MÉDIA |
 
 ### Requisitos não Funcionais
 
