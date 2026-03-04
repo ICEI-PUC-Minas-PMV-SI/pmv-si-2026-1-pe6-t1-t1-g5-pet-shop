@@ -26,16 +26,39 @@ O grupo de trabalho pode fazer uso de questionários, entrevistas e dados estat�
 
 ## Público-Alvo
 
-Descreva quem serão as pessoas que usarão a sua aplicação indicando os diferentes perfis. O objetivo aqui não é definir quem serão os clientes ou quais serão os papéis dos usuários na aplicação. A ideia é, dentro do possível, conhecer um pouco mais sobre o perfil dos usuários: conhecimentos prévios, relação com a tecnologia, relações
-hierárquicas, etc.
+### 1. Definição Geral
+O público-alvo do Pet Flow são pet shops que enfrentam dificuldade na organização de agendamento, controle de serviços (banho e tosa), gestão de clientes e acompanhamento da carga diária de trabalho. Gerando uma maior dificuldade no controle e gestão operacional, portando o Pet Flow busca centralizar as informações e oferecer um controle muito mais simplificado para os pet shops.
 
-Adicione informações sobre o público-alvo por meio de uma descrição textual, diagramas de personas e mapa de stakeholders.
+### 2. Segmentação
 
-> **Links Úteis**:
-> - [Público-alvo](https://blog.hotmart.com/pt-br/publico-alvo/)
-> - [Como definir o público alvo](https://exame.com/pme/5-dicas-essenciais-para-definir-o-publico-alvo-do-seu-negocio/)
-> - [Público-alvo: o que é, tipos, como definir seu público e exemplos](https://klickpages.com.br/blog/publico-alvo-o-que-e/)
-> - [Qual a diferença entre público-alvo e persona?](https://rockcontent.com/blog/diferenca-publico-alvo-e-persona/)
+#### 2.1 Segmentação Firmográfica (B2B)
+- Tipo de empresa: Pet Shop
+- Porte: Qualquer porte de empresa (pequeno, médio e grande)
+- Estrutura atual: Gestão manual ou uso de planilhas
+
+#### 2.2 Segmentação Comportamental
+- Usa WhatsApp ou telefone para agendamentos
+- Possui agenda física ou planilha Excel
+- Não possui dashboard operacional
+- Tem dificuldade em visualizar:
+  - Quantos atendimentos faltam no dia
+  - Próximo atendimento
+  - Serviços já concluídos
+- Perde tempo com retrabalho administrativo
+
+#### 2.3 Segmentação Psicográfica
+- Empresário prático
+- Focado em produtividade
+- Busca organização e previsibilidade
+- Sensível a custo, mas valoriza eficiência
+
+### 3. Personas
+
+### 3.1 Isabella Rocha
+![Persona 1](img/persona_01.jpg)
+
+### 3.2 Carlos Mendes
+![Persona 2](img/persona_02.jpg)
 
 # Especificações do Projeto
 
@@ -54,7 +77,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| O sistema deve ser responsivo para rodar em um dispositivos móvel | MÉDIA | 
+|RNF-001| O Pet Flow deve ser responsivo para rodar em um dispositivos móvel | MÉDIA | 
 |RNF-002| Deve processar requisições do usuário em no máximo 3s |  BAIXA | 
 
 Com base nas Histórias de Usuário, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:
@@ -102,7 +125,7 @@ Definição de como o software é estruturado em termos dos componentes que faze
 
 Descreva aqui qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas.
 
-Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o sistema vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
+Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o Pet Flow vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
 
 ## Hospedagem
 
