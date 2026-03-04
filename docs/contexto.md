@@ -1,11 +1,12 @@
 # Introdução
 
-Os animais de estimação estão cada vez mais sendo considerados parte da família, o que aumenta a busca por serviços de qualidade em pet shops. Com esse crescimento, surge a necessidade de organizar melhor clientes, agendamentos e serviços como banho e tosa.Muitos estabelecimentos ainda enfrentam problemas como desorganização, falhas nos agendamentos e dificuldade no controle das informações. Para resolver isso, o projeto propõe o desenvolvimento de um sistema distribuído que integra clientes, serviços e horários em tempo real, facilitando a gestão do negócio.O objetivo é tornar o funcionamento do pet shop mais eficiente, reduzir erros e melhorar o atendimento. A justificativa do projeto está no crescimento do setor pet e na necessidade de oferecer um serviço mais organizado e moderno.Nosso público-alvo são proprietários e funcionários de pet shops que desejam melhorar a administração do estabelecimento, além dos tutores de animais que buscam um atendimento mais ágil e de qualidade.
+O mercado de produtos e serviços para animais de estimação tem apresentado crescimento constante no Brasil nas últimas décadas. Segundo dados da Associação Brasileira da Indústria de Produtos para Animais de Estimação (ABINPET), o país está entre os maiores mercados pet do mundo, impulsionado pelo aumento do número de animais de estimação e pela crescente humanização desses animais no ambiente familiar. Esse cenário tem ampliado a demanda por serviços especializados, como banho, tosa e atendimento personalizado.Apesar desse crescimento, muitos estabelecimentos do setor ainda utilizam métodos manuais ou sistemas pouco integrados para o controle de agendamentos, cadastro de clientes e gestão de serviços, o que pode gerar falhas operacionais e dificuldades administrativas. Nesse contexto, a aplicação de tecnologias da informação, especialmente por meio de sistemas distribuídos, apresenta-se como uma alternativa para modernizar e integrar os processos internos, contribuindo para maior organização e eficiência na gestão de pet shops.
 
 ## Problema
 Pequenos e médios pet shops enfrentam dificuldades na organização de suas operações diárias, como controle de clientes, agendamentos de banho e tosa, registro de serviços e acompanhamento financeiro. Em muitos casos, essas informações são gerenciadas de forma manual ou por meio de ferramentas não integradas, como cadernos, planilhas e aplicativos de mensagens, o que pode gerar conflitos de horário, perda de dados e falhas na comunicação interna.
 
 Esse cenário é comum em estabelecimentos com equipe reduzida, onde o gestor acumula funções administrativas e operacionais. A falta de organização impacta diretamente na eficiência, qualidade do atendimento e na capacidade de controle dentro do pet shop.
+
 ## Objetivos
 
 Aqui você deve descrever os objetivos do trabalho indicando que o objetivo geral é desenvolver um software para solucionar o problema apresentado acima. 
@@ -131,3 +132,12 @@ Apresente também uma figura explicando como as tecnologias estão relacionadas 
 ## Hospedagem
 
 Explique como a hospedagem e o lançamento da plataforma foi feita.
+
+
+## Referência
+Introdução 
+- https://abinpet.org.br/dados-de-mercado
+- https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
+- https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
+- https://zipdo.co/brazil-pet-industry-statistics/
+
