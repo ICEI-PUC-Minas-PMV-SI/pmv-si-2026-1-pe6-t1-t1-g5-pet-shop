@@ -7,7 +7,7 @@
 | 09/02 - 15/02 | Gestão de Serviços de TI - Unidade 1 | ✅ | - | - |
 | 16/02 - 22/02 | Gestão de Serviços de TI - Unidade 2 | ✅ | - | - |
 | 23/02 - 01/03 | Arquitetura de Software Distribuído - Unidade 1 e 2 | ✅ | Criação da seção 'Público-Alvo' e 'Requisitos Funcionais' com o time  | Criação da seção 'Público-Alvo' e 'Requisitos Funcionais' com o time |
-| 02/03 - 08/03 | Arquitetura de Software Distribuído - Unidade 3 | ✅ | Correção da seção 'Público-Alvo' e 'Requisitos Funcionais' com o time | Correção da seção 'Público-Alvo' e 'Requisitos Funcionais' com o time |
+| 02/03 - 08/03 | Arquitetura de Software Distribuído - Unidade 3 | ✅ | Correção da seção 'Público-Alvo', Criação da arquitetura e 'Requisitos Funcionais' com o time | Correção da seção 'Público-Alvo', Criação da arquitetura e 'Requisitos Funcionais' com o time |
 | 09/03 - 15/03 | APIs e Web Services - Unidade 1 | ⬜ |  |  |
 | 16/03 - 22/03 | APIs e Web Services - Unidade 2 | ⬜ |  |  |
 | 23/03 - 29/03 | APIs e Web Services - Unidade 2 | ⬜ |  |  |
