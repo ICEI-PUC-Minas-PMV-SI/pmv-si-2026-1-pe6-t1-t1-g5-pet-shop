@@ -481,7 +481,7 @@ flowchart LR
 %% Clients
 subgraph CLIENTS["💻 Clients"]
 direction TB
-WEB["Web Dashboard (React)"]
+WEB["Web (React)"]
 MOBILE["Clinic Mobile App (React Native)"]
 end
 
