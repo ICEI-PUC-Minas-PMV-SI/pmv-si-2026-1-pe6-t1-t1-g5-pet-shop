@@ -120,7 +120,7 @@ Descreva aqui todos os serviços que serão disponibilizados pelo seu projeto, d
 
 # Arquitetura da Solução
 
-## Entity-Relationship Diagram (ERD)
+## Diagrama de Entidade Relacionamento (ERD)
 
 ```mermaid
 erDiagram
