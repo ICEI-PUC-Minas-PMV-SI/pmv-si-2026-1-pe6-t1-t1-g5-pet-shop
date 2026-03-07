@@ -591,3 +591,4 @@ Introdução
 - https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
 - https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
 - https://zipdo.co/brazil-pet-industry-statistics/
+- https://mermaid.js.org/intro/syntax-reference.html
