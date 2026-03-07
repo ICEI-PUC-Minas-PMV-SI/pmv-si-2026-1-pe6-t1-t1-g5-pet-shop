@@ -81,7 +81,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001| Cadastro e login de usuários | ALTA | 
+|RF-001| Cadastro e login de usuários | ALTA |
 |RF-002| Cadastro, edição e exclusão de clientes  | ALTA |
 |RF-003| Cadastro, edição e exclusão de pets  | ALTA |
 |RF-004| Cadastro, edição e exclusão de serviços | ALTA |
@@ -93,11 +93,11 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| O sistema deve ser dividido em módulos independentes (ex: Clientes, Agendamentos) para facilitar a manutenção | ALTA | 
-|RNF-002|O sistema deve garantir a integridade dos dados, impedindo que um agendamento seja apagado sem deixar histórico |  ALTA | 
-|RNF-003| A interface deve ser intuitiva, permitindo que o usuário realize um agendamento em menos de 4 cliques. |  MÉDIA | 
-|RNF-004| O acesso às funcionalidades do sistema deve ser restrito através de login e senha para cada tipo de usuário |  ALTA | 
-|RNF-005| As respostas das consultas (ex: busca de pets) devem ser exibidas em um tempo aceitável para o usuário |  BAIXA | 
+|RNF-001| O sistema deve ser dividido em módulos independentes (ex: Clientes, Agendamentos) para facilitar a manutenção | ALTA |
+|RNF-002|O sistema deve garantir a integridade dos dados, impedindo que um agendamento seja apagado sem deixar histórico |  ALTA |
+|RNF-003| A interface deve ser intuitiva, permitindo que o usuário realize um agendamento em menos de 4 cliques. |  MÉDIA |
+|RNF-004| O acesso às funcionalidades do sistema deve ser restrito através de login e senha para cada tipo de usuário |  ALTA |
+|RNF-005| As respostas das consultas (ex: busca de pets) devem ser exibidas em um tempo aceitável para o usuário |  BAIXA |
 
 ## Restrições
 
@@ -269,250 +269,250 @@ erDiagram
 
 ## Detalhe das tabelas
 
-### 1. Table `CLINIC`
+### 1. Tabela `CLINIC`
 
 Armazena informações das clínicas/pet shops do sistema.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| name | VARCHAR(100) | NOT NULL | Clinic name |
-| cnpj | VARCHAR(18) | UNIQUE | Formatted CNPJ |
-| email | VARCHAR(100) | | Main email |
-| phone | VARCHAR(15) | | Main phone |
-| address | VARCHAR(200) | | Full address |
-| city | VARCHAR(50) | | City |
-| state | VARCHAR(2) | | State abbreviation |
-| zip_code | VARCHAR(9) | | ZIP code |
-| created_at | DATETIME | NOT NULL, DEFAULT CURRENT_TIMESTAMP | Registration date |
-| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Clinic status |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| name | VARCHAR(100) | NOT NULL | Nome da clínica |
+| cnpj | VARCHAR(18) | UNIQUE | CNPJ |
+| email | VARCHAR(100) | | E-mail |
+| phone | VARCHAR(15) | | Telefone |
+| address | VARCHAR(200) | | Endereço |
+| city | VARCHAR(50) | | Cidade |
+| state | VARCHAR(2) | | Estado |
+| zip_code | VARCHAR(9) | | CEP |
+| created_at | DATETIME | NOT NULL, DEFAULT CURRENT_TIMESTAMP | Data de cadastro |
+| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Status da clínica |
 
 ---
 
-### 2. Table `TUTOR`
+### 2. Tabela `TUTOR`
 
 Armazena informações dos tutores (donos) dos pets.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| clinic_id | VARCHAR(36) | FK, NOT NULL | Reference to clinic |
-| name | VARCHAR(100) | NOT NULL | Full name |
-| cpf | VARCHAR(14) | UNIQUE | Formatted CPF |
-| email | VARCHAR(100) | | Email |
-| phone | VARCHAR(15) | NOT NULL | Main phone |
-| secondary_phone | VARCHAR(15) | | Secondary phone |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Referência para a clínica |
+| name | VARCHAR(100) | NOT NULL | Nome completo |
+| cpf | VARCHAR(14) | UNIQUE | CPF |
+| email | VARCHAR(100) | | E-mail |
+| phone | VARCHAR(15) | NOT NULL | Telefone |
+| secondary_phone | VARCHAR(15) | | Telefone secundário |
 
 ---
 
-### 3. Table `PET`
+### 3. Tabela `PET`
 
 Armazena informações dos pets vinculados aos tutores.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| tutor_id | VARCHAR(36) | FK, NOT NULL | Reference to tutor |
-| name | VARCHAR(50) | NOT NULL | Pet name |
-| species | VARCHAR(30) | NOT NULL | Species (Dog, Cat, etc.) |
-| breed | VARCHAR(50) | | Breed |
-| birth_date | DATE | | Approximate birth date |
-| size | VARCHAR(20) | | Size (Small, Medium, Large) |
-| weight | DECIMAL(5,2) | | Weight in kg |
-| color | VARCHAR(30) | | Coat color |
-| gender | CHAR(1) | | M (Male) / F (Female) |
-| notes | TEXT | | Medical/behavioral notes |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| tutor_id | VARCHAR(36) | FK, NOT NULL | Referência para o tutor |
+| name | VARCHAR(50) | NOT NULL | Nome do pet |
+| species | VARCHAR(30) | NOT NULL | Espécie (Cachorro, Gato, etc.) |
+| breed | VARCHAR(50) | | Raça |
+| birth_date | DATE | | Data de nascimento |
+| size | VARCHAR(20) | | Porte (Pequeno, Médio, Grande) |
+| weight | DECIMAL(5,2) | | Peso em kg |
+| color | VARCHAR(30) | | Cor da pelagem |
+| gender | CHAR(1) | | M (Macho) / F (Fêmea) |
+| notes | TEXT | | Observações médicas/comportamentais |
 
 ---
 
-### 4. Table `VACCINE`
+### 4. Tabela `VACCINE`
 
 Armazena o histórico de vacinação dos pets.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| pet_id | VARCHAR(36) | FK, NOT NULL | Reference to pet |
-| name | VARCHAR(100) | NOT NULL | Vaccine name |
-| application_date | DATE | NOT NULL | Application date |
-| next_dose_date | DATE | | Next dose date |
-| veterinarian | VARCHAR(100) | | Veterinarian name |
-| notes | TEXT | | Additional notes |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| pet_id | VARCHAR(36) | FK, NOT NULL | Referência para o pet |
+| name | VARCHAR(100) | NOT NULL | Nome da vacina |
+| application_date | DATE | NOT NULL | Data de aplicação |
+| next_dose_date | DATE | | Data da próxima dose |
+| veterinarian | VARCHAR(100) | | Nome do veterinário |
+| notes | TEXT | | Observações adicionais |
 
 ---
 
-### 5. Table `EMPLOYEE`
+### 5. Tabela `EMPLOYEE`
 
 Armazena os usuários do sistema (funcionários) vinculados à clínica.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| clinic_id | VARCHAR(36) | FK, NOT NULL | Reference to clinic |
-| name | VARCHAR(100) | NOT NULL | Full name |
-| email | VARCHAR(100) | UNIQUE, NOT NULL | Email (login) |
-| password | VARCHAR(255) | NOT NULL | Encrypted password |
-| role | VARCHAR(30) | NOT NULL | Role in the system |
-| phone | VARCHAR(15) | | Contact phone |
-| admission_date | DATE | | Admission date |
-| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Employee status |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Referência para a clínica |
+| name | VARCHAR(100) | NOT NULL | Nome completo |
+| email | VARCHAR(100) | UNIQUE, NOT NULL | E-mail (login) |
+| password | VARCHAR(255) | NOT NULL | Senha criptografada |
+| role | VARCHAR(30) | NOT NULL | Função no sistema |
+| phone | VARCHAR(15) | | Telefone de contato |
+| admission_date | DATE | | Data de admissão |
+| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Status do funcionário |
 
 ---
 
-### 6. Table `SERVICE`
+### 6. Tabela `SERVICE`
 
 Armazena os serviços oferecidos pelo pet shop.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| name | VARCHAR(100) | NOT NULL | Service name |
-| description | TEXT | | Detailed description |
-| price | DECIMAL(10,2) | NOT NULL | Price |
-| duration_minutes | INT | | Estimated duration in minutes |
-| category | VARCHAR(30) | NOT NULL | Service category |
-| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Service status |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| name | VARCHAR(100) | NOT NULL | Nome do serviço |
+| description | TEXT | | Descrição detalhada |
+| price | DECIMAL(10,2) | NOT NULL | Preço |
+| duration_minutes | INT | | Duração estimada em minutos |
+| category | VARCHAR(30) | NOT NULL | Categoria do serviço |
+| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Status do serviço |
 
 ---
 
-### 7. Table `SERVICE_PRODUCT` (Junction Table)
+### 7. Tabela `SERVICE_PRODUCT` (Tabela de Junção)
 
 Relaciona serviços com os produtos que utilizam (N:N).
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| service_id | VARCHAR(36) | FK, NOT NULL | Reference to service |
-| product_id | VARCHAR(36) | FK, NOT NULL | Reference to product |
-| quantity | INT | NOT NULL | Quantity used in service |
-| notes | TEXT | | Product usage notes |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| service_id | VARCHAR(36) | FK, NOT NULL | Referência para o serviço |
+| product_id | VARCHAR(36) | FK, NOT NULL | Referência para o produto |
+| quantity | INT | NOT NULL | Quantidade utilizada no serviço |
+| notes | TEXT | | Observações sobre o uso do produto |
 
 ---
 
-### 8. Table `PRODUCT`
+### 8. Tabela `PRODUCT`
 
 Controla o estoque de produtos da clínica.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| clinic_id | VARCHAR(36) | FK, NOT NULL | Reference to clinic |
-| name | VARCHAR(100) | NOT NULL | Product name |
-| description | TEXT | | Detailed description |
-| category | VARCHAR(30) | NOT NULL | Product category |
-| brand | VARCHAR(50) | | Brand |
-| quantity | INT | NOT NULL, DEFAULT 0 | Quantity |
-| min_stock | INT | NOT NULL, DEFAULT 0 | Minimum stock for alert |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Referência para a clínica |
+| name | VARCHAR(100) | NOT NULL | Nome do produto |
+| description | TEXT | | Descrição detalhada |
+| category | VARCHAR(30) | NOT NULL | Categoria do produto |
+| brand | VARCHAR(50) | | Marca |
+| quantity | INT | NOT NULL, DEFAULT 0 | Quantidade |
+| min_stock | INT | NOT NULL, DEFAULT 0 | Estoque mínimo para alerta |
 
 ---
 
-### 9. Table `SCHEDULING`
+### 9. Tabela `SCHEDULING`
 
 Registra os agendamentos de serviços realizados pela clínica.
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| clinic_id | VARCHAR(36) | FK, NOT NULL | Responsible clinic |
-| tutor_id | VARCHAR(36) | FK, NOT NULL | Requesting tutor |
-| pet_id | VARCHAR(36) | FK, NOT NULL | Pet to be attended |
-| employee_id | VARCHAR(36) | FK, NOT NULL | Responsible professional |
-| date_time | DATETIME | NOT NULL | Appointment date and time |
-| status | VARCHAR(20) | NOT NULL | Appointment status |
-| total_value | DECIMAL(10,2) | NOT NULL | Total appointment value |
-| notes | TEXT | | General notes |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Clínica responsável |
+| tutor_id | VARCHAR(36) | FK, NOT NULL | Tutor solicitante |
+| pet_id | VARCHAR(36) | FK, NOT NULL | Pet a ser atendido |
+| employee_id | VARCHAR(36) | FK, NOT NULL | Profissional responsável |
+| date_time | DATETIME | NOT NULL | Data e hora do agendamento |
+| status | VARCHAR(20) | NOT NULL | Status do agendamento |
+| total_value | DECIMAL(10,2) | NOT NULL | Valor total do agendamento |
+| notes | TEXT | | Observações gerais |
 
-**Possible Status:**
-- `Scheduled` - Appointment created
-- `Confirmed` - Confirmed by tutor
-- `In Progress` - Service being executed
-- `Completed` - Service finished
-- `Cancelled` - Appointment cancelled
+**Status Possíveis:**
+- `Agendado` - Agendamento criado
+- `Confirmado` - Confirmado pelo tutor
+- `Em Andamento` - Serviço em execução
+- `Concluído` - Serviço finalizado
+- `Cancelado` - Agendamento cancelado
 
 ---
 
-### 10. Table `SCHEDULED_SERVICE` (Junction Table)
+### 10. Tabela `SCHEDULED_SERVICE` (Tabela de Junção)
 
 Relaciona agendamentos com serviços (N:N).
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| scheduling_id | VARCHAR(36) | FK, NOT NULL | Reference to scheduling |
-| service_id | VARCHAR(36) | FK, NOT NULL | Reference to service |
-| service_value | DECIMAL(10,2) | NOT NULL | Service value at time of appointment |
-| notes | TEXT | | Specific service notes |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| scheduling_id | VARCHAR(36) | FK, NOT NULL | Referência para o agendamento |
+| service_id | VARCHAR(36) | FK, NOT NULL | Referência para o serviço |
+| service_value | DECIMAL(10,2) | NOT NULL | Valor do serviço no momento do agendamento |
+| notes | TEXT | | Observações específicas do serviço |
 
 ---
 
-### 11. Table `FINANCIAL_TRANSACTION`
+### 11. Tabela `FINANCIAL_TRANSACTION`
 
 Registra receitas e despesas do pet shop (uma por agendamento).
 
-| Field | Type | Constraints | Description |
+| Campo | Tipo | Restrições | Descrição |
 |-------|------|-------------|-------------|
-| id | VARCHAR(36) | PK | Unique identifier (UUID) |
-| scheduling_id | VARCHAR(36) | FK, UNIQUE, NOT NULL | Related scheduling (unique) |
-| category | VARCHAR(50) | NOT NULL | Transaction category |
-| description | VARCHAR(200) | NOT NULL | Detailed description |
-| amount | DECIMAL(10,2) | NOT NULL | Transaction amount |
-| due_date | DATE | | Due date |
-| payment_date | DATE | | Payment date |
-| status | VARCHAR(20) | NOT NULL | Payment status |
-| payment_method | VARCHAR(20) | | Payment method |
-| employee_id | VARCHAR(36) | FK, NOT NULL | Responsible employee |
-| created_at | DATETIME | NOT NULL, DEFAULT CURRENT_TIMESTAMP | Creation date |
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| scheduling_id | VARCHAR(36) | FK, UNIQUE, NOT NULL | Agendamento relacionado (único) |
+| category | VARCHAR(50) | NOT NULL | Categoria da transação |
+| description | VARCHAR(200) | NOT NULL | Descrição detalhada |
+| amount | DECIMAL(10,2) | NOT NULL | Valor da transação |
+| due_date | DATE | | Data de vencimento |
+| payment_date | DATE | | Data do pagamento |
+| status | VARCHAR(20) | NOT NULL | Status do pagamento |
+| payment_method | VARCHAR(20) | | Forma de pagamento |
+| employee_id | VARCHAR(36) | FK, NOT NULL | Funcionário responsável |
+| created_at | DATETIME | NOT NULL, DEFAULT CURRENT_TIMESTAMP | Data de criação |
 
-**Possible Status:**
-- `Pending` - Awaiting payment
-- `Paid` - Payment completed
-- `Cancelled` - Transaction cancelled
+**Status Possíveis:**
+- `Pendente` - Aguardando pagamento
+- `Pago` - Pagamento realizado
+- `Cancelado` - Transação cancelada
 
 ---
 
-### 12. System Design:
+### 12. Design do Sistema:
 ```mermaid
 graph TB
-    subgraph PETFLOW ["🐶--PET FLOW"]
+    subgraph PETFLOW ["<br>🐶 PET FLOW</br>"]
         direction TB
 
-        subgraph CLIENTS ["💻 CLINIC INTERFACES"]
+        subgraph CLIENTS ["💻 Clients"]
             direction LR
             WEB["💻 Web Dashboard<br/>(React.js)"]
-            MOBILE["📱 Clinic App<br/>(React Native)"]
+            MOBILE["📱 Clinic Mobile App<br/>(React Native)"]
         end
 
         CLIENTS ~~~ BACKEND
 
-        subgraph BACKEND ["⚙️ PET FLOW BACKEND"]
+        subgraph BACKEND ["⚙️ PET FLOW BACKEND"](Node.js)
             direction TB
-            
-            subgraph REALTIME ["⚡ REAL-TIME"]
+
+            subgraph REALTIME ["⚡ REAL-TIME LAYER"]
                 WS["📡 WebSocket Handler<br/>(Socket.io)"]
             end
 
             REALTIME ~~~ SERVICES
 
-            subgraph SERVICES ["🛠️ BUSINESS LOGIC SERVICES"]
+            subgraph SERVICES ["🛠️ BUSINESS LOGIC SERVICES"](Deployed on Vercel)
                 direction LR
                 CLINIC["🏥 Clinic & Staff"]
-                CUSTOMER["🐶 Tutors & Pets"]
+                CUSTOMER["🐶 Owners & Pets"]
                 SCHEDULE["📅 Scheduling Engine"]
-                STOCK["📦 Stock & Finance"]
+                STOCK["📦 Inventory & Finance"]
             end
         end
 
         BACKEND ~~~ DATA
 
-        subgraph DATA ["🗄️ PERSISTENCE LAYER"]
-            DB[("🗄️ SQL Database (Single Source)")]
+        subgraph DATA ["🗄️ PERSISTENCE LAYER"](Deployed on Supabase)
+            DB[("🗄️ PostgreSQL Database")]
         end
     end
 
     WEB & MOBILE <-->|WSS Events| WS
     WEB & MOBILE --->|REST API| SERVICES
     SERVICES <--> DB
-    
+
     SCHEDULE -.->|Trigger Update| WS
     SCHEDULE -->|SQL Transaction| STOCK
 
@@ -520,7 +520,7 @@ graph TB
     style CLIENTS fill:#2C3E50,stroke:#000,stroke-width:2px,color:#fff
     style BACKEND fill:#EBEDEF,stroke:#34495E,stroke-dasharray: 5 5,color:#000
     style DATA fill:#1B2631,stroke:#000,color:#fff
-    
+
     style WEB fill:#2980B9,color:#fff
     style MOBILE fill:#2980B9,color:#fff
     style WS fill:#D4AC0D,stroke:#000,color:#000
@@ -543,9 +543,8 @@ Explique como a hospedagem e o lançamento da plataforma foi feita.
 
 
 ## Referência
-Introdução 
+Introdução
 - https://abinpet.org.br/dados-de-mercado
 - https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
 - https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
 - https://zipdo.co/brazil-pet-industry-statistics/
-
