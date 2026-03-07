@@ -472,63 +472,106 @@ Registra receitas e despesas do pet shop (uma por agendamento).
 
 ### 12. Design do Sistema:
 ```mermaid
-graph TB
-    subgraph PETFLOW ["<br>🐶 PET FLOW</br>"]
-        direction TB
+%%{init: {'theme':'base','themeVariables':{'background':'#0F172A'}}}%%
+flowchart LR
 
-        subgraph CLIENTS ["💻 Clients"]
-            direction LR
-            WEB["💻 Web Dashboard<br/>(React.js)"]
-            MOBILE["📱 Clinic Mobile App<br/>(React Native)"]
-        end
+%% Title
+%% Pet Flow - System Design
 
-        CLIENTS ~~~ BACKEND
+%% Clients
+subgraph CLIENTS["💻 Clients"]
+direction TB
+WEB["Web Dashboard (React)"]
+MOBILE["Clinic Mobile App (React Native)"]
+end
 
-        subgraph BACKEND ["⚙️ PET FLOW BACKEND"](Node.js)
-            direction TB
+%% Backend
+subgraph BACKEND["⚙️ Backend (Node.js - Vercel)"]
+direction TB
+API["API Gateway"]
 
-            subgraph REALTIME ["⚡ REAL-TIME LAYER"]
-                WS["📡 WebSocket Handler<br/>(Socket.io)"]
-            end
+subgraph REALTIME["⚡ Realtime"]
+WS["WebSocket Gateway"]
+end
 
-            REALTIME ~~~ SERVICES
+subgraph SERVICES["🛠️ Services"]
+direction TB
+CLINIC["Clinic"]
+CUSTOMER["Owners & Pets"]
+SCHEDULE["Scheduling"]
+STOCK["Inventory"]
+FINANCIAL["Financial / Payments"]
+end
 
-            subgraph SERVICES ["🛠️ BUSINESS LOGIC SERVICES"](Deployed on Vercel)
-                direction LR
-                CLINIC["🏥 Clinic & Staff"]
-                CUSTOMER["🐶 Owners & Pets"]
-                SCHEDULE["📅 Scheduling Engine"]
-                STOCK["📦 Inventory & Finance"]
-            end
-        end
+WEBHOOK["Stripe Webhook"]
+end
 
-        BACKEND ~~~ DATA
+%% Invisible node for spacing
+SPACER1([" "]):::invisible
 
-        subgraph DATA ["🗄️ PERSISTENCE LAYER"](Deployed on Supabase)
-            DB[("🗄️ PostgreSQL Database")]
-        end
-    end
+%% Database
+subgraph DATA["🗄️ Database (Supabase)"]
+DB[(PostgreSQL)]
+end
 
-    WEB & MOBILE <-->|WSS Events| WS
-    WEB & MOBILE --->|REST API| SERVICES
-    SERVICES <--> DB
+%% External
+subgraph EXTERNAL["🌐 External Services"]
+STRIPE["Stripe API"]
+end
 
-    SCHEDULE -.->|Trigger Update| WS
-    SCHEDULE -->|SQL Transaction| STOCK
+%% Connections
+WEB --> API
+MOBILE --> API
 
-    style PETFLOW fill:#FDFEFE,stroke:#333,stroke-width:3px,color:#000
-    style CLIENTS fill:#2C3E50,stroke:#000,stroke-width:2px,color:#fff
-    style BACKEND fill:#EBEDEF,stroke:#34495E,stroke-dasharray: 5 5,color:#000
-    style DATA fill:#1B2631,stroke:#000,color:#fff
+WEB <-->|WSS| WS
+MOBILE <-->|WSS| WS
 
-    style WEB fill:#2980B9,color:#fff
-    style MOBILE fill:#2980B9,color:#fff
-    style WS fill:#D4AC0D,stroke:#000,color:#000
-    style CLINIC fill:#6C3483,color:#fff
-    style CUSTOMER fill:#1D8348,color:#fff
-    style SCHEDULE fill:#1A5276,color:#fff
-    style STOCK fill:#A04000,color:#fff
-    style DB fill:#566573,stroke:#000,color:#fff
+API --> CLINIC
+API --> CUSTOMER
+API --> SCHEDULE
+API --> STOCK
+API --> FINANCIAL
+
+CLINIC --> SPACER1 --> DB
+CUSTOMER --> SPACER1
+SCHEDULE --> SPACER1
+STOCK --> SPACER1
+FINANCIAL --> SPACER1
+
+SCHEDULE --> WS
+FINANCIAL --> WS
+
+FINANCIAL -->|Create Checkout| STRIPE
+STRIPE -->|Payment Event| WEBHOOK
+WEBHOOK --> FINANCIAL
+
+FINANCIAL -->|Direct Payment| DB
+
+%% Styles
+style CLIENTS fill:#334155,stroke:#1E40AF,color:#E5E7EB
+style BACKEND fill:#1F2937,stroke:#475569,color:#E5E7EB
+style REALTIME fill:#1E3A8A,stroke:#1E40AF,color:#E5E7EB
+style SERVICES fill:#1E40AF,stroke:#1E3A8A,color:#E5E7EB
+style DATA fill:#111827,stroke:#1E293B,color:#E5E7EB
+style EXTERNAL fill:#4338CA,stroke:#312E81,color:#E5E7EB
+
+style WEB fill:#2563EB,color:#fff
+style MOBILE fill:#2563EB,color:#fff
+style API fill:#0EA5E9,color:#fff
+style WS fill:#FBBF24,color:#000
+style CLINIC fill:#7C3AED,color:#fff
+style CUSTOMER fill:#16A34A,color:#fff
+style SCHEDULE fill:#0284C7,color:#fff
+style STOCK fill:#EA580C,color:#fff
+style FINANCIAL fill:#DC2626,color:#fff
+style WEBHOOK fill:#FACC15,color:#000
+style DB fill:#64748B,stroke:#000,color:#fff
+
+style SPACER1 fill:none,stroke:none
+
+style STRIPE fill:#635BFF,color:#fff
+
+linkStyle default stroke:#60A5FA,stroke-width:2px
 ```
 
 ## Tecnologias Utilizadas
