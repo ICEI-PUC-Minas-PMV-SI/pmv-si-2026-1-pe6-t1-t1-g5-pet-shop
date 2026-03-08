@@ -30,11 +30,6 @@ O Pet Flow surge como resposta a esse cenário. Trata-se de uma aplicação dist
 
 Mais do que uma ferramenta de digitalização, o Pet Flow se propõe a reduzir o retrabalho administrativo e devolver ao gestor e à equipe mais tempo e atenção para o atendimento em si.
 
-**Referências:**
-- ABINPET; IPB. *Release 3º Trimestre 2024*. Disponível em: https://www.gov.br/agricultura/pt-br/assuntos/camaras-setoriais-tematicas/documentos/camaras-setoriais/animais-e-estimacao/2024/41a-ro-05-11-2024/release_3trimestre_abinpet_ipb_2024.pdf. Acesso em: mar. 2026.
-- CRMV-PB. *Brasil ocupa o 3º lugar no ranking mundial de países com mais animais domésticos*. Disponível em: https://www.crmvpb.org.br/29077-2/. Acesso em: mar. 2026.
-- PETSHOPCONTROL. *7 dificuldades do empreendedor no mercado pet*. Disponível em: https://www.petshopcontrol.com.br/blog/dificuldades-empreendedor-mercado-pet/. Acesso em: mar. 2026.
-
 ## Público-Alvo
 
 ### 1. Definição Geral
@@ -105,14 +100,14 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 
 |ID| Restrição                                             |
 |--|-------------------------------------------------------|
-|01| O projeto deverá ser entregue até o final do semestre |
-|02| Não pode ser desenvolvido um módulo de backend        |
+| 01 | O projeto deverá ser desenvolvido e entregue dentro do prazo definido pelo cronograma acadêmico da disciplina, até o final do semestre letivo.                                              |
+| 02 | O escopo do projeto não contempla a emissão automatizada de notas fiscais eletrônicas (NF-e/NFS-e) ou integração direta com sistemas da Secretaria da Fazenda nesta versão inicial.         |
+| 03 | A interface do sistema deverá ser desenvolvida utilizando JavaScript e tecnologias web padrão, não sendo permitido o uso de plataformas de criação de sites prontos, como Wix ou WordPress. |
+| 04 | O controle de estoque será limitado ao registro interno de entradas e saídas de produtos, não incluindo integração automática com fornecedores ou sistemas externos de reposição.           |
+| 05 | É obrigatório o uso de uma ferramenta de controle de versão, como Git e GitHub, para gerenciamento do código-fonte e histórico de desenvolvimento do projeto.                               |
+| 06 | O sistema será disponibilizado apenas no idioma Português do Brasil, não contemplando suporte nativo a múltiplos idiomas nesta versão.                                                      |
+| 07 | A infraestrutura de hospedagem poderá utilizar serviços gratuitos ou de baixo custo, o que pode limitar recursos de desempenho, escalabilidade ou armazenamento.                            |
 
-Enumere as restrições à sua solução. Lembre-se de que as restrições geralmente limitam a solução candidata.
-
-> **Links Úteis**:
-> - [O que são Requisitos Funcionais e Requisitos Não Funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
 
 # Catálogo de Serviços
 
@@ -663,14 +658,16 @@ linkStyle default stroke:#60A5FA,stroke-width:2px
 
 ## Tecnologias Utilizadas
 
-Descreva aqui qual(is) tecnologias você vai usar para resolver o seu problema, ou seja, implementar a sua solução. Liste todas as tecnologias envolvidas, linguagens a serem utilizadas, serviços web, frameworks, bibliotecas, IDEs de desenvolvimento, e ferramentas.
-
-Apresente também uma figura explicando como as tecnologias estão relacionadas ou como uma interação do usuário com o Pet Flow vai ser conduzida, por onde ela passa até retornar uma resposta ao usuário.
+O desenvolvimento do sistema Pet Flow será realizado utilizando tecnologias voltadas para aplicações web e mobile, permitindo a criação de uma plataforma acessível em diferentes dispositivos e capaz de centralizar as informações operacionais do pet shop.A interface web será desenvolvida utilizando HTML, CSS e JavaScript, com o apoio da biblioteca React, responsável pela construção da interface do usuário por meio de componentes reutilizáveis e pela criação de uma experiência mais dinâmica e interativa.Para a aplicação mobile, será utilizado o framework React Native, que permite o desenvolvimento de aplicativos móveis utilizando JavaScript. A versão mobile irá reutilizar o mesmo backend da aplicação web, permitindo que ambas as plataformas compartilhem a mesma lógica de negócio e acesso aos dados do sistema.O desenvolvimento do código será realizado utilizando a IDE Visual Studio Code, amplamente utilizada no desenvolvimento de aplicações web. Para o controle de versões e gerenciamento do código-fonte será utilizado o GitHub, possibilitando o acompanhamento das alterações realizadas durante o desenvolvimento do projeto.Essa combinação de tecnologias permite a construção de uma aplicação moderna, modular e acessível, facilitando a manutenção do sistema e possibilitando a integração entre as versões web e mobile do Pet Flow.
 
 ## Hospedagem
-
-Explique como a hospedagem e o lançamento da plataforma foi feita.
-
+A hospedagem do sistema Pet Flow será realizada utilizando serviços de computação em nuvem com planos gratuitos, adequados ao contexto do projeto.
+O frontend da aplicação será hospedado na plataforma Vercel, permitindo que os usuários acessem o sistema por meio do navegador de forma rápida e segura.
+O backend da API REST, responsável pelas regras de negócio e pela comunicação com o banco de dados, também será hospedado na Vercel, aproveitando os recursos de funções serverless da plataforma.
+Já o backend responsável pela comunicação em tempo real via WebSocket será hospedado na Render, garantindo maior estabilidade para conexões persistentes entre o servidor e os clientes.
+O banco de dados será hospedado no Supabase, um serviço gerenciado que oferece banco PostgreSQL, autenticação e outras funcionalidades úteis para o desenvolvimento da aplicação.
+Todo o código do projeto será armazenado e versionado no GitHub, permitindo controle de versões, colaboração entre os membros da equipe e atualização contínua da aplicação.
+Essa arquitetura permite que o sistema funcione de forma distribuída, escalável e acessível pela internet, possibilitando que diferentes usuários utilizem o sistema simultaneamente.
 
 ## Referência
 Introdução
@@ -679,3 +676,7 @@ Introdução
 - https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
 - https://zipdo.co/brazil-pet-industry-statistics/
 - https://mermaid.js.org/intro/syntax-reference.html
+- ABINPET; IPB. *Release 3º Trimestre 2024*. Disponível em: https://www.gov.br/agricultura/pt-br/assuntos/camaras-setoriais-tematicas/documentos/camaras-setoriais/animais-e-estimacao/2024/41a-ro-05-11-2024/release_3trimestre_abinpet_ipb_2024.pdf. Acesso em: mar. 2026.
+- CRMV-PB. *Brasil ocupa o 3º lugar no ranking mundial de países com mais animais domésticos*. Disponível em: https://www.crmvpb.org.br/29077-2/. Acesso em: mar. 2026.
+- PETSHOPCONTROL. *7 dificuldades do empreendedor no mercado pet*. Disponível em: https://www.petshopcontrol.com.br/blog/dificuldades-empreendedor-mercado-pet/. Acesso em: mar. 2026.
+- https://archive.org/details/sommerville-engenharia-de-software-10e
