@@ -116,7 +116,94 @@ Enumere as restrições à sua solução. Lembre-se de que as restrições geral
 
 # Catálogo de Serviços
 
-Descreva aqui todos os serviços que serão disponibilizados pelo seu projeto, detalhando suas características e funcionalidades.
+## 1. Autenticação de Usuários
+
+**Descrição**
+Responsável por permitir que funcionários da clínica se cadastrem e acessem o sistema, garantindo acesso às funcionalidades de acordo com seu perfil.
+
+**Funcionalidades**
+
+* Cadastro de novos usuários vinculados à clínica
+* Autenticação por meio de e-mail e senha
+* Controle de acesso ao sistema conforme grau de autorização
+
+---
+
+## 2. Gestão de Clientes (Tutores)
+
+**Descrição**
+Permite o gerenciamento das informações dos tutores, que são os responsáveis pelos pets atendidos na clínica.
+
+**Funcionalidades**
+
+* Cadastro de novos tutores
+* Edição e exclusão de informações cadastrais
+* Consulta de tutores cadastrados
+
+---
+
+## 3. Gestão de Pets
+
+**Descrição**
+Cadastro e gerenciamento dos pets vinculados aos tutores. Permite registrar informações relevantes sobre os animais para facilitar o atendimento.
+
+**Funcionalidades**
+
+* Cadastro de pets associados a um tutor
+* Edição e exclusão das informações do pet
+* Consulta de dados do animal
+
+---
+
+## 4. Gestão de Serviços
+
+**Descrição**
+Permite o cadastro e gerenciamento dos serviços oferecidos pelo pet shop, possibilitando organizar os atendimentos disponíveis para agendamento.
+
+**Funcionalidades**
+
+* Cadastro de serviços oferecidos pela clínica
+* Definição de preço, descrição e duração estimada do serviço
+* Edição, ativação ou desativação dos serviços cadastrados
+
+---
+
+## 5. Agendamento de Atendimentos
+
+**Descrição**
+Gerenciamento dos agendamentos realizados para os pets. Permite organizar os horários de atendimento e acompanhar o status de cada agendamento.
+
+**Funcionalidades**
+
+* Criação de novos agendamentos
+* Associação de pet, tutor, serviço e profissional responsável
+* Alteração, cancelamento ou atualização do status do agendamento
+
+---
+
+## 6. Controle de Estoque
+
+**Descrição**
+Permite o controle dos produtos utilizados, auxiliando na gestão das quantidades disponíveis e na reposição de itens necessários.
+
+**Funcionalidades**
+
+* Cadastro de produtos no sistema
+* Registro de entradas e saídas de produtos no estoque
+* Consulta do estoque disponível
+
+---
+
+## 7. Gestão Financeira
+
+**Descrição**
+Responsável pelo registro e acompanhamento das movimentações financeiras da clínica, permitindo controlar receitas provenientes de serviços e despesas operacionais.
+
+**Funcionalidades**
+
+* Registro de receitas e despesas da clínica
+* Consulta do histórico de movimentações financeiras
+* Atualização do status de pagamento das transações
 
 # Arquitetura da Solução
 
