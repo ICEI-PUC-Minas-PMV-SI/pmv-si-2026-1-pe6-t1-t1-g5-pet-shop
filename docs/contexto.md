@@ -558,21 +558,16 @@ Registra receitas e despesas do pet shop (uma por agendamento).
 ---
 
 ### 12. Design do Sistema:
-```mermaid
+``` mermaid
 %%{init: {'theme':'base','themeVariables':{'background':'#0F172A'}}}%%
 flowchart LR
 
-%% Title
-%% Pet Flow - System Design
-
-%% Clients
 subgraph CLIENTS["💻 Clients"]
 direction TB
 WEB["Web (React)"]
 MOBILE["Clinic Mobile App (React Native)"]
 end
 
-%% Backend
 subgraph BACKEND["⚙️ Backend Rest (Node.js)"]
 direction TB
 API["API Gateway"]
@@ -583,22 +578,20 @@ end
 
 subgraph SERVICES["🛠️ Services"]
 direction TB
-CLINIC["Clinic"]
-CUSTOMER["Owners & Pets"]
+CLINIC_SERVICE["Clinic"]
+CUSTOMER_SERVICE["Owners & Pets"]
 SCHEDULE["Scheduling"]
-STOCK["Inventory"]
 FINANCIAL["Financial / Payments"]
 end
 
 WEBHOOK["Stripe Webhook"]
 end
 
-SPACER1([" "]):::invisible
-
 subgraph DATA["🗄️ Database (Supabase)"]
-DB[(SERVICE)]
-DB[(CLINIC)]
-DB[(CUSTOMER)]
+direction LR
+SERVICE_DB[(SERVICE)]
+CLINIC_DB[(CLINIC)]
+CUSTOMER_DB[(CUSTOMER)]
 end
 
 subgraph EXTERNAL["🌐 External Services"]
@@ -611,17 +604,14 @@ MOBILE --> API
 WEB <-->|WSS| WS
 MOBILE <-->|WSS| WS
 
-API --> CLINIC
-API --> CUSTOMER
+API --> CLINIC_SERVICE
+API --> CUSTOMER_SERVICE
 API --> SCHEDULE
-API --> STOCK
 API --> FINANCIAL
 
-CLINIC --> SPACER1 --> DB
-CUSTOMER --> SPACER1
-SCHEDULE --> SPACER1
-STOCK --> SPACER1
-FINANCIAL --> SPACER1
+CLINIC_SERVICE --> CLINIC_DB
+CUSTOMER_SERVICE --> CUSTOMER_DB
+FINANCIAL --> SERVICE_DB
 
 SCHEDULE --> WS
 FINANCIAL --> WS
@@ -630,7 +620,7 @@ FINANCIAL -->|Create Checkout| STRIPE
 STRIPE -->|Payment Event| WEBHOOK
 WEBHOOK --> FINANCIAL
 
-FINANCIAL -->|Direct Payment| DB
+FINANCIAL -->|Direct Payment| SERVICE_DB
 
 %% Styles
 style CLIENTS fill:#334155,stroke:#1E40AF,color:#E5E7EB
@@ -644,17 +634,18 @@ style WEB fill:#2563EB,color:#fff
 style MOBILE fill:#2563EB,color:#fff
 style API fill:#0EA5E9,color:#fff
 style WS fill:#FBBF24,color:#000
-style CLINIC fill:#7C3AED,color:#fff
-style CUSTOMER fill:#16A34A,color:#fff
+
+style CLINIC_SERVICE fill:#7C3AED,color:#fff
+style CUSTOMER_SERVICE fill:#16A34A,color:#fff
 style SCHEDULE fill:#0284C7,color:#fff
-style STOCK fill:#EA580C,color:#fff
 style FINANCIAL fill:#DC2626,color:#fff
+
 style WEBHOOK fill:#FACC15,color:#000
-style DB fill:#64748B,stroke:#000,color:#fff
-
-style SPACER1 fill:none,stroke:none
-
 style STRIPE fill:#635BFF,color:#fff
+
+style SERVICE_DB fill:#64748B,color:#fff
+style CLINIC_DB fill:#64748B,color:#fff
+style CUSTOMER_DB fill:#64748B,color:#fff
 
 linkStyle default stroke:#60A5FA,stroke-width:2px
 ```
