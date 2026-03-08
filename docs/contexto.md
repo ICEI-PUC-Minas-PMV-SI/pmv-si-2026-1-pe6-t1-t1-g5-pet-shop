@@ -93,11 +93,11 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID     | Descrição do Requisito  |Prioridade |
 |-------|-------------------------|----|
-|RNF-001| O sistema deve ser dividido em módulos independentes (ex: Clientes, Agendamentos) para facilitar a manutenção | ALTA |
-|RNF-002|O sistema deve garantir a integridade dos dados, impedindo que um agendamento seja apagado sem deixar histórico |  ALTA |
-|RNF-003| A interface deve ser intuitiva, permitindo que o usuário realize um agendamento em menos de 4 cliques. |  MÉDIA |
-|RNF-004| O acesso às funcionalidades do sistema deve ser restrito através de login e senha para cada tipo de usuário |  ALTA |
-|RNF-005| As respostas das consultas (ex: busca de pets) devem ser exibidas em um tempo aceitável para o usuário |  BAIXA |
+|RNF-001| O sistema deve ser desenvolvido utilizando uma arquitetura de microserviços (ou módulos desacoplados) para permitir atualizações independentes de cada componente | ALTA | 
+|RNF-002|O sistema deve garantir a segurança das informações através da criptografia de dados sensíveis e assegurar a disponibilidade do serviço para os usuários finais |  ALTA | 
+|RNF-003| A interface deve ser totalmente responsiva, garantindo a mesma experiência de usuário em resoluções de desktop, tablets e smartphones |  MÉDIA | 
+|RNF-004| O acesso às funcionalidades do sistema deve ser restrito através de login e senha para cada tipo de usuário |  ALTA | 
+|RNF-005| As respostas das consultas devem ser exibidas em até 5 segundos, caso o processamento exceda esse tempo irá exibir uma mensagem de erro  |  MÉDIA | 
 
 ## Restrições
 
