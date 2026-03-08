@@ -573,11 +573,11 @@ MOBILE["Clinic Mobile App (React Native)"]
 end
 
 %% Backend
-subgraph BACKEND["⚙️ Backend (Node.js - Vercel)"]
+subgraph BACKEND["⚙️ Backend Rest (Node.js)"]
 direction TB
 API["API Gateway"]
 
-subgraph REALTIME["⚡ Realtime"]
+subgraph REALTIME["⚡ Backend Realtime (Websocket)"]
 WS["WebSocket Gateway"]
 end
 
@@ -593,20 +593,18 @@ end
 WEBHOOK["Stripe Webhook"]
 end
 
-%% Invisible node for spacing
 SPACER1([" "]):::invisible
 
-%% Database
 subgraph DATA["🗄️ Database (Supabase)"]
-DB[(PostgreSQL)]
+DB[(SERVICE)]
+DB[(CLINIC)]
+DB[(CUSTOMER)]
 end
 
-%% External
 subgraph EXTERNAL["🌐 External Services"]
 STRIPE["Stripe API"]
 end
 
-%% Connections
 WEB --> API
 MOBILE --> API
 
