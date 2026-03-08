@@ -551,7 +551,6 @@ Registra receitas e despesas do pet shop (uma por agendamento).
 - `Cancelado` - Transação cancelada
 
 ---
-
 ### 12. Design do Sistema:
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'background':'#0F172A'}}}%%
@@ -659,6 +658,8 @@ linkStyle default stroke:#60A5FA,stroke-width:2px
 ## Tecnologias Utilizadas
 
 O desenvolvimento do sistema Pet Flow será realizado utilizando tecnologias voltadas para aplicações web e mobile, permitindo a criação de uma plataforma acessível em diferentes dispositivos e capaz de centralizar as informações operacionais do pet shop.A interface web será desenvolvida utilizando HTML, CSS e JavaScript, com o apoio da biblioteca React, responsável pela construção da interface do usuário por meio de componentes reutilizáveis e pela criação de uma experiência mais dinâmica e interativa.Para a aplicação mobile, será utilizado o framework React Native, que permite o desenvolvimento de aplicativos móveis utilizando JavaScript. A versão mobile irá reutilizar o mesmo backend da aplicação web, permitindo que ambas as plataformas compartilhem a mesma lógica de negócio e acesso aos dados do sistema.O desenvolvimento do código será realizado utilizando a IDE Visual Studio Code, amplamente utilizada no desenvolvimento de aplicações web. Para o controle de versões e gerenciamento do código-fonte será utilizado o GitHub, possibilitando o acompanhamento das alterações realizadas durante o desenvolvimento do projeto.Essa combinação de tecnologias permite a construção de uma aplicação moderna, modular e acessível, facilitando a manutenção do sistema e possibilitando a integração entre as versões web e mobile do Pet Flow.
+
+![Fluxo Tecnologias](img/Fluxo-Tecnologias.png)
 
 ## Hospedagem
 A hospedagem do sistema Pet Flow será realizada utilizando serviços de computação em nuvem com planos gratuitos, adequados ao contexto do projeto.
