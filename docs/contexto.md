@@ -81,7 +81,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001| Cadastro e login de usuários | ALTA | 
+|RF-001| Cadastro e login de usuários | ALTA |
 |RF-002| Cadastro, edição e exclusão de clientes  | ALTA |
 |RF-003| Cadastro, edição e exclusão de pets  | ALTA |
 |RF-004| Cadastro, edição e exclusão de serviços | ALTA |
@@ -116,14 +116,550 @@ Enumere as restrições à sua solução. Lembre-se de que as restrições geral
 
 # Catálogo de Serviços
 
-Descreva aqui todos os serviços que serão disponibilizados pelo seu projeto, detalhando suas características e funcionalidades.
+## 1. Autenticação de Usuários
+
+**Descrição**
+Responsável por permitir que funcionários da clínica se cadastrem e acessem o sistema, garantindo acesso às funcionalidades de acordo com seu perfil.
+
+**Funcionalidades**
+
+* Cadastro de novos usuários vinculados à clínica
+* Autenticação por meio de e-mail e senha
+* Controle de acesso ao sistema conforme grau de autorização
+
+---
+
+## 2. Gestão de Clientes (Tutores)
+
+**Descrição**
+Permite o gerenciamento das informações dos tutores, que são os responsáveis pelos pets atendidos na clínica.
+
+**Funcionalidades**
+
+* Cadastro de novos tutores
+* Edição e exclusão de informações cadastrais
+* Consulta de tutores cadastrados
+
+---
+
+## 3. Gestão de Pets
+
+**Descrição**
+Cadastro e gerenciamento dos pets vinculados aos tutores. Permite registrar informações relevantes sobre os animais para facilitar o atendimento.
+
+**Funcionalidades**
+
+* Cadastro de pets associados a um tutor
+* Edição e exclusão das informações do pet
+* Consulta de dados do animal
+
+---
+
+## 4. Gestão de Serviços
+
+**Descrição**
+Permite o cadastro e gerenciamento dos serviços oferecidos pelo pet shop, possibilitando organizar os atendimentos disponíveis para agendamento.
+
+**Funcionalidades**
+
+* Cadastro de serviços oferecidos pela clínica
+* Definição de preço, descrição e duração estimada do serviço
+* Edição, ativação ou desativação dos serviços cadastrados
+
+---
+
+## 5. Agendamento de Atendimentos
+
+**Descrição**
+Gerenciamento dos agendamentos realizados para os pets. Permite organizar os horários de atendimento e acompanhar o status de cada agendamento.
+
+**Funcionalidades**
+
+* Criação de novos agendamentos
+* Associação de pet, tutor, serviço e profissional responsável
+* Alteração, cancelamento ou atualização do status do agendamento
+
+---
+
+## 6. Controle de Estoque
+
+**Descrição**
+Permite o controle dos produtos utilizados, auxiliando na gestão das quantidades disponíveis e na reposição de itens necessários.
+
+**Funcionalidades**
+
+* Cadastro de produtos no sistema
+* Registro de entradas e saídas de produtos no estoque
+* Consulta do estoque disponível
+
+---
+
+## 7. Gestão Financeira
+
+**Descrição**
+Responsável pelo registro e acompanhamento das movimentações financeiras da clínica, permitindo controlar receitas provenientes de serviços e despesas operacionais.
+
+**Funcionalidades**
+
+* Registro de receitas e despesas da clínica
+* Consulta do histórico de movimentações financeiras
+* Atualização do status de pagamento das transações
 
 # Arquitetura da Solução
 
-Definição de como o software é estruturado em termos dos componentes que fazem parte da solução e do ambiente de hospedagem da aplicação.
+## Diagrama de Entidade Relacionamento (ERD)
 
-![arq](https://github.com/user-attachments/assets/b9402e05-8445-47c3-9d47-f11696e38a3d)
+```mermaid
+erDiagram
+    CLINIC ||--o{ EMPLOYEE : employs
+    CLINIC ||--o{ PRODUCT : owns
+    CLINIC ||--o{ SCHEDULING : performs
+    CLINIC ||--o{ TUTOR : serves
 
+    TUTOR ||--o{ PET : owns
+    PET ||--o{ VACCINE : receives
+    PET ||--o{ SCHEDULING : attends
+
+    EMPLOYEE ||--o{ SCHEDULING : executes
+
+    SCHEDULING ||--|{ SCHEDULED_SERVICE : contains
+    SERVICE ||--o{ SCHEDULED_SERVICE : composes
+
+    SERVICE ||--o{ SERVICE_PRODUCT : uses
+    PRODUCT ||--o{ SERVICE_PRODUCT : consumed_by
+
+    SCHEDULING ||--|| FINANCIAL_TRANSACTION : generates
+
+    CLINIC {
+        varchar id PK
+        string name
+        string cnpj
+        string email
+        string phone
+        string address
+        string city
+        string state
+        string zip_code
+        datetime created_at
+        boolean is_active
+    }
+
+    TUTOR {
+        varchar id PK
+        varchar clinic_id FK
+        string name
+        string cpf
+        string email
+        string phone
+        string secondary_phone
+    }
+
+    PET {
+        varchar id PK
+        varchar tutor_id FK
+        string name
+        string species
+        string breed
+        date birth_date
+        string size
+        float weight
+        string color
+        string gender
+        text notes
+    }
+
+    VACCINE {
+        varchar id PK
+        varchar pet_id FK
+        string name
+        date application_date
+        date next_dose_date
+        string veterinarian
+        text notes
+    }
+
+    EMPLOYEE {
+        varchar id PK
+        varchar clinic_id FK
+        string name
+        string email
+        string password
+        string role
+        string phone
+        date admission_date
+        boolean is_active
+    }
+
+    SERVICE {
+        varchar id PK
+        string name
+        text description
+        decimal price
+        int duration_minutes
+        string category
+        boolean is_active
+    }
+
+    SERVICE_PRODUCT {
+        varchar id PK
+        varchar service_id FK
+        varchar product_id FK
+        int quantity
+        text notes
+    }
+
+    PRODUCT {
+        varchar id PK
+        varchar clinic_id FK
+        string name
+        text description
+        string category
+        string brand
+        int quantity
+        int min_stock
+    }
+
+    SCHEDULING {
+        varchar id PK
+        varchar clinic_id FK
+        varchar tutor_id FK
+        varchar pet_id FK
+        varchar employee_id FK
+        datetime date_time
+        string status
+        decimal total_value
+        text notes
+    }
+
+    SCHEDULED_SERVICE {
+        varchar id PK
+        varchar scheduling_id FK
+        varchar service_id FK
+        decimal service_value
+        text notes
+    }
+
+    FINANCIAL_TRANSACTION {
+        varchar id PK
+        varchar scheduling_id FK
+        string category
+        string description
+        decimal amount
+        date due_date
+        date payment_date
+        string status
+        string payment_method
+        varchar employee_id FK
+        datetime created_at
+    }
+```
+
+## Detalhe das tabelas
+
+### 1. Tabela `CLINIC`
+
+Armazena informações das clínicas/pet shops do sistema.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| name | VARCHAR(100) | NOT NULL | Nome da clínica |
+| cnpj | VARCHAR(18) | UNIQUE | CNPJ |
+| email | VARCHAR(100) | | E-mail |
+| phone | VARCHAR(15) | | Telefone |
+| address | VARCHAR(200) | | Endereço |
+| city | VARCHAR(50) | | Cidade |
+| state | VARCHAR(2) | | Estado |
+| zip_code | VARCHAR(9) | | CEP |
+| created_at | DATETIME | NOT NULL, DEFAULT CURRENT_TIMESTAMP | Data de cadastro |
+| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Status da clínica |
+
+---
+
+### 2. Tabela `TUTOR`
+
+Armazena informações dos tutores (donos) dos pets.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Referência para a clínica |
+| name | VARCHAR(100) | NOT NULL | Nome completo |
+| cpf | VARCHAR(14) | UNIQUE | CPF |
+| email | VARCHAR(100) | | E-mail |
+| phone | VARCHAR(15) | NOT NULL | Telefone |
+| secondary_phone | VARCHAR(15) | | Telefone secundário |
+
+---
+
+### 3. Tabela `PET`
+
+Armazena informações dos pets vinculados aos tutores.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| tutor_id | VARCHAR(36) | FK, NOT NULL | Referência para o tutor |
+| name | VARCHAR(50) | NOT NULL | Nome do pet |
+| species | VARCHAR(30) | NOT NULL | Espécie (Cachorro, Gato, etc.) |
+| breed | VARCHAR(50) | | Raça |
+| birth_date | DATE | | Data de nascimento |
+| size | VARCHAR(20) | | Porte (Pequeno, Médio, Grande) |
+| weight | DECIMAL(5,2) | | Peso em kg |
+| color | VARCHAR(30) | | Cor da pelagem |
+| gender | CHAR(1) | | M (Macho) / F (Fêmea) |
+| notes | TEXT | | Observações médicas/comportamentais |
+
+---
+
+### 4. Tabela `VACCINE`
+
+Armazena o histórico de vacinação dos pets.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| pet_id | VARCHAR(36) | FK, NOT NULL | Referência para o pet |
+| name | VARCHAR(100) | NOT NULL | Nome da vacina |
+| application_date | DATE | NOT NULL | Data de aplicação |
+| next_dose_date | DATE | | Data da próxima dose |
+| veterinarian | VARCHAR(100) | | Nome do veterinário |
+| notes | TEXT | | Observações adicionais |
+
+---
+
+### 5. Tabela `EMPLOYEE`
+
+Armazena os usuários do sistema (funcionários) vinculados à clínica.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Referência para a clínica |
+| name | VARCHAR(100) | NOT NULL | Nome completo |
+| email | VARCHAR(100) | UNIQUE, NOT NULL | E-mail (login) |
+| password | VARCHAR(255) | NOT NULL | Senha criptografada |
+| role | VARCHAR(30) | NOT NULL | Função no sistema |
+| phone | VARCHAR(15) | | Telefone de contato |
+| admission_date | DATE | | Data de admissão |
+| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Status do funcionário |
+
+---
+
+### 6. Tabela `SERVICE`
+
+Armazena os serviços oferecidos pelo pet shop.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| name | VARCHAR(100) | NOT NULL | Nome do serviço |
+| description | TEXT | | Descrição detalhada |
+| price | DECIMAL(10,2) | NOT NULL | Preço |
+| duration_minutes | INT | | Duração estimada em minutos |
+| category | VARCHAR(30) | NOT NULL | Categoria do serviço |
+| is_active | BOOLEAN | NOT NULL, DEFAULT TRUE | Status do serviço |
+
+---
+
+### 7. Tabela `SERVICE_PRODUCT` (Tabela de Junção)
+
+Relaciona serviços com os produtos que utilizam (N:N).
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| service_id | VARCHAR(36) | FK, NOT NULL | Referência para o serviço |
+| product_id | VARCHAR(36) | FK, NOT NULL | Referência para o produto |
+| quantity | INT | NOT NULL | Quantidade utilizada no serviço |
+| notes | TEXT | | Observações sobre o uso do produto |
+
+---
+
+### 8. Tabela `PRODUCT`
+
+Controla o estoque de produtos da clínica.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Referência para a clínica |
+| name | VARCHAR(100) | NOT NULL | Nome do produto |
+| description | TEXT | | Descrição detalhada |
+| category | VARCHAR(30) | NOT NULL | Categoria do produto |
+| brand | VARCHAR(50) | | Marca |
+| quantity | INT | NOT NULL, DEFAULT 0 | Quantidade |
+| min_stock | INT | NOT NULL, DEFAULT 0 | Estoque mínimo para alerta |
+
+---
+
+### 9. Tabela `SCHEDULING`
+
+Registra os agendamentos de serviços realizados pela clínica.
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| clinic_id | VARCHAR(36) | FK, NOT NULL | Clínica responsável |
+| tutor_id | VARCHAR(36) | FK, NOT NULL | Tutor solicitante |
+| pet_id | VARCHAR(36) | FK, NOT NULL | Pet a ser atendido |
+| employee_id | VARCHAR(36) | FK, NOT NULL | Profissional responsável |
+| date_time | DATETIME | NOT NULL | Data e hora do agendamento |
+| status | VARCHAR(20) | NOT NULL | Status do agendamento |
+| total_value | DECIMAL(10,2) | NOT NULL | Valor total do agendamento |
+| notes | TEXT | | Observações gerais |
+
+**Status Possíveis:**
+- `Agendado` - Agendamento criado
+- `Confirmado` - Confirmado pelo tutor
+- `Em Andamento` - Serviço em execução
+- `Concluído` - Serviço finalizado
+- `Cancelado` - Agendamento cancelado
+
+---
+
+### 10. Tabela `SCHEDULED_SERVICE` (Tabela de Junção)
+
+Relaciona agendamentos com serviços (N:N).
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| scheduling_id | VARCHAR(36) | FK, NOT NULL | Referência para o agendamento |
+| service_id | VARCHAR(36) | FK, NOT NULL | Referência para o serviço |
+| service_value | DECIMAL(10,2) | NOT NULL | Valor do serviço no momento do agendamento |
+| notes | TEXT | | Observações específicas do serviço |
+
+---
+
+### 11. Tabela `FINANCIAL_TRANSACTION`
+
+Registra receitas e despesas do pet shop (uma por agendamento).
+
+| Campo | Tipo | Restrições | Descrição |
+|-------|------|-------------|-------------|
+| id | VARCHAR(36) | PK | Identificador único (UUID) |
+| scheduling_id | VARCHAR(36) | FK, UNIQUE, NOT NULL | Agendamento relacionado (único) |
+| category | VARCHAR(50) | NOT NULL | Categoria da transação |
+| description | VARCHAR(200) | NOT NULL | Descrição detalhada |
+| amount | DECIMAL(10,2) | NOT NULL | Valor da transação |
+| due_date | DATE | | Data de vencimento |
+| payment_date | DATE | | Data do pagamento |
+| status | VARCHAR(20) | NOT NULL | Status do pagamento |
+| payment_method | VARCHAR(20) | | Forma de pagamento |
+| employee_id | VARCHAR(36) | FK, NOT NULL | Funcionário responsável |
+| created_at | DATETIME | NOT NULL, DEFAULT CURRENT_TIMESTAMP | Data de criação |
+
+**Status Possíveis:**
+- `Pendente` - Aguardando pagamento
+- `Pago` - Pagamento realizado
+- `Cancelado` - Transação cancelada
+
+---
+
+### 12. Design do Sistema:
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'background':'#0F172A'}}}%%
+flowchart LR
+
+%% Title
+%% Pet Flow - System Design
+
+%% Clients
+subgraph CLIENTS["💻 Clients"]
+direction TB
+WEB["Web (React)"]
+MOBILE["Clinic Mobile App (React Native)"]
+end
+
+%% Backend
+subgraph BACKEND["⚙️ Backend (Node.js - Vercel)"]
+direction TB
+API["API Gateway"]
+
+subgraph REALTIME["⚡ Realtime"]
+WS["WebSocket Gateway"]
+end
+
+subgraph SERVICES["🛠️ Services"]
+direction TB
+CLINIC["Clinic"]
+CUSTOMER["Owners & Pets"]
+SCHEDULE["Scheduling"]
+STOCK["Inventory"]
+FINANCIAL["Financial / Payments"]
+end
+
+WEBHOOK["Stripe Webhook"]
+end
+
+%% Invisible node for spacing
+SPACER1([" "]):::invisible
+
+%% Database
+subgraph DATA["🗄️ Database (Supabase)"]
+DB[(PostgreSQL)]
+end
+
+%% External
+subgraph EXTERNAL["🌐 External Services"]
+STRIPE["Stripe API"]
+end
+
+%% Connections
+WEB --> API
+MOBILE --> API
+
+WEB <-->|WSS| WS
+MOBILE <-->|WSS| WS
+
+API --> CLINIC
+API --> CUSTOMER
+API --> SCHEDULE
+API --> STOCK
+API --> FINANCIAL
+
+CLINIC --> SPACER1 --> DB
+CUSTOMER --> SPACER1
+SCHEDULE --> SPACER1
+STOCK --> SPACER1
+FINANCIAL --> SPACER1
+
+SCHEDULE --> WS
+FINANCIAL --> WS
+
+FINANCIAL -->|Create Checkout| STRIPE
+STRIPE -->|Payment Event| WEBHOOK
+WEBHOOK --> FINANCIAL
+
+FINANCIAL -->|Direct Payment| DB
+
+%% Styles
+style CLIENTS fill:#334155,stroke:#1E40AF,color:#E5E7EB
+style BACKEND fill:#1F2937,stroke:#475569,color:#E5E7EB
+style REALTIME fill:#1E3A8A,stroke:#1E40AF,color:#E5E7EB
+style SERVICES fill:#1E40AF,stroke:#1E3A8A,color:#E5E7EB
+style DATA fill:#111827,stroke:#1E293B,color:#E5E7EB
+style EXTERNAL fill:#4338CA,stroke:#312E81,color:#E5E7EB
+
+style WEB fill:#2563EB,color:#fff
+style MOBILE fill:#2563EB,color:#fff
+style API fill:#0EA5E9,color:#fff
+style WS fill:#FBBF24,color:#000
+style CLINIC fill:#7C3AED,color:#fff
+style CUSTOMER fill:#16A34A,color:#fff
+style SCHEDULE fill:#0284C7,color:#fff
+style STOCK fill:#EA580C,color:#fff
+style FINANCIAL fill:#DC2626,color:#fff
+style WEBHOOK fill:#FACC15,color:#000
+style DB fill:#64748B,stroke:#000,color:#fff
+
+style SPACER1 fill:none,stroke:none
+
+style STRIPE fill:#635BFF,color:#fff
+
+linkStyle default stroke:#60A5FA,stroke-width:2px
+```
 
 ## Tecnologias Utilizadas
 
@@ -137,9 +673,9 @@ Explique como a hospedagem e o lançamento da plataforma foi feita.
 
 
 ## Referência
-Introdução 
+Introdução
 - https://abinpet.org.br/dados-de-mercado
 - https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
 - https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
 - https://zipdo.co/brazil-pet-industry-statistics/
-
+- https://mermaid.js.org/intro/syntax-reference.html

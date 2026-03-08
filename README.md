@@ -16,7 +16,7 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 * [Lucas Soares dos Reis](docs/atas/aluno4.md)
 * [Natália Kiefer Ferreira](docs/atas/aluno5.md)
 * [Rafael Vinícius da Silva](docs/atas/aluno6.md)
-* [Vinicius Henrique de Oliveira Neves](docs/atas/aluno6.md)
+* [Vinicius Henrique de Oliveira Neves](docs/atas/aluno7.md)
 
 ## Orientador
 
