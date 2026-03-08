@@ -6,7 +6,8 @@
 
 `SEMESTRE: 6º`
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+O mercado pet tem crescido significativamente no Brasil, impulsionado pelo aumento do número de animais de estimação e pela humanização desses animais no ambiente familiar, conforme dados da Associação Brasileira da Indústria de Produtos para Animais de Estimação (ABINPET). Esse crescimento tem ampliado a demanda por serviços especializados em pet shops.
+Diante disso, o projeto propõe o desenvolvimento de um sistema para auxiliar na gestão de pet shops, permitindo o controle de agendamentos, cadastro de clientes e organização dos serviços, utilizando conceitos de sistemas distribuídos para melhorar a eficiência e a organização do estabelecimento.
 
 ## Integrantes
 
