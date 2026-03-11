@@ -1,4 +1,4 @@
-# ATA de Acompanhamento - Nome completo do aluno 4
+# ATA de Acompanhamento - LUCAS SOARES DOS REIS
 
 ## Registro de Atividades Semanais
 
