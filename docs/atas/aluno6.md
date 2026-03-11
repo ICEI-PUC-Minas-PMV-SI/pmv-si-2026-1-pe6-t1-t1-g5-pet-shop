@@ -1,4 +1,4 @@
-# ATA de Acompanhamento - Nome completo do aluno 6
+# ATA de Acompanhamento - Rafael Vinícius da Silva
 
 ## Registro de Atividades Semanais
 
