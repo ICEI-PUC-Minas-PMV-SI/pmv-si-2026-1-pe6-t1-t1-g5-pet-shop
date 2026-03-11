@@ -101,13 +101,6 @@ O projeto está restrito pelos itens apresentados na tabela a seguir.
 |ID| Restrição                                             |
 |--|-------------------------------------------------------|
 | 01 | O projeto deverá ser desenvolvido e entregue dentro do prazo definido pelo cronograma acadêmico da disciplina, até o final do semestre letivo.                                              |
-| 02 | O escopo do projeto não contempla a emissão automatizada de notas fiscais eletrônicas (NF-e/NFS-e) ou integração direta com sistemas da Secretaria da Fazenda nesta versão inicial.         |
-| 03 | A interface do sistema deverá ser desenvolvida utilizando JavaScript e tecnologias web padrão, não sendo permitido o uso de plataformas de criação de sites prontos, como Wix ou WordPress. |
-| 04 | O controle de estoque será limitado ao registro interno de entradas e saídas de produtos, não incluindo integração automática com fornecedores ou sistemas externos de reposição.           |
-| 05 | É obrigatório o uso de uma ferramenta de controle de versão, como Git e GitHub, para gerenciamento do código-fonte e histórico de desenvolvimento do projeto.                               |
-| 06 | O sistema será disponibilizado apenas no idioma Português do Brasil, não contemplando suporte nativo a múltiplos idiomas nesta versão.                                                      |
-| 07 | A infraestrutura de hospedagem poderá utilizar serviços gratuitos ou de baixo custo, o que pode limitar recursos de desempenho, escalabilidade ou armazenamento.                            |
-
 
 # Catálogo de Serviços
 
