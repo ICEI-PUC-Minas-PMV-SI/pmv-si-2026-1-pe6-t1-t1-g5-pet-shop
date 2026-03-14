@@ -172,21 +172,6 @@ export class ClinicRoutes {
 ### 6. App Integration
 To keep `app.ts` clean, use a centralized **AppRouter**.
 
-**1. Create a Central Router (`routes.ts`):**
-```typescript
-import { Router } from "express";
-
-export class AppRouter {
-  public readonly router: Router = Router();
-
-  constructor() {}
-
-  public use(path: string, router: Router): void {
-    this.router.use(path, router);
-  }
-}
-```
-
 **2. Register services in `app.ts`:**
 ```typescript
 import express from "express";
