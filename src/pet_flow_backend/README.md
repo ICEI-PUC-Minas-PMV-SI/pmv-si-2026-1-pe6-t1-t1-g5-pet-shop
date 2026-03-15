@@ -39,6 +39,7 @@ export interface ClinicDatasource {
   getAll(): Promise<DbResult<ClinicEntity[]>>;
   getById(id: string): Promise<DbResult<ClinicEntity>>;
   create(clinic: Partial<ClinicEntity>): Promise<DbResult<ClinicEntity>>;
+  update(id: string, clinic: Partial<ClinicEntity>): Promise<DbResult<ClinicEntity>>;
 }
 ```
 
@@ -54,7 +55,10 @@ export class ClinicDatasourceImpl implements ClinicDatasource {
   async getAll(): Promise<DbResult<ClinicEntity[]>> {
     return supabaseExtensions.getAll<ClinicEntity>(this.table);
   }
-  // ... implement other methods using supabaseExtensions
+
+  async update(id: string, clinic: Partial<ClinicEntity>): Promise<DbResult<ClinicEntity>> {
+    return supabaseExtensions.update<ClinicEntity>(this.table, id, clinic);
+  }
 }
 ```
 
@@ -67,6 +71,7 @@ import { Clinic } from "../domain/models/clinic";
 
 export interface ClinicRepository {
   getClinics(): Promise<Clinic[]>;
+  updateClinic(id: string, clinic: Partial<Clinic>): Promise<Clinic>;
 }
 ```
 
@@ -84,9 +89,24 @@ export class ClinicRepositoryImpl implements ClinicRepository {
   ) {}
 
   async getClinics(): Promise<Clinic[]> {
-    const { data, error } = await this.datasource.getAll();
-    if (error) throw new Error(error.message);
-    return this.mapper.toObjects(data || []);
+    try {
+      const { data, error } = await this.datasource.getAll();
+      if (error) return [];
+      return this.mapper.toObjects(data || []);
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async updateClinic(id: string, clinic: Partial<Clinic>): Promise<Clinic> {
+    try {
+      const entity = this.mapper.toEntity(clinic as Clinic);
+      const { data, error } = await this.datasource.update(id, entity);
+      if (error) throw new Error(error.message);
+      return this.mapper.toObject(data!);
+    } catch (error) {
+      throw error;
+    }
   }
 }
 ```
@@ -104,6 +124,10 @@ export class ClinicService {
 
   async listAllClinics(): Promise<Clinic[]> {
     return this.repository.getClinics();
+  }
+
+  async updateClinic(id: string, clinic: Partial<Clinic>): Promise<Clinic> {
+    return this.repository.updateClinic(id, clinic);
   }
 }
 ```
@@ -127,6 +151,17 @@ export class ClinicController {
     try {
       const clinics = await this.service.listAllClinics();
       const response = this.mapper.toObjects(clinics);
+      res.status(200).json(response);
+    } catch (error) {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
+  async update(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const clinic = await this.service.updateClinic(id, req.body);
+      const response = this.mapper.toObject(clinic);
       res.status(200).json(response);
     } catch (error) {
       res.status(500).json({ error: "Internal Server Error" });
