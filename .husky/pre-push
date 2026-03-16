@@ -1,0 +1,1 @@
+cd src/pet_flow_backend && npm run lint

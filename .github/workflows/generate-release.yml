@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      description:
+        description: 'Descrição do que foi adicionado'
+        required: true
+        type: string
+      branch:
+        description: 'Branch para o release'
+        required: true
+        default: 'main'
+        type: choice
+        options:
+          - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Get version
+        id: get_version
+        run: |
+          VERSION=$(grep -oP '"version":\s*"\K[^"]+' package.json)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update README.md
+        run: |
+          VERSION=${{ steps.get_version.outputs.VERSION }}
+          DATE=$(date +'%d/%m/%Y')
+          DESCRIPTION="${{ github.event.inputs.description }}"
+          
+          NEW_RELEASE="### [$VERSION] - $DATE\n#### Adicionado\n- $DESCRIPTION\n"
+          
+          sed -i "/## Histórico de versões/a \\\n$NEW_RELEASE" src/README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/README.md
+          git commit -m "docs: update README.md for version ${{ steps.get_version.outputs.VERSION }}"
+          git push
+
+      - name: Create Zip file
+        run: |
+          zip -r pet-shop-project.zip . -x "*.git*" "node_modules*"
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${{ steps.get_version.outputs.VERSION }}
+          DESCRIPTION="${{ github.event.inputs.description }}"
+          
+          gh release create "v$VERSION" pet-shop-project.zip \
+            --title "Release $VERSION" \
+            --notes "## O que há de novo?\n$DESCRIPTION"
