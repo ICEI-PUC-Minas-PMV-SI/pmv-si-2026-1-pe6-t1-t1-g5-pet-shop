@@ -1,3 +1,5 @@
+import { AuthRepository } from "./repositories/auth.repository";
+
 export class AuthService {
-  constructor() {}
+  constructor(private readonly repository: AuthRepository) { }
 }

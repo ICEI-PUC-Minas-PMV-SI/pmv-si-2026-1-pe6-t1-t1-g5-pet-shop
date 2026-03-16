@@ -39,11 +39,8 @@ jobs:
           DATE=$(date +'%d/%m/%Y')
           DESCRIPTION="${{ github.event.inputs.description }}"
           
-          # Prepare the new release text
           NEW_RELEASE="### [$VERSION] - $DATE\n#### Adicionado\n- $DESCRIPTION\n"
           
-          # Find the line after "## Histórico de versões"
-          # We use sed to insert after the heading
           sed -i "/## Histórico de versões/a \\\n$NEW_RELEASE" src/README.md
 
       - name: Commit and push changes
@@ -56,7 +53,6 @@ jobs:
 
       - name: Create Zip file
         run: |
-          # Zip everything except .git and node_modules
           zip -r pet-shop-project.zip . -x "*.git*" "node_modules*"
 
       - name: Create Release
