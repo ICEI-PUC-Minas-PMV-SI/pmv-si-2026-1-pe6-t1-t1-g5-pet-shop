@@ -1,3 +1,5 @@
+import { SchedulingService } from "./scheduling.service";
+
 export class SchedulingController {
-  constructor() {}
+  constructor(private readonly service: SchedulingService) {}
 }

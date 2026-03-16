@@ -1,3 +1,5 @@
+import { SchedulingRepository } from "./repositories/scheduling.repository";
+
 export class SchedulingService {
-  constructor() {}
+  constructor(private readonly repository: SchedulingRepository) {}
 }

@@ -1,3 +1,5 @@
+import { FinancialTransactionRepository } from "./repositories/financial-transaction.repository";
+
 export class FinancialService {
-  constructor() {}
+  constructor(private readonly repository: FinancialTransactionRepository) {}
 }

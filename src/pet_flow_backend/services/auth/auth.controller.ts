@@ -1,3 +1,5 @@
+import { AuthService } from "./auth.service";
+
 export class AuthController {
-  constructor() {}
+  constructor(private readonly service: AuthService) {}
 }

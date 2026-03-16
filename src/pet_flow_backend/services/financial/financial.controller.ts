@@ -1,3 +1,5 @@
+import { FinancialService } from "./financial.service";
+
 export class FinancialController {
-  constructor() {}
+  constructor(private readonly service: FinancialService) {}
 }

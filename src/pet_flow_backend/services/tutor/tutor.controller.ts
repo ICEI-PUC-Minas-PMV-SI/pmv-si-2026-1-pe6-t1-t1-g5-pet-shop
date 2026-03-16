@@ -1,3 +1,5 @@
+import { TutorService } from "./tutor.service";
+
 export class TutorController {
-  constructor() {}
+  constructor(private readonly service: TutorService) {}
 }

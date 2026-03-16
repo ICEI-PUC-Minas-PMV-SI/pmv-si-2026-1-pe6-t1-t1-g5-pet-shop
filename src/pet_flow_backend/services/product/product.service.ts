@@ -1,3 +1,5 @@
+import { ProductRepository } from "./repositories/product.repository";
+
 export class ProductService {
-  constructor() {}
+  constructor(private readonly repository: ProductRepository) {}
 }

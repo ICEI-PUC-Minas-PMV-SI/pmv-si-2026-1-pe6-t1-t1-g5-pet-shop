@@ -1,3 +1,5 @@
+import { ServiceService } from "./service.service";
+
 export class ServiceController {
-  constructor() {}
+  constructor(private readonly service: ServiceService) {}
 }

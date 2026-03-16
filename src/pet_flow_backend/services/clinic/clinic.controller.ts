@@ -1,3 +1,5 @@
+import { ClinicService } from "./clinic.service";
+
 export class ClinicController {
-  constructor() {}
+  constructor(private readonly service: ClinicService) {}
 }

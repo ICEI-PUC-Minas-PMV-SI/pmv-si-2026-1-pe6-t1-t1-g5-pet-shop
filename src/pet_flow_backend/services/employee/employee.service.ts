@@ -1,3 +1,5 @@
+import { EmployeeRepository } from "./repositories/employee.repository";
+
 export class EmployeeService {
-  constructor() {}
+  constructor(private readonly repository: EmployeeRepository) {}
 }

@@ -1,3 +1,5 @@
+import { ClinicRepository } from "./repositories/clinic.repository";
+
 export class ClinicService {
-  constructor() {}
+  constructor(private readonly repository: ClinicRepository) {}
 }
