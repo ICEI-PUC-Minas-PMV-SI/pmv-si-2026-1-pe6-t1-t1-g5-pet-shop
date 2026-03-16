@@ -30,7 +30,7 @@ jobs:
       - name: Get version
         id: get_version
         run: |
-          VERSION=$(grep -oP 'VERSION = "\K[^"]+' src/pet_flow_backend/version.ts)
+          VERSION=$(grep -oP '"version":\s*"\K[^"]+' package.json)
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Update README.md
