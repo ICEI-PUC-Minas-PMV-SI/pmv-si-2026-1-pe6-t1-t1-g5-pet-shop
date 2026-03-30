@@ -1,0 +1,195 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Pet Flow API",
+    "description": "Documentação da API para o Sistema de Pet Shop",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Financial",
+      "description": "Endpoints relacionados as transações financeiras"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/financial/": {
+      "get": {
+        "tags": [
+          "Financial"
+        ],
+        "summary": "Lista todas as transações financeiras",
+        "description": "Retorna uma lista de todas as movimentações financeiras do sistema.",
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Financial"
+        ],
+        "summary": "Cria uma nova transação financeira",
+        "description": "Registra uma nova movimentação financeira no sistema.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Dados da transação.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Transação criada com sucesso."
+          },
+          "400": {
+            "description": "Erro na requisição."
+          },
+          "500": {
+            "description": "Erro interno no servidor."
+          }
+        }
+      }
+    },
+    "/financial/{id}": {
+      "get": {
+        "tags": [
+          "Financial"
+        ],
+        "summary": "Busca uma transação pelo ID",
+        "description": "Retorna os detalhes de uma transação financeira específica baseada no seu ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transação encontrada."
+          },
+          "404": {
+            "description": "Não encontrado."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Financial"
+        ],
+        "summary": "Atualiza uma transação financeira",
+        "description": "Atualiza os dados de uma movimentação financeira existente baseada no seu ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Novos dados da transação.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "number"
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updated_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transação atualizada."
+          },
+          "400": {
+            "description": "Erro na requisição."
+          },
+          "500": {
+            "description": "Erro interno."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Financial"
+        ],
+        "summary": "Remove uma transação financeira",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Removido."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,1 +1,1 @@
-export interface AuthResponseDto { }
+export interface AuthResponseDto {}

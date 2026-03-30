@@ -1,1 +1,1 @@
-export interface AuthDatasource { }
+export interface AuthDatasource {}

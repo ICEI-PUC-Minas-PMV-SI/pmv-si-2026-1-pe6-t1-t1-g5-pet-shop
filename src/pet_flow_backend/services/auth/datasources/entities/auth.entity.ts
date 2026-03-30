@@ -1,1 +1,1 @@
-export class AuthEntity { }
+export class AuthEntity {}

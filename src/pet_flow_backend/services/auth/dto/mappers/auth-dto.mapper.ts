@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Auth } from "../../domain/models/auth";
 import { AuthResponseDto } from "../models/auth-response.dto";
 
 export class AuthDtoMapper {
-    static toDto(domain: Auth): AuthResponseDto {
-        return {};
-    }
+  static toDto(_domain: Auth): AuthResponseDto {
+    return {};
+  }
 }
