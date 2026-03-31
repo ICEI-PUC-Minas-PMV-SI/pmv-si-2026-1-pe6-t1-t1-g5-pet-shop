@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Auth } from "../../domain/models/auth";
 import { AuthResponseDto } from "../models/auth-response.dto";
 
