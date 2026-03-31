@@ -5,3 +5,8 @@
 O site em HTML/CSS/JS é um projeto estático, logo pode ser utilizado tanto em servidores...
 
 ## Histórico de versões
+
+### [1.0.0] - 16/03/2026
+#### Adicionado
+- Definido a arquitetura do projeto.
+

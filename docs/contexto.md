@@ -1,8 +1,11 @@
 # Introdução
 
-O mercado de produtos e serviços para animais de estimação tem apresentado crescimento constante no Brasil nas últimas décadas. Segundo dados da Associação Brasileira da Indústria de Produtos para Animais de Estimação (ABINPET), o país está entre os maiores mercados pet do mundo, impulsionado pelo aumento do número de animais de estimação e pela crescente humanização desses animais no ambiente familiar. Esse cenário tem ampliado a demanda por serviços especializados, como banho, tosa e atendimento personalizado.Apesar desse crescimento, muitos estabelecimentos do setor ainda utilizam métodos manuais ou sistemas pouco integrados para o controle de agendamentos, cadastro de clientes e gestão de serviços, o que pode gerar falhas operacionais e dificuldades administrativas. Nesse contexto, a aplicação de tecnologias da informação, especialmente por meio de sistemas distribuídos, apresenta-se como uma alternativa para modernizar e integrar os processos internos, contribuindo para maior organização e eficiência na gestão de pet shops.
+O mercado de produtos e serviços para animais de estimação tem apresentado crescimento constante no Brasil nas últimas décadas. Segundo dados da Associação Brasileira da Indústria de Produtos para Animais de Estimação (ABINPET), o país está entre os maiores mercados pet do mundo, impulsionado pelo aumento do número de animais de estimação e pela crescente humanização desses animais no ambiente familiar. Esse cenário tem ampliado a demanda por serviços especializados, como banho, tosa e atendimento personalizado.
+
+Apesar desse crescimento, muitos estabelecimentos do setor ainda utilizam métodos manuais ou sistemas pouco integrados para o controle de agendamentos, cadastro de clientes e gestão de serviços, o que pode gerar falhas operacionais e dificuldades administrativas. Nesse contexto, a aplicação de tecnologias da informação, especialmente por meio de sistemas distribuídos, apresenta-se como uma alternativa para modernizar e integrar os processos internos, contribuindo para maior organização e eficiência na gestão de pet shops.
 
 ## Problema
+
 Pequenos e médios pet shops enfrentam dificuldades na organização de suas operações diárias, como controle de clientes, agendamentos de banho e tosa, registro de serviços e acompanhamento financeiro. Em muitos casos, essas informações são gerenciadas de forma manual ou por meio de ferramentas não integradas, como cadernos, planilhas e aplicativos de mensagens, o que pode gerar conflitos de horário, perda de dados e falhas na comunicação interna.
 
 Esse cenário é comum em estabelecimentos com equipe reduzida, onde o gestor acumula funções administrativas e operacionais. A falta de organização impacta diretamente na eficiência, qualidade do atendimento e na capacidade de controle dentro do pet shop.
@@ -30,14 +33,10 @@ O Pet Flow surge como resposta a esse cenário. Trata-se de uma aplicação dist
 
 Mais do que uma ferramenta de digitalização, o Pet Flow se propõe a reduzir o retrabalho administrativo e devolver ao gestor e à equipe mais tempo e atenção para o atendimento em si.
 
-**Referências:**
-- ABINPET; IPB. *Release 3º Trimestre 2024*. Disponível em: https://www.gov.br/agricultura/pt-br/assuntos/camaras-setoriais-tematicas/documentos/camaras-setoriais/animais-e-estimacao/2024/41a-ro-05-11-2024/release_3trimestre_abinpet_ipb_2024.pdf. Acesso em: mar. 2026.
-- CRMV-PB. *Brasil ocupa o 3º lugar no ranking mundial de países com mais animais domésticos*. Disponível em: https://www.crmvpb.org.br/29077-2/. Acesso em: mar. 2026.
-- PETSHOPCONTROL. *7 dificuldades do empreendedor no mercado pet*. Disponível em: https://www.petshopcontrol.com.br/blog/dificuldades-empreendedor-mercado-pet/. Acesso em: mar. 2026.
-
 ## Público-Alvo
 
 ### 1. Definição Geral
+
 O público-alvo do Pet Flow são pet shops que enfrentam dificuldade na organização de agendamento, controle de serviços (banho e tosa), gestão de clientes e acompanhamento da carga diária de trabalho. Gerando uma maior dificuldade no controle e gestão operacional, portando o Pet Flow busca centralizar as informações e oferecer um controle muito mais simplificado para os pet shops.
 
 ### 2. Segmentação
@@ -65,118 +64,37 @@ O público-alvo do Pet Flow são pet shops que enfrentam dificuldade na organiza
 
 ### 3. Personas
 
-### 3.1 Isabella Rocha
+#### 3.1 Isabella Rocha
 ![Persona 1](img/persona_01.png)
 
-### 3.2 Carlos Mendes
+#### 3.2 Carlos Mendes
 ![Persona 2](img/persona_02.png)
 
 # Especificações do Projeto
 
 Para detalhes técnicos sobre requisitos, restrições, catálogo de serviços e modelagem de dados, consulte o documento [Backend APIs](backend-apis.md).
 
-## Design do Sistema:
-``` mermaid
-%%{init: {'theme':'base','themeVariables':{'background':'#0F172A'}}}%%
-flowchart LR
+## Tecnologias Utilizadas
 
-subgraph CLIENTS["💻 Clients"]
-direction TB
-WEB["Web (React)"]
-MOBILE["Clinic Mobile App (React Native)"]
-end
+O desenvolvimento do sistema Pet Flow será realizado utilizando tecnologias voltadas para aplicações web e mobile, permitindo a criação de uma plataforma acessível em diferentes dispositivos e capaz de centralizar as informações operacionais do pet shop.
 
-subgraph BACKEND["⚙️ Backend Rest (Node.js)"]
-direction TB
-API["API Gateway"]
+A interface web será desenvolvida utilizando HTML, CSS e JavaScript, com o apoio da biblioteca React, responsável pela construção da interface do usuário por meio de componentes reutilizáveis e pela criação de uma experiência mais dinâmica e interativa. Para a aplicação mobile, será utilizado o framework React Native, que permite o desenvolvimento de aplicativos móveis utilizando JavaScript. A versão mobile irá reutilizar o mesmo backend da aplicação web, permitindo que ambas as plataformas compartilhem a mesma lógica de negócio e acesso aos dados do sistema.
 
-subgraph REALTIME["⚡ Backend Realtime (Websocket)"]
-WS["WebSocket Gateway"]
-end
+O desenvolvimento do código será realizado utilizando a IDE Visual Studio Code, amplamente utilizada no desenvolvimento de aplicações web. Para o controle de versões e gerenciamento do código-fonte será utilizado o GitHub, possibilitando o acompanhamento das alterações realizadas durante o desenvolvimento do projeto.
 
-subgraph SERVICES["🛠️ Services"]
-direction TB
-CLINIC_SERVICE["Clinic"]
-CUSTOMER_SERVICE["Owners & Pets"]
-SCHEDULE["Scheduling"]
-FINANCIAL["Financial / Payments"]
-end
-
-WEBHOOK["Stripe Webhook"]
-end
-
-subgraph DATA["🗄️ Database (Supabase)"]
-direction LR
-SERVICE_DB[(SERVICE)]
-CLINIC_DB[(CLINIC)]
-CUSTOMER_DB[(CUSTOMER)]
-end
-
-subgraph EXTERNAL["🌐 External Services"]
-STRIPE["Stripe API"]
-end
-
-WEB --> API
-MOBILE --> API
-
-WEB <-->|WSS| WS
-MOBILE <-->|WSS| WS
-
-API --> CLINIC_SERVICE
-API --> CUSTOMER_SERVICE
-API --> SCHEDULE
-API --> FINANCIAL
-
-CLINIC_SERVICE --> CLINIC_DB
-CUSTOMER_SERVICE --> CUSTOMER_DB
-FINANCIAL --> SERVICE_DB
-
-SCHEDULE --> WS
-FINANCIAL --> WS
-
-FINANCIAL -->|Create Checkout| STRIPE
-STRIPE -->|Payment Event| WEBHOOK
-WEBHOOK --> FINANCIAL
-
-FINANCIAL -->|Direct Payment| SERVICE_DB
-
-%% Styles
-style CLIENTS fill:#334155,stroke:#1E40AF,color:#E5E7EB
-style BACKEND fill:#1F2937,stroke:#475569,color:#E5E7EB
-style REALTIME fill:#1E3A8A,stroke:#1E40AF,color:#E5E7EB
-style SERVICES fill:#1E40AF,stroke:#1E3A8A,color:#E5E7EB
-style DATA fill:#111827,stroke:#1E293B,color:#E5E7EB
-style EXTERNAL fill:#4338CA,stroke:#312E81,color:#E5E7EB
-
-style WEB fill:#2563EB,color:#fff
-style MOBILE fill:#2563EB,color:#fff
-style API fill:#0EA5E9,color:#fff
-style WS fill:#FBBF24,color:#000
-
-style CLINIC_SERVICE fill:#7C3AED,color:#fff
-style CUSTOMER_SERVICE fill:#16A34A,color:#fff
-style SCHEDULE fill:#0284C7,color:#fff
-style FINANCIAL fill:#DC2626,color:#fff
-
-style WEBHOOK fill:#FACC15,color:#000
-style STRIPE fill:#635BFF,color:#fff
-
-style SERVICE_DB fill:#64748B,color:#fff
-style CLINIC_DB fill:#64748B,color:#fff
-style CUSTOMER_DB fill:#64748B,color:#fff
-
-linkStyle default stroke:#60A5FA,stroke-width:2px
-```
+![Fluxo Tecnologias](img/Fluxo-Tecnologias.png)
 
 ## Hospedagem
 
-Explique como a hospedagem e o lançamento da plataforma foi feita.
-
+A hospedagem do sistema Pet Flow será realizada utilizando serviços de computação em nuvem com planos gratuitos, adequados ao contexto do projeto.
+O frontend da aplicação será hospedado na plataforma Vercel, permitindo que os usuários acessem o sistema por meio do navegador de forma rápida e segura.
+O banco de dados será hospedado no Supabase, um serviço gerenciado que oferece banco PostgreSQL, autenticação e outras funcionalidades úteis para o desenvolvimento da aplicação.
+Todo o código do projeto será armazenado e versionado no GitHub, permitindo controle de versões, colaboração entre os membros da equipe e atualização contínua da aplicação.
 
 ## Referência
-Introdução
-- https://abinpet.org.br/dados-de-mercado
-- https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
-- https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil
-- https://zipdo.co/brazil-pet-industry-statistics/
-- https://mermaid.js.org/intro/syntax-reference.html
+
+- [ABINPET - Dados de Mercado](https://abinpet.org.br/dados-de-mercado)
+- [ABRE - Inovação Mercado Pet](https://www.abre.org.br/inovacao/mercado-pet-movimenta-r-754-bilhoes-em-2024-e-segue-em-expansao-no-brasil)
+- [ZipDo - Brazil Pet Industry Statistics](https://zipdo.co/brazil-pet-industry-statistics/)
+- [Mermaid JS Syntax Reference](https://mermaid.js.org/intro/syntax-reference.html)
+- [Engenharia de Software (Ian Sommerville)](https://archive.org/details/sommerville-engenharia-de-software-10e)
