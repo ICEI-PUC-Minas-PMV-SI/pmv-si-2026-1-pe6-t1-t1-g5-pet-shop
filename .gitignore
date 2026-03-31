@@ -3,3 +3,4 @@ node_modules/
 dist/
 *.log
 .DS_Store
+src/pet_flow_backend/swagger_output.json

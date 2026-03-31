@@ -2,11 +2,21 @@
   "swagger": "2.0",
   "info": {
     "title": "Pet Flow API",
-    "description": "Documentação da API para o Sistema de Pet Shop (Minimalist Version)",
-    "version": "1.1.0"
+    "description": "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação e Gestão Financeira.",
+    "version": "1.2.0"
   },
   "host": "localhost:3000",
   "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Autenticação",
+      "description": "Gestão de acesso e registro de funcionários"
+    },
+    {
+      "name": "Financeiro",
+      "description": "Controle de transações financeiras e fluxo de caixa"
+    }
+  ],
   "schemes": [
     "http"
   ],
@@ -21,8 +31,31 @@
   "paths": {
     "/auth/login": {
       "post": {
-        "description": "",
+        "tags": [
+          "Autenticação"
+        ],
+        "description": "Realiza o login de um funcionário na plataforma.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Credenciais de acesso",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
         "responses": {
+          "200": {
+            "description": "Autenticado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "401": {
+            "description": "Credenciais inválidas"
+          },
           "default": {
             "description": ""
           }
@@ -31,8 +64,31 @@
     },
     "/auth/register": {
       "post": {
-        "description": "",
+        "tags": [
+          "Autenticação"
+        ],
+        "description": "Registra um novo funcionário vinculado a uma clínica.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do novo funcionário",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
         "responses": {
+          "201": {
+            "description": "Funcionário registrado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos ou e-mail já em uso"
+          },
           "default": {
             "description": ""
           }
@@ -41,15 +97,40 @@
     },
     "/financial/all": {
       "post": {
-        "description": "",
+        "tags": [
+          "Financeiro"
+        ],
+        "description": "Lista todas as transações financeiras filtradas por clínica e opcionalmente por funcionário.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Filtros de busca",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FinancialListRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Lista de transações recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/FinancialResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -61,17 +142,33 @@
     },
     "/financial/detail": {
       "post": {
-        "description": "",
+        "tags": [
+          "Financeiro"
+        ],
+        "description": "Obtém os detalhes de uma transação financeira específica.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Identificadores da transação",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FinancialGetRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Detalhes da transação",
+            "schema": {
+              "$ref": "#/definitions/FinancialResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Transação não encontrada ou acesso não autorizado"
           },
           "500": {
             "description": "Internal Server Error"
@@ -81,15 +178,28 @@
     },
     "/financial/": {
       "post": {
-        "description": "",
+        "tags": [
+          "Financeiro"
+        ],
+        "description": "Cria um novo registro de transação financeira.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados da nova transação",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FinancialCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Transação criada com sucesso",
+            "schema": {
+              "$ref": "#/definitions/FinancialResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -99,15 +209,28 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Financeiro"
+        ],
+        "description": "Atualiza os dados de uma transação financeira existente.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados da transação",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FinancialUpdateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Transação atualizada com sucesso",
+            "schema": {
+              "$ref": "#/definitions/FinancialResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -117,21 +240,228 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Financeiro"
+        ],
+        "description": "Remove permanentemente uma transação financeira.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Identificadores para exclusão",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FinancialGetRequest"
+            }
           }
         ],
         "responses": {
+          "204": {
+            "description": "Excluido com sucesso sem conteudo"
+          },
+          "400": {
+            "description": "Falha na exclusao ou acesso negado"
+          },
           "401": {
             "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "LoginRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "funcionario@exemplo.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "minhasenha123"
+        }
+      }
+    },
+    "RegisterRequest": {
+      "type": "object",
+      "properties": {
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nome do Funcionário"
+        },
+        "email": {
+          "type": "string",
+          "example": "novo@exemplo.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "senha-segura"
+        },
+        "role": {
+          "type": "string",
+          "example": "Atendente"
+        },
+        "phone": {
+          "type": "string",
+          "example": "11988887777"
+        }
+      }
+    },
+    "AuthResponse": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "string",
+          "example": "uuid-do-usuario"
+        },
+        "token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        }
+      }
+    },
+    "FinancialListRequest": {
+      "type": "object",
+      "properties": {
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "employeeId": {
+          "type": "string",
+          "example": "uuid-do-funcionario (opcional)"
+        }
+      }
+    },
+    "FinancialGetRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-da-transacao"
+        },
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        }
+      }
+    },
+    "FinancialCreateRequest": {
+      "type": "object",
+      "properties": {
+        "schedulingId": {
+          "type": "string",
+          "example": "uuid-do-agendamento"
+        },
+        "category": {
+          "type": "string",
+          "example": "Receita"
+        },
+        "description": {
+          "type": "string",
+          "example": "Pagamento de Banho e Tosa"
+        },
+        "amount": {
+          "type": "number",
+          "example": 150
+        },
+        "paymentDate": {
+          "type": "string",
+          "example": "2026-03-31"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "example": "Cartão de Crédito"
+        },
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        }
+      }
+    },
+    "FinancialUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-da-transacao"
+        },
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "category": {
+          "type": "string",
+          "example": "Despesa"
+        },
+        "description": {
+          "type": "string",
+          "example": "Manutenção de Equipamento"
+        },
+        "amount": {
+          "type": "number",
+          "example": 300
+        },
+        "paymentDate": {
+          "type": "string",
+          "example": "2026-04-05"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "example": "Pix"
+        }
+      }
+    },
+    "FinancialResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-da-transacao"
+        },
+        "schedulingId": {
+          "type": "string",
+          "example": "uuid-do-agendamento"
+        },
+        "category": {
+          "type": "string",
+          "example": "Receita"
+        },
+        "description": {
+          "type": "string",
+          "example": "Pagamento de Banho e Tosa"
+        },
+        "amount": {
+          "type": "number",
+          "example": 150
+        },
+        "paymentDate": {
+          "type": "string",
+          "example": "2026-03-31"
+        },
+        "paymentMethod": {
+          "type": "string",
+          "example": "Cartão de Crédito"
+        },
+        "employeeId": {
+          "type": "string",
+          "example": "uuid-do-funcionario"
+        },
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-03-31T20:00:00Z"
         }
       }
     }
