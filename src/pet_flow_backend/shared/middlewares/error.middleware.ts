@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from "express";
 import { Logger } from "../utils/logger";
 

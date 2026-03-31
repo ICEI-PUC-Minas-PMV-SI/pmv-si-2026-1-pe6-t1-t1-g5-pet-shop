@@ -353,7 +353,7 @@ Registra os agendamentos de serviços realizados pela clínica.
 
 ---
 
-### 9. Tabela `FINANCIAL_TRANSACTION` (Atualizada)
+### 9. Tabela `FINANCIAL_TRANSACTION`
 Registra receitas e despesas do pet shop (uma por agendamento).
 
 | Campo | Tipo | Restrições | Descrição |
@@ -370,14 +370,43 @@ Registra receitas e despesas do pet shop (uma por agendamento).
 
 ---
 
-## API Endpoints
+## API Endpoints (Módulo Financeiro)
 
 A documentação completa e interativa dos endpoints está disponível via Swagger em: `http://localhost:3000/api-docs`
+
+**IMPORTANTE:** Para maior segurança e proteção de dados sensíveis em logs de servidor, os identificadores (`id`, `clinicId`, `employeeId`) devem ser enviados obrigatoriamente no **Corpo da Requisição (JSON Body)**.
+
+### Principais Endpoints
+
+#### Listar Transações
+- **Método**: POST
+- **URL**: `/financial/all`
+- **Body**: `{ "clinicId": "...", "employeeId": "..." }`
+
+#### Obter Detalhe da Transação
+- **Método**: POST
+- **URL**: `/financial/detail`
+- **Body**: `{ "id": "...", "clinicId": "..." }`
+
+#### Criar Transação
+- **Método**: POST
+- **URL**: `/financial`
+- **Body**: Inclui todos os dados da transação + `clinicId`.
+
+#### Atualizar Transação
+- **Método**: PUT
+- **URL**: `/financial`
+- **Body**: `{ "id": "...", "clinicId": "...", ...campos }`
+
+#### Excluir Transação
+- **Método**: DELETE
+- **URL**: `/financial`
+- **Body**: `{ "id": "...", "clinicId": "..." }`
 
 ## Considerações de Segurança
 
 - **Isolamento Multi-tenant**: Toda consulta é filtrada obrigatoriamente por `clinic_id`.
-- **Criptografia**: IDs sensíveis são protegidos nos logs ao serem passados no body ou query params seguros.
+- **Proteção de IDs**: Identificadores são passados via Body para evitar vazamento em logs de URL (Security-by-Design).
 - **Autenticação**: Uso de Bearer JWT para todos os endpoints protegidos.
 
 ## Implantação

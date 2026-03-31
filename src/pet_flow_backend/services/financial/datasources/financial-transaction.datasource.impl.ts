@@ -42,7 +42,6 @@ export class FinancialTransactionDatasourceImpl implements FinancialTransactionD
   async create(
     transaction: Partial<FinancialTransactionEntity>,
   ): Promise<DbResult<FinancialTransactionEntity>> {
-    // Note: clinic_id should be in the transaction object from the controller
     return supabaseExtensions.create<FinancialTransactionEntity>(
       this.table,
       transaction,
@@ -58,7 +57,7 @@ export class FinancialTransactionDatasourceImpl implements FinancialTransactionD
       .from(this.table)
       .update(transaction)
       .eq("id", id)
-      .eq("clinic_id", clinicId) // Mandatory ownership check
+      .eq("clinic_id", clinicId)
       .select()
       .single();
     return { data: data as FinancialTransactionEntity, error };
@@ -69,7 +68,7 @@ export class FinancialTransactionDatasourceImpl implements FinancialTransactionD
       .from(this.table)
       .delete()
       .eq("id", id)
-      .eq("clinic_id", clinicId); // Mandatory ownership check
+      .eq("clinic_id", clinicId);
     return { data: null, error };
   }
 }

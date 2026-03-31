@@ -11,8 +11,7 @@ export class FinancialController {
 
   async getAllFinancials(req: Request, res: Response): Promise<void> {
     try {
-      const clinicId = req.query.clinicId as string | undefined;
-      const employeeId = req.query.employeeId as string | undefined;
+      const { clinicId, employeeId } = req.body;
 
       const transactions = await this.service.getAllFinancials({ clinicId, employeeId });
       const response = this.mapper.toObjects(transactions);
@@ -25,8 +24,12 @@ export class FinancialController {
 
   async getFinancialById(req: Request, res: Response): Promise<void> {
     try {
-      const id = req.params.id as string;
-      const clinicId = req.query.clinicId as string | undefined;
+      const { id, clinicId } = req.body;
+
+      if (!id || !clinicId) {
+        res.status(400).json({ error: "id and clinicId are required in body" });
+        return;
+      }
 
       const transaction = await this.service.getFinancialById(id, clinicId);
       if (!transaction) {
@@ -58,11 +61,10 @@ export class FinancialController {
 
   async update(req: Request, res: Response): Promise<void> {
     try {
-      const id = req.params.id as string;
-      const clinicId = req.body.clinicId as string; // Required in body for security
+      const { id, clinicId } = req.body;
 
-      if (!clinicId) {
-        res.status(400).json({ error: "clinicId is required in request body" });
+      if (!id || !clinicId) {
+        res.status(400).json({ error: "id and clinicId are required in request body" });
         return;
       }
 
@@ -81,11 +83,10 @@ export class FinancialController {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const id = req.params.id as string;
-      const clinicId = req.query.clinicId as string;
+      const { id, clinicId } = req.body;
 
-      if (!clinicId) {
-        res.status(400).json({ error: "clinicId is required as a query parameter" });
+      if (!id || !clinicId) {
+        res.status(400).json({ error: "id and clinicId are required in body" });
         return;
       }
 
