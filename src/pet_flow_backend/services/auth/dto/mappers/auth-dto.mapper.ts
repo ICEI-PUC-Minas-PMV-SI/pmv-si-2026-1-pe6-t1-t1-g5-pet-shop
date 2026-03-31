@@ -1,8 +1,16 @@
+import { Mapper } from "../../../../shared/utils/mapper";
 import { Auth } from "../../domain/models/auth";
 import { AuthResponseDto } from "../models/auth-response.dto";
 
-export class AuthDtoMapper {
-  static toDto(_domain: Auth): AuthResponseDto {
-    return {};
+export class AuthDtoMapper implements Mapper<Auth, AuthResponseDto> {
+  toObject(fromObject: Auth): AuthResponseDto {
+    return {
+      user_id: fromObject.userId,
+      token: fromObject.token
+    };
+  }
+
+  toObjects(fromObjects: Auth[]): AuthResponseDto[] {
+    return fromObjects.map((fromObject) => this.toObject(fromObject));
   }
 }

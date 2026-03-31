@@ -1,6 +1,4 @@
 /**
- * Metadata Documentation File (Purely for Swagger Autogen)
- * 
  * Este arquivo serve apenas para documentação do Swagger. 
  * Permite manter o código de produção limpo de comentários.
  */

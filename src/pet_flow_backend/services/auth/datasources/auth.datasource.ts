@@ -1,16 +1,7 @@
-import { AuthError, Session, User } from "@supabase/supabase-js";
-
-export interface AuthSessionData {
-    user: User | null;
-    session: Session | null;
-}
-
-export interface AuthResult {
-    data: AuthSessionData;
-    error: AuthError | null;
-}
+import { AuthEntity } from "./entities/auth.entity";
+import { DbResult } from "../../../shared/utils/supabase.extensions";
 
 export interface AuthDatasource {
-    login(email: string, password: string): Promise<AuthResult>;
-    register(email: string, password: string): Promise<AuthResult>;
+    login(email: string, password: string): Promise<DbResult<AuthEntity>>;
+    register(email: string, password: string): Promise<DbResult<AuthEntity>>;
 }
