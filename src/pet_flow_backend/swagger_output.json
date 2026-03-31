@@ -2,130 +2,108 @@
   "swagger": "2.0",
   "info": {
     "title": "Pet Flow API",
-    "description": "Documentação da API para o Sistema de Pet Shop",
+    "description": "Documentação da API para o Sistema de Pet Shop - Financial Module Refactored",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
   "basePath": "/api/v1",
-  "tags": [
-    {
-      "name": "Financial",
-      "description": "Endpoints relacionados as transações financeiras"
-    }
-  ],
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Insira o token JWT no formato: Bearer {token}"
+    }
+  },
   "paths": {
+    "/auth/login": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/financial/": {
       "get": {
-        "tags": [
-          "Financial"
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
         ],
-        "summary": "Lista todas as transações financeiras",
-        "description": "Retorna uma lista de todas as movimentações financeiras do sistema.",
         "responses": {
-          "200": {
-            "description": "Sucesso"
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "tags": [
-          "Financial"
-        ],
-        "summary": "Cria uma nova transação financeira",
-        "description": "Registra uma nova movimentação financeira no sistema.",
+        "description": "",
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "Dados da transação.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "amount": {
-                  "type": "number"
-                },
-                "due_date": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "payment_method": {
-                  "type": "string"
-                },
-                "status": {
-                  "type": "string"
-                },
-                "clinic_id": {
-                  "type": "string",
-                  "format": "uuid"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            }
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
-          "201": {
-            "description": "Transação criada com sucesso."
-          },
-          "400": {
-            "description": "Erro na requisição."
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
-            "description": "Erro interno no servidor."
+            "description": "Internal Server Error"
           }
         }
       }
     },
     "/financial/{id}": {
       "get": {
-        "tags": [
-          "Financial"
-        ],
-        "summary": "Busca uma transação pelo ID",
-        "description": "Retorna os detalhes de uma transação financeira específica baseada no seu ID.",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Transação encontrada."
+          "401": {
+            "description": "Unauthorized"
           },
-          "404": {
-            "description": "Não encontrado."
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
       "put": {
-        "tags": [
-          "Financial"
-        ],
-        "summary": "Atualiza uma transação financeira",
-        "description": "Atualiza os dados de uma movimentação financeira existente baseada no seu ID.",
+        "description": "",
         "parameters": [
           {
             "name": "id",
@@ -134,65 +112,281 @@
             "type": "string"
           },
           {
-            "in": "body",
-            "name": "body",
-            "description": "Novos dados da transação.",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string"
-                },
-                "amount": {
-                  "type": "number"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "created_at": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated_at": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              }
-            }
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Transação atualizada."
-          },
-          "400": {
-            "description": "Erro na requisição."
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
-            "description": "Erro interno."
+            "description": "Internal Server Error"
           }
         }
       },
       "delete": {
-        "tags": [
-          "Financial"
-        ],
-        "summary": "Remove uma transação financeira",
+        "description": "",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
-          "204": {
-            "description": "Removido."
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "FinancialTransactionRequest": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "required": {
+          "type": "array",
+          "example": [
+            "schedulingId",
+            "category",
+            "description",
+            "amount",
+            "clinicId"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "schedulingId": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "uuid"
+                }
+              }
+            },
+            "category": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "description": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "amount": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "double"
+                }
+              }
+            },
+            "paymentDate": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "date"
+                }
+              }
+            },
+            "paymentMethod": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "clinicId": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "FinancialTransactionResponse": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "uuid"
+                }
+              }
+            },
+            "schedulingId": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "uuid"
+                }
+              }
+            },
+            "category": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "description": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "amount": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "double"
+                }
+              }
+            },
+            "paymentDate": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "date"
+                }
+              }
+            },
+            "paymentMethod": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            },
+            "employeeId": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "uuid"
+                }
+              }
+            },
+            "clinicId": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "uuid"
+                }
+              }
+            },
+            "createdAt": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "format": {
+                  "type": "string",
+                  "example": "date-time"
+                }
+              }
+            }
           }
         }
       }

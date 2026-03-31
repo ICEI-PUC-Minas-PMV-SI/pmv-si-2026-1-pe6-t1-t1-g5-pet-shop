@@ -11,11 +11,13 @@ export class FinancialTransactionDtoMapper
   toObject(fromObject: FinancialTransaction): FinancialTransactionResponseDto {
     return {
       id: fromObject.id || "",
+      schedulingId: fromObject.schedulingId || "",
+      category: fromObject.category || "",
       description: fromObject.description || "",
       amount: fromObject.amount || 0,
-      dueDate: fromObject.dueDate || new Date(),
+      paymentDate: fromObject.paymentDate || new Date(),
       paymentMethod: fromObject.paymentMethod || "",
-      status: fromObject.status || "",
+      employeeId: fromObject.employeeId || "",
       clinicId: fromObject.clinicId || "",
       createdAt: fromObject.createdAt || new Date(),
     };
@@ -26,11 +28,13 @@ export class FinancialTransactionDtoMapper
   ): FinancialTransaction {
     return new FinancialTransaction(
       toObject.id,
+      toObject.schedulingId,
+      toObject.category,
       toObject.description,
       toObject.amount,
-      toObject.dueDate,
+      toObject.paymentDate,
       toObject.paymentMethod,
-      toObject.status,
+      toObject.employeeId,
       toObject.clinicId,
       toObject.createdAt,
     );

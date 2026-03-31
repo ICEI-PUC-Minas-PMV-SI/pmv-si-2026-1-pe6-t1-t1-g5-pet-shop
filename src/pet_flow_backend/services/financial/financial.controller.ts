@@ -9,29 +9,34 @@ export class FinancialController {
     private readonly mapper: FinancialTransactionDtoMapper,
   ) { }
 
-  async list(req: Request, res: Response): Promise<void> {
+  async getAllFinancials(req: Request, res: Response): Promise<void> {
     try {
-      const transactions = await this.service.listAll();
+      const clinicId = req.query.clinicId as string | undefined;
+      const employeeId = req.query.employeeId as string | undefined;
+
+      const transactions = await this.service.getAllFinancials({ clinicId, employeeId });
       const response = this.mapper.toObjects(transactions);
       res.status(200).json(response);
     } catch (error) {
-      Logger.error("[FinancialController] list error:", error);
+      Logger.error(`[FinancialController] getAllFinancials error:`, error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
-  async getById(req: Request, res: Response): Promise<void> {
+  async getFinancialById(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;
-      const transaction = await this.service.getById(id);
+      const clinicId = req.query.clinicId as string | undefined;
+
+      const transaction = await this.service.getFinancialById(id, clinicId);
       if (!transaction) {
-        res.status(404).json({ error: "Not Found" });
+        res.status(404).json({ error: "Not Found or Unauthorized" });
         return;
       }
       const response = this.mapper.toObject(transaction);
       res.status(200).json(response);
     } catch (error) {
-      Logger.error("[FinancialController] getById error:", error);
+      Logger.error("[FinancialController] getFinancialById error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -54,9 +59,16 @@ export class FinancialController {
   async update(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;
-      const transaction = await this.service.update(id, req.body);
+      const clinicId = req.body.clinicId as string; // Required in body for security
+
+      if (!clinicId) {
+        res.status(400).json({ error: "clinicId is required in request body" });
+        return;
+      }
+
+      const transaction = await this.service.update(id, clinicId, req.body);
       if (!transaction) {
-        res.status(400).json({ error: "Failed to update" });
+        res.status(400).json({ error: "Failed to update or not authorized" });
         return;
       }
       const response = this.mapper.toObject(transaction);
@@ -70,9 +82,16 @@ export class FinancialController {
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;
-      const success = await this.service.delete(id);
+      const clinicId = req.query.clinicId as string;
+
+      if (!clinicId) {
+        res.status(400).json({ error: "clinicId is required as a query parameter" });
+        return;
+      }
+
+      const success = await this.service.delete(id, clinicId);
       if (!success) {
-        res.status(400).json({ error: "Failed to delete" });
+        res.status(400).json({ error: "Failed to delete or not authorized" });
         return;
       }
       res.status(204).send();

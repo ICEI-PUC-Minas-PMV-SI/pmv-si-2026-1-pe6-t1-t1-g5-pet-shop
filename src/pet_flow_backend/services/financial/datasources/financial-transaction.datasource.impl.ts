@@ -4,24 +4,45 @@ import {
   supabaseExtensions,
   DbResult,
 } from "../../../shared/utils/supabase.extensions";
+import { supabase } from "../../../config/supabase";
 
 export class FinancialTransactionDatasourceImpl implements FinancialTransactionDatasource {
   private readonly table = "financial_transaction";
 
-  async getAll(): Promise<DbResult<FinancialTransactionEntity[]>> {
-    return supabaseExtensions.getAll<FinancialTransactionEntity>(this.table);
+  async getAllFinancials(filters: {
+    clinicId?: string | undefined;
+    employeeId?: string | undefined;
+  }): Promise<DbResult<FinancialTransactionEntity[]>> {
+    let query = supabase.from(this.table).select("*");
+
+    if (filters.clinicId) {
+      query = query.eq("clinic_id", filters.clinicId);
+    }
+    if (filters.employeeId) {
+      query = query
+      .eq("clinic_id", filters.clinicId)
+      .eq("employee_id", filters.employeeId);
+    }
+
+    const { data, error } = await query;
+    return { data: data as FinancialTransactionEntity[], error };
   }
 
-  async getById(id: string): Promise<DbResult<FinancialTransactionEntity>> {
-    return supabaseExtensions.getById<FinancialTransactionEntity>(
-      this.table,
-      id,
-    );
+  async getFinancialById(id: string, clinicId?: string | undefined): Promise<DbResult<FinancialTransactionEntity>> {
+    let query = supabase.from(this.table).select("*").eq("id", id);
+
+    if (clinicId) {
+      query = query.eq("clinic_id", clinicId);
+    }
+
+    const { data, error } = await query.single();
+    return { data: data as FinancialTransactionEntity, error };
   }
 
   async create(
     transaction: Partial<FinancialTransactionEntity>,
   ): Promise<DbResult<FinancialTransactionEntity>> {
+    // Note: clinic_id should be in the transaction object from the controller
     return supabaseExtensions.create<FinancialTransactionEntity>(
       this.table,
       transaction,
@@ -30,16 +51,25 @@ export class FinancialTransactionDatasourceImpl implements FinancialTransactionD
 
   async update(
     id: string,
+    clinicId: string,
     transaction: Partial<FinancialTransactionEntity>,
   ): Promise<DbResult<FinancialTransactionEntity>> {
-    return supabaseExtensions.update<FinancialTransactionEntity>(
-      this.table,
-      id,
-      transaction,
-    );
+    const { data, error } = await supabase
+      .from(this.table)
+      .update(transaction)
+      .eq("id", id)
+      .eq("clinic_id", clinicId) // Mandatory ownership check
+      .select()
+      .single();
+    return { data: data as FinancialTransactionEntity, error };
   }
 
-  async delete(id: string): Promise<DbResult<null>> {
-    return supabaseExtensions.delete(this.table, id);
+  async delete(id: string, clinicId: string): Promise<DbResult<null>> {
+    const { error } = await supabase
+      .from(this.table)
+      .delete()
+      .eq("id", id)
+      .eq("clinic_id", clinicId); // Mandatory ownership check
+    return { data: null, error };
   }
 }

@@ -2,14 +2,17 @@ import { FinancialTransactionRepository } from "./repositories/financial-transac
 import { FinancialTransaction } from "./domain/models/financial-transaction";
 
 export class FinancialService {
-  constructor(private readonly repository: FinancialTransactionRepository) {}
+  constructor(private readonly repository: FinancialTransactionRepository) { }
 
-  async listAll(): Promise<FinancialTransaction[]> {
-    return this.repository.getAll();
+  async getAllFinancials(filters: {
+    clinicId?: string | undefined;
+    employeeId?: string | undefined;
+  }): Promise<FinancialTransaction[]> {
+    return this.repository.getAllFinancials(filters);
   }
 
-  async getById(id: string): Promise<FinancialTransaction | null> {
-    return this.repository.getById(id);
+  async getFinancialById(id: string, clinicId?: string | undefined): Promise<FinancialTransaction | null> {
+    return this.repository.getFinancialById(id, clinicId);
   }
 
   async create(
@@ -20,12 +23,13 @@ export class FinancialService {
 
   async update(
     id: string,
+    clinicId: string,
     transaction: Partial<FinancialTransaction>,
   ): Promise<FinancialTransaction | null> {
-    return this.repository.update(id, transaction);
+    return this.repository.update(id, clinicId, transaction);
   }
 
-  async delete(id: string): Promise<boolean> {
-    return this.repository.delete(id);
+  async delete(id: string, clinicId: string): Promise<boolean> {
+    return this.repository.delete(id, clinicId);
   }
 }

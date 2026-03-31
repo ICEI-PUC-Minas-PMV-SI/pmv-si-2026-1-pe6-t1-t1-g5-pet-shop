@@ -1,10 +1,12 @@
 export interface FinancialTransactionResponseDto {
   id: string;
+  schedulingId: string;
+  category: string;
   description: string;
   amount: number;
-  dueDate: Date;
+  paymentDate: Date;
   paymentMethod: string;
-  status: string;
+  employeeId: string;
   clinicId: string;
   createdAt: Date;
 }
