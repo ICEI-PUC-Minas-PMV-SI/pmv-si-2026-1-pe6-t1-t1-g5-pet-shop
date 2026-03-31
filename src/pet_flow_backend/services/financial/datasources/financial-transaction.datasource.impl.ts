@@ -6,7 +6,7 @@ import {
 } from "../../../shared/utils/supabase.extensions";
 
 export class FinancialTransactionDatasourceImpl implements FinancialTransactionDatasource {
-  private readonly table = "financial_transactions";
+  private readonly table = "financial_transaction";
 
   async getAll(): Promise<DbResult<FinancialTransactionEntity[]>> {
     return supabaseExtensions.getAll<FinancialTransactionEntity>(this.table);

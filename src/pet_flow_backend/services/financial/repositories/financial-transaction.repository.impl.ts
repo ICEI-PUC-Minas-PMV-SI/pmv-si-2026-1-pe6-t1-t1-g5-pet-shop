@@ -8,7 +8,7 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
   constructor(
     private readonly datasource: FinancialTransactionDatasource,
     private readonly mapper: FinancialTransactionMapper,
-  ) {}
+  ) { }
 
   async getAll(): Promise<FinancialTransaction[]> {
     try {
