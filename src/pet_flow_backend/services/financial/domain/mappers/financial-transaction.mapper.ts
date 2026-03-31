@@ -11,24 +11,26 @@ export class FinancialTransactionMapper
   toObject(fromObject: FinancialTransactionEntity): FinancialTransaction {
     return new FinancialTransaction(
       fromObject.id,
-      fromObject.type,
-      fromObject.amount,
-      fromObject.date,
       fromObject.description,
+      fromObject.amount,
+      fromObject.due_date,
+      fromObject.payment_method,
+      fromObject.status,
+      fromObject.clinic_id,
       fromObject.created_at,
-      fromObject.updated_at,
     );
   }
 
   toReversedObject(toObject: FinancialTransaction): FinancialTransactionEntity {
     return new FinancialTransactionEntity(
       toObject.id,
-      toObject.type,
-      toObject.amount,
-      toObject.date,
       toObject.description,
-      toObject.createdAt,
-      toObject.updatedAt,
+      toObject.amount,
+      toObject.dueDate,
+      toObject.paymentMethod,
+      toObject.status,
+      toObject.clinicId,
+      undefined,
     );
   }
 

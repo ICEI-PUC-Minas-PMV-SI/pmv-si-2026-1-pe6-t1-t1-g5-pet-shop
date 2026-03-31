@@ -54,9 +54,19 @@
                 "amount": {
                   "type": "number"
                 },
-                "date": {
+                "due_date": {
                   "type": "string",
                   "format": "date-time"
+                },
+                "payment_method": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "clinic_id": {
+                  "type": "string",
+                  "format": "uuid"
                 },
                 "description": {
                   "type": "string"
@@ -139,10 +149,6 @@
                 },
                 "amount": {
                   "type": "number"
-                },
-                "date": {
-                  "type": "string",
-                  "format": "date-time"
                 },
                 "description": {
                   "type": "string"

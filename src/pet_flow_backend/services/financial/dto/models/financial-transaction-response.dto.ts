@@ -1,9 +1,10 @@
 export interface FinancialTransactionResponseDto {
   id: string;
-  type: string;
-  amount: number;
-  date: Date;
   description: string;
+  amount: number;
+  dueDate: Date;
+  paymentMethod: string;
+  status: string;
+  clinicId: string;
   createdAt: Date;
-  updatedAt: Date;
 }
