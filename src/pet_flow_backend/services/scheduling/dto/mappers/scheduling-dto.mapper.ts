@@ -12,28 +12,30 @@ export class SchedulingDtoMapper
   toObject(fromObject: Scheduling): SchedulingResponseDto {
     return {
       id: fromObject.id || "",
-      date: fromObject.date || new Date(),
-      time: fromObject.time || "",
+      clinicId: fromObject.clinicId || "",
+      tutorId: fromObject.tutorId || "",
       petId: fromObject.petId || "",
-      serviceId: fromObject.serviceId || "",
       employeeId: fromObject.employeeId || "",
+      dateTime: fromObject.dateTime || new Date(),
       status: fromObject.status || "",
+      totalValue: fromObject.totalValue || 0,
+      notes: fromObject.notes || "",
       createdAt: fromObject.createdAt || new Date(),
-      updatedAt: fromObject.updatedAt || new Date(),
     };
   }
 
   toReversedObject(toObject: SchedulingResponseDto): Scheduling {
     return new Scheduling(
       toObject.id,
-      toObject.date,
-      toObject.time,
+      toObject.clinicId,
+      toObject.tutorId,
       toObject.petId,
-      toObject.serviceId,
       toObject.employeeId,
+      toObject.dateTime,
       toObject.status,
+      toObject.totalValue,
+      toObject.notes,
       toObject.createdAt,
-      toObject.updatedAt,
     );
   }
 

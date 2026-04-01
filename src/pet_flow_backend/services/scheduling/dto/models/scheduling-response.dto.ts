@@ -1,11 +1,12 @@
 export interface SchedulingResponseDto {
   id: string;
-  date: Date;
-  time: string;
+  clinicId: string;
+  tutorId: string;
   petId: string;
-  serviceId: string;
   employeeId: string;
+  dateTime: Date;
   status: string;
+  totalValue: number;
+  notes: string;
   createdAt: Date;
-  updatedAt: Date;
 }
