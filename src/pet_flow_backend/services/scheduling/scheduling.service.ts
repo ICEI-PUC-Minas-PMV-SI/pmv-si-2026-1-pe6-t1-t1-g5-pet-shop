@@ -4,9 +4,6 @@ import { CreateSchedulingDto } from "./dto/models/create-scheduling.dto";
 import { UpdateSchedulingDto } from "./dto/models/update-scheduling.dto";
 import { SchedulingError } from "./domain/errors/scheduling.error";
 
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
 export class SchedulingService {
   constructor(private readonly repository: SchedulingRepository) {}
 
@@ -15,7 +12,6 @@ export class SchedulingService {
   }
 
   async getById(id: string): Promise<Scheduling> {
-    this.validateId(id);
     const scheduling = await this.repository.getById(id);
 
     if (!scheduling) {
@@ -42,8 +38,6 @@ export class SchedulingService {
   }
 
   async update(id: string, dto: UpdateSchedulingDto): Promise<Scheduling> {
-    this.validateId(id);
-
     const updated = await this.repository.update(id, {
       clinicId: dto.clinicId,
       tutorId: dto.tutorId,
@@ -63,7 +57,6 @@ export class SchedulingService {
   }
 
   async delete(id: string): Promise<void> {
-    this.validateId(id);
     const existing = await this.repository.getById(id);
 
     if (!existing) {
@@ -71,11 +64,5 @@ export class SchedulingService {
     }
 
     await this.repository.delete(id);
-  }
-
-  private validateId(id: string): void {
-    if (!UUID_REGEX.test(id)) {
-      throw SchedulingError.badRequest("id must be a valid UUID");
-    }
   }
 }

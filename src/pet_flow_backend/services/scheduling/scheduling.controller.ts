@@ -1,8 +1,6 @@
 import { SchedulingService } from "./scheduling.service";
 import { Request, Response } from "express";
 import { SchedulingDtoMapper } from "./dto/mappers/scheduling-dto.mapper";
-import { CreateSchedulingDto } from "./dto/models/create-scheduling.dto";
-import { UpdateSchedulingDto } from "./dto/models/update-scheduling.dto";
 import { SchedulingError } from "./domain/errors/scheduling.error";
 
 export class SchedulingController {
@@ -32,7 +30,7 @@ export class SchedulingController {
 
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const dto = CreateSchedulingDto.from(req.body as Record<string, unknown>);
+      const dto = this.mapper.toCreateDto(req.body as Record<string, unknown>);
       const scheduling = await this.service.create(dto);
 
       res.status(201).json(this.mapper.toObject(scheduling));
@@ -44,7 +42,7 @@ export class SchedulingController {
   async update(req: Request, res: Response): Promise<void> {
     try {
       const id = this.getParamId(req);
-      const dto = UpdateSchedulingDto.from(req.body as Record<string, unknown>);
+      const dto = this.mapper.toUpdateDto(req.body as Record<string, unknown>);
       const scheduling = await this.service.update(id, dto);
       res.status(200).json(this.mapper.toObject(scheduling));
     } catch (error) {
