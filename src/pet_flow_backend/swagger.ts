@@ -6,9 +6,9 @@ const doc = {
         description: "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação e Gestão Financeira.",
         version: "1.2.0"
     },
-    host: "localhost:3000",
+    host: "petflow-beta.vercel.app",
     basePath: "/api/v1",
-    schemes: ["http"],
+    schemes: ["https", "http"],
     securityDefinitions: {
         Bearer: {
             type: "apiKey",
