@@ -4,20 +4,22 @@ import { FinancialTransaction } from "../../domain/models/financial-transaction"
 
 export class FinancialTransactionDtoMapper
   implements
-    Mapper<FinancialTransaction, FinancialTransactionResponseDto>,
-    ReversedMapper<FinancialTransaction, FinancialTransactionResponseDto>
-{
-  constructor() {}
+  Mapper<FinancialTransaction, FinancialTransactionResponseDto>,
+  ReversedMapper<FinancialTransaction, FinancialTransactionResponseDto> {
+  constructor() { }
 
   toObject(fromObject: FinancialTransaction): FinancialTransactionResponseDto {
     return {
       id: fromObject.id || "",
-      type: fromObject.type || "",
-      amount: fromObject.amount || 0,
-      date: fromObject.date || new Date(),
+      schedulingId: fromObject.schedulingId || "",
+      category: fromObject.category || "",
       description: fromObject.description || "",
+      amount: fromObject.amount || 0,
+      paymentDate: fromObject.paymentDate || new Date(),
+      paymentMethod: fromObject.paymentMethod || "",
+      employeeId: fromObject.employeeId || "",
+      clinicId: fromObject.clinicId || "",
       createdAt: fromObject.createdAt || new Date(),
-      updatedAt: fromObject.updatedAt || new Date(),
     };
   }
 
@@ -26,12 +28,15 @@ export class FinancialTransactionDtoMapper
   ): FinancialTransaction {
     return new FinancialTransaction(
       toObject.id,
-      toObject.type,
-      toObject.amount,
-      toObject.date,
+      toObject.schedulingId,
+      toObject.category,
       toObject.description,
+      toObject.amount,
+      toObject.paymentDate,
+      toObject.paymentMethod,
+      toObject.employeeId,
+      toObject.clinicId,
       toObject.createdAt,
-      toObject.updatedAt,
     );
   }
 

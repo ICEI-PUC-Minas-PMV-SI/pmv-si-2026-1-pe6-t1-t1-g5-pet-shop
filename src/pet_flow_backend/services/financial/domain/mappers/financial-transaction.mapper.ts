@@ -4,32 +4,37 @@ import { FinancialTransaction } from "../models/financial-transaction";
 
 export class FinancialTransactionMapper
   implements
-    Mapper<FinancialTransactionEntity, FinancialTransaction>,
-    ReversedMapper<FinancialTransactionEntity, FinancialTransaction>
-{
-  constructor() {}
+  Mapper<FinancialTransactionEntity, FinancialTransaction>,
+  ReversedMapper<FinancialTransactionEntity, FinancialTransaction> {
+  constructor() { }
 
   toObject(fromObject: FinancialTransactionEntity): FinancialTransaction {
     return new FinancialTransaction(
       fromObject.id,
-      fromObject.type,
-      fromObject.amount,
-      fromObject.date,
+      fromObject.scheduling_id,
+      fromObject.category,
       fromObject.description,
+      fromObject.amount,
+      fromObject.payment_date,
+      fromObject.payment_method,
+      fromObject.employee_id,
+      fromObject.clinic_id,
       fromObject.created_at,
-      fromObject.updated_at,
     );
   }
 
   toReversedObject(toObject: FinancialTransaction): FinancialTransactionEntity {
     return new FinancialTransactionEntity(
       toObject.id,
-      toObject.type,
-      toObject.amount,
-      toObject.date,
+      toObject.schedulingId,
+      toObject.category,
       toObject.description,
-      toObject.createdAt,
-      toObject.updatedAt,
+      toObject.amount,
+      toObject.paymentDate,
+      toObject.paymentMethod,
+      toObject.employeeId,
+      toObject.clinicId,
+      undefined,
     );
   }
 

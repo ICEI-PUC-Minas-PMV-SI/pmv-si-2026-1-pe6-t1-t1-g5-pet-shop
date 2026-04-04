@@ -34,6 +34,16 @@ jobs:
           VERSION=$(grep -oP '"version":\s*"\K[^"]+' package.json)
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      - name: Verify Version Change
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=${{ steps.get_version.outputs.VERSION }}
+          if gh release view "v$VERSION" > /dev/null 2>&1; then
+            echo "Error: Version $VERSION already exists. Please update the version in package.json before generating a new release."
+            exit 1
+          fi
+
       - name: Update README.md
         run: |
           VERSION=${{ steps.get_version.outputs.VERSION }}

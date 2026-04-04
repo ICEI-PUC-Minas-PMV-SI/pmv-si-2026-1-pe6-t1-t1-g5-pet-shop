@@ -9,6 +9,10 @@ export class FinancialRoutes {
   }
 
   private initRoutes(): void {
-    // Define routes here
+    this.router.post("/all", (req, res) => this.controller.getAllFinancials(req, res));
+    this.router.post("/detail", (req, res) => this.controller.getFinancialById(req, res));
+    this.router.post("/", (req, res) => this.controller.create(req, res));
+    this.router.put("/", (req, res) => this.controller.update(req, res));
+    this.router.delete("/", (req, res) => this.controller.delete(req, res));
   }
 }

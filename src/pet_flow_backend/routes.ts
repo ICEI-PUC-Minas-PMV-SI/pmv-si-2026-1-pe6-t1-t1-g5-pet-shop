@@ -9,6 +9,7 @@ import { serviceRoutes } from "./services/service";
 import { tutorRoutes } from "./services/tutor";
 import { vaccineRoutes } from "./services/vaccine";
 import { authRoutes } from "./services/auth";
+import { authMiddleware } from "./shared/middlewares/auth.middleware";
 
 export class AppRouter {
   public readonly router: Router = Router();
@@ -18,6 +19,11 @@ export class AppRouter {
   }
 
   private initRoutes(): void {
+    this.router.use("/auth", authRoutes);
+
+    // every route below this line requires a valid Bearer token
+    this.router.use(authMiddleware);
+
     this.router.use("/clinic", clinicRoutes);
     this.router.use("/employee", employeeRoutes);
     this.router.use("/financial", financialRoutes);
@@ -27,10 +33,8 @@ export class AppRouter {
     this.router.use("/service", serviceRoutes);
     this.router.use("/tutor", tutorRoutes);
     this.router.use("/vaccine", vaccineRoutes);
-    this.router.use("/auth", authRoutes);
   }
 
-  // Method to add individual routes manually or centralized
   public use(path: string, router: Router): void {
     this.router.use(path, router);
   }
