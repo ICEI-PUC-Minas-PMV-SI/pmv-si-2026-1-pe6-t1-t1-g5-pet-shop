@@ -1,12 +1,13 @@
-import { AuthController } from "./auth.controller";
-import { AuthRoutes } from "./auth.routes";
-import { AuthService } from "./auth.service";
 import { AuthDatasourceImpl } from "./datasources/auth.datasource.impl";
 import { AuthRepositoryImpl } from "./repositories/auth.repository.impl";
+import { AuthService } from "./auth.service";
+import { AuthController } from "./auth.controller";
+import { AuthRoutes } from "./auth.routes";
 
-const datasource = new AuthDatasourceImpl();
-const repository = new AuthRepositoryImpl(datasource);
-const service = new AuthService(repository);
-const controller = new AuthController(service);
+const authDatasource = new AuthDatasourceImpl();
+const authRepository = new AuthRepositoryImpl(authDatasource);
+const authService = new AuthService(authRepository);
+const authController = new AuthController(authService);
+const authRoutes = new AuthRoutes(authController).router;
 
-export const authRoutes = new AuthRoutes(controller).router;
+export { authRoutes };

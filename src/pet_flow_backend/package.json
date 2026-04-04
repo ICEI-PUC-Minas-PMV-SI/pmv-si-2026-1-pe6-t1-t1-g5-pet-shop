@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
     "swagger": "ts-node swagger.ts",
+    "build": "npm run swagger && tsc",
+    "start": "node dist/server.js",
     "dev": "npm run swagger && ts-node-dev server.ts"
   },
   "keywords": [],
