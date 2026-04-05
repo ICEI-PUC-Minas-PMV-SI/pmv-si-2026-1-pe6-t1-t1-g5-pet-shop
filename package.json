@@ -8,7 +8,7 @@
     ],
     "scripts": {
         "install:all": "npm install && cd src/pet_flow_backend && npm install",
-        "prepare": "husky",
+        "prepare": "husky || true",
         "build": "cd src/pet_flow_backend && npm run build"
     },
     "devDependencies": {
