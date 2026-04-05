@@ -2,17 +2,17 @@ import { Router } from "express";
 import { ServiceController } from "./service.controller";
 
 export class ServiceRoutes {
-  public readonly router = Router();
+  public readonly router: Router = Router();
 
   constructor(private readonly controller: ServiceController) {
-    this.init();
+    this.initRoutes();
   }
 
-  private init() {
-    this.router.get("/", this.controller.list.bind(this.controller));
-    this.router.get("/:id", this.controller.findById.bind(this.controller));
-    this.router.post("/", this.controller.create.bind(this.controller));
-    this.router.put("/:id", this.controller.update.bind(this.controller));
-    this.router.delete("/:id", this.controller.delete.bind(this.controller));
+  private initRoutes(): void {
+    this.router.get("/", (req, res) => this.controller.list(req, res));
+    this.router.get("/:id", (req, res) => this.controller.findById(req, res));
+    this.router.post("/", (req, res) => this.controller.create(req, res));
+    this.router.put("/:id", (req, res) => this.controller.update(req, res));
+    this.router.delete("/:id", (req, res) => this.controller.delete(req, res));
   }
 }

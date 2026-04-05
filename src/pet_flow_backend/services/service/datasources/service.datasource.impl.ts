@@ -5,11 +5,11 @@ import { supabaseExtensions, DbResult } from "../../../shared/utils/supabase.ext
 export class ServiceDatasourceImpl implements ServiceDatasource {
   private readonly table = "service";
 
-  async findAll(): Promise<DbResult<ServiceEntity[]>> {
+  async getAll(): Promise<DbResult<ServiceEntity[]>> {
     return supabaseExtensions.getAll<ServiceEntity>(this.table);
   }
 
-  async findById(id: string): Promise<DbResult<ServiceEntity>> {
+  async getById(id: string): Promise<DbResult<ServiceEntity>> {
     return supabaseExtensions.getById<ServiceEntity>(this.table, id);
   }
 
@@ -18,11 +18,11 @@ export class ServiceDatasourceImpl implements ServiceDatasource {
   }
 
   async update(id: string, data: Partial<ServiceEntity>): Promise<DbResult<ServiceEntity>> {
-  return supabaseExtensions.update<ServiceEntity>(this.table, id, {
-    ...data,
-    updated_at: new Date()
-  });
-}
+    return supabaseExtensions.update<ServiceEntity>(this.table, id, {
+      ...data,
+      updated_at: new Date()
+    });
+  }
 
   async delete(id: string): Promise<DbResult<null>> {
     return supabaseExtensions.delete(this.table, id);
