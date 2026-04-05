@@ -8,6 +8,8 @@
         "prepare": "husky"
     },
     "devDependencies": {
-        "husky": "^9.1.5"
+        "husky": "^9.1.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^6.0.2"
     }
 }

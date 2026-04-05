@@ -14,30 +14,38 @@ O primeiro passo é definir os objetivos da sua API. O que você espera alcança
 
 
 ## Modelagem da Aplicação
-# Arquitetura da Solução
+## Arquitetura da Solução
 
 ## Diagrama de Entidade Relacionamento (ERD)
 
 ```mermaid
 erDiagram
+    %% --- CLINIC RELATIONSHIPS ---
     CLINIC ||--o{ EMPLOYEE : employs
     CLINIC ||--o{ PRODUCT : owns
+    CLINIC ||--o{ SERVICE : offers
     CLINIC ||--o{ SCHEDULING : performs
     CLINIC ||--o{ TUTOR : serves
+    CLINIC ||--o{ FINANCIAL_TRANSACTION : registers
 
+    %% --- TUTOR & PET RELATIONSHIPS ---
     TUTOR ||--o{ PET : owns
+    TUTOR ||--o{ SCHEDULING : requests
     PET ||--o{ VACCINE : receives
     PET ||--o{ SCHEDULING : attends
 
+    %% --- EMPLOYEE RELATIONSHIPS ---
     EMPLOYEE ||--o{ SCHEDULING : executes
+    EMPLOYEE ||--o{ FINANCIAL_TRANSACTION : processes
 
+    %% --- SCHEDULING & SERVICES RELATIONSHIPS ---
     SCHEDULING ||--|{ SCHEDULED_SERVICE : contains
+    SCHEDULING ||--|| FINANCIAL_TRANSACTION : generates
     SERVICE ||--o{ SCHEDULED_SERVICE : composes
-
     SERVICE ||--o{ SERVICE_PRODUCT : uses
     PRODUCT ||--o{ SERVICE_PRODUCT : consumed_by
 
-    SCHEDULING ||--|| FINANCIAL_TRANSACTION : generates
+    %% --- ENTITY DEFINITIONS ---
 
     CLINIC {
         uuid id PK
@@ -101,6 +109,7 @@ erDiagram
 
     SERVICE {
         uuid id PK
+        uuid clinic_id FK
         string name
         text description
         decimal price
