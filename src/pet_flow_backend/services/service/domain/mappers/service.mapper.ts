@@ -22,16 +22,16 @@ export class ServiceMapper
   }
 
   toReversedObject(toObject: Service): ServiceEntity {
-    return new ServiceEntity(
-      toObject.id,
-      toObject.name,
-      toObject.description,
-      toObject.price,
-      toObject.duration,
-      toObject.createdAt,
-      toObject.updatedAt,
-    );
-  }
+  return new ServiceEntity(
+    toObject.id,
+    toObject.name,
+    toObject.description,
+    toObject.price,
+    toObject.duration,
+    toObject.createdAt,
+    new Date(),
+  );
+}
 
   toObjects(fromObjects: ServiceEntity[]): Service[] {
     return fromObjects.map((fromObject) => this.toObject(fromObject));

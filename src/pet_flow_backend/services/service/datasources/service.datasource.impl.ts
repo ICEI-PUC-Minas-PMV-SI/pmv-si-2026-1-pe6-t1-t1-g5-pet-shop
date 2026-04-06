@@ -18,11 +18,8 @@ export class ServiceDatasourceImpl implements ServiceDatasource {
   }
 
   async update(id: string, data: Partial<ServiceEntity>): Promise<DbResult<ServiceEntity>> {
-    return supabaseExtensions.update<ServiceEntity>(this.table, id, {
-      ...data,
-      updated_at: new Date()
-    });
-  }
+  return supabaseExtensions.update<ServiceEntity>(this.table, id, data);
+}
 
   async delete(id: string): Promise<DbResult<null>> {
     return supabaseExtensions.delete(this.table, id);
