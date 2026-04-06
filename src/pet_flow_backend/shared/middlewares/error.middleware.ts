@@ -1,19 +1,20 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { Logger } from "../utils/logger";
 
 export const errorHandler = (
-  err: any,
+  err: unknown,
   req: Request,
   res: Response,
-  _next: NextFunction,
 ): void => {
   Logger.error(
-    `[${req.method}] ${req.originalUrl} - ${err.message || err}`,
+    `[${req.method}] ${req.originalUrl} - ${
+      err instanceof Error ? err.message : String(err)
+    }`,
     err,
   );
 
-  const status = err.status || 500;
-  const message = err.message || "Internal Server Error";
+  const status = (err as { status?: number })?.status || 500;
+  const message = err instanceof Error ? err.message : "Internal Server Error";
 
   res.status(status).json({ error: message });
 };

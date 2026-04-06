@@ -10,5 +10,5 @@ export class FinancialTransaction {
     public employeeId?: string,
     public clinicId?: string,
     public createdAt?: Date,
-  ) { }
+  ) {}
 }

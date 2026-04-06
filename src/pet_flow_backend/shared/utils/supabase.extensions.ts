@@ -1,9 +1,13 @@
-import { SupabaseClient, PostgrestError } from "@supabase/supabase-js";
+import {
+  SupabaseClient,
+  PostgrestError,
+  AuthError,
+} from "@supabase/supabase-js";
 import { supabase } from "../../config/supabase";
 
-export interface DbResult<T> {
+export interface DbResult<T, E = PostgrestError | AuthError> {
   data: T | null;
-  error: PostgrestError | null;
+  error: E | null;
 }
 
 export class SupabaseExtensions {

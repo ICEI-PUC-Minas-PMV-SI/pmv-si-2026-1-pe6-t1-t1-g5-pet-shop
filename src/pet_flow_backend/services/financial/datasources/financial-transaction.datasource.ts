@@ -6,7 +6,10 @@ export interface FinancialTransactionDatasource {
     clinicId?: string | undefined;
     employeeId?: string | undefined;
   }): Promise<DbResult<FinancialTransactionEntity[]>>;
-  getFinancialById(id: string, clinicId?: string | undefined): Promise<DbResult<FinancialTransactionEntity>>;
+  getFinancialById(
+    id: string,
+    clinicId?: string | undefined,
+  ): Promise<DbResult<FinancialTransactionEntity>>;
   create(
     transaction: Partial<FinancialTransactionEntity>,
   ): Promise<DbResult<FinancialTransactionEntity>>;

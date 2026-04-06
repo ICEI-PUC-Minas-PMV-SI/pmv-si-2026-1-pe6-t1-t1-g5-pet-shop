@@ -4,9 +4,10 @@ import { FinancialTransaction } from "../../domain/models/financial-transaction"
 
 export class FinancialTransactionDtoMapper
   implements
-  Mapper<FinancialTransaction, FinancialTransactionResponseDto>,
-  ReversedMapper<FinancialTransaction, FinancialTransactionResponseDto> {
-  constructor() { }
+    Mapper<FinancialTransaction, FinancialTransactionResponseDto>,
+    ReversedMapper<FinancialTransaction, FinancialTransactionResponseDto>
+{
+  constructor() {}
 
   toObject(fromObject: FinancialTransaction): FinancialTransactionResponseDto {
     return {
