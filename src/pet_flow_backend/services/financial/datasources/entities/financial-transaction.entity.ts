@@ -10,5 +10,5 @@ export class FinancialTransactionEntity {
     public employee_id?: string,
     public clinic_id?: string,
     public created_at?: Date,
-  ) { }
+  ) {}
 }

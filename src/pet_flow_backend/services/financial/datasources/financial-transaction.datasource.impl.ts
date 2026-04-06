@@ -20,15 +20,18 @@ export class FinancialTransactionDatasourceImpl implements FinancialTransactionD
     }
     if (filters.employeeId) {
       query = query
-      .eq("clinic_id", filters.clinicId)
-      .eq("employee_id", filters.employeeId);
+        .eq("clinic_id", filters.clinicId)
+        .eq("employee_id", filters.employeeId);
     }
 
     const { data, error } = await query;
     return { data: data as FinancialTransactionEntity[], error };
   }
 
-  async getFinancialById(id: string, clinicId?: string | undefined): Promise<DbResult<FinancialTransactionEntity>> {
+  async getFinancialById(
+    id: string,
+    clinicId?: string | undefined,
+  ): Promise<DbResult<FinancialTransactionEntity>> {
     let query = supabase.from(this.table).select("*").eq("id", id);
 
     if (clinicId) {

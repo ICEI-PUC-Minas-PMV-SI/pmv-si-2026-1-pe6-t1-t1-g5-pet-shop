@@ -6,7 +6,7 @@ export class AuthDtoMapper implements Mapper<Auth, AuthResponseDto> {
   toObject(fromObject: Auth): AuthResponseDto {
     return {
       user_id: fromObject.userId,
-      token: fromObject.token
+      token: fromObject.token,
     };
   }
 

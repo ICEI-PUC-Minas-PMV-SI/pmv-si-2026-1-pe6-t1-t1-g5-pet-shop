@@ -5,7 +5,10 @@ export interface FinancialTransactionRepository {
     clinicId?: string | undefined;
     employeeId?: string | undefined;
   }): Promise<FinancialTransaction[]>;
-  getFinancialById(id: string, clinicId?: string | undefined): Promise<FinancialTransaction | null>;
+  getFinancialById(
+    id: string,
+    clinicId?: string | undefined,
+  ): Promise<FinancialTransaction | null>;
   create(
     transaction: Partial<FinancialTransaction>,
   ): Promise<FinancialTransaction | null>;

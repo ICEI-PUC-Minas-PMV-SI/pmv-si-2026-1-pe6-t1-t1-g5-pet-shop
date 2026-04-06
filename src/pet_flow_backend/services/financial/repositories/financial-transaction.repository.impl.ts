@@ -8,7 +8,7 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
   constructor(
     private readonly datasource: FinancialTransactionDatasource,
     private readonly mapper: FinancialTransactionMapper,
-  ) { }
+  ) {}
 
   async getAllFinancials(filters: {
     clinicId?: string;
@@ -24,9 +24,15 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
     }
   }
 
-  async getFinancialById(id: string, clinicId?: string): Promise<FinancialTransaction | null> {
+  async getFinancialById(
+    id: string,
+    clinicId?: string,
+  ): Promise<FinancialTransaction | null> {
     try {
-      const { data, error } = await this.datasource.getFinancialById(id, clinicId);
+      const { data, error } = await this.datasource.getFinancialById(
+        id,
+        clinicId,
+      );
       if (error || !data) return null;
       return this.mapper.toObject(data);
     } catch (error) {
@@ -63,7 +69,11 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       const entity = this.mapper.toReversedObject(
         transaction as FinancialTransaction,
       );
-      const { data, error } = await this.datasource.update(id, clinicId, entity);
+      const { data, error } = await this.datasource.update(
+        id,
+        clinicId,
+        entity,
+      );
       if (error || !data) throw new Error(error?.message || "Failed to update");
       return this.mapper.toObject(data);
     } catch (error) {
@@ -79,7 +89,9 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
     try {
       const { error } = await this.datasource.delete(id, clinicId);
       if (error) {
-        Logger.error(`Failed to delete transaction id ${id} for clinic ${clinicId}: ${error.message}`);
+        Logger.error(
+          `Failed to delete transaction id ${id} for clinic ${clinicId}: ${error.message}`,
+        );
         return false;
       }
       return true;

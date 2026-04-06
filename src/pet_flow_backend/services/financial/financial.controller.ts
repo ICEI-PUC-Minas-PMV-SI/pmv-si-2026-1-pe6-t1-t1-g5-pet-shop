@@ -7,13 +7,16 @@ export class FinancialController {
   constructor(
     private readonly service: FinancialService,
     private readonly mapper: FinancialTransactionDtoMapper,
-  ) { }
+  ) {}
 
   async getAllFinancials(req: Request, res: Response): Promise<void> {
     try {
       const { clinicId, employeeId } = req.body;
 
-      const transactions = await this.service.getAllFinancials({ clinicId, employeeId });
+      const transactions = await this.service.getAllFinancials({
+        clinicId,
+        employeeId,
+      });
       const response = this.mapper.toObjects(transactions);
       res.status(200).json(response);
     } catch (error) {
@@ -64,7 +67,9 @@ export class FinancialController {
       const { id, clinicId } = req.body;
 
       if (!id || !clinicId) {
-        res.status(400).json({ error: "id and clinicId are required in request body" });
+        res
+          .status(400)
+          .json({ error: "id and clinicId are required in request body" });
         return;
       }
 

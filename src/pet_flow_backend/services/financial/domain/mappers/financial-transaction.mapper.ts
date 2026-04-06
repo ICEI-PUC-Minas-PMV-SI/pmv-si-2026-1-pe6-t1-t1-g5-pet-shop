@@ -4,9 +4,10 @@ import { FinancialTransaction } from "../models/financial-transaction";
 
 export class FinancialTransactionMapper
   implements
-  Mapper<FinancialTransactionEntity, FinancialTransaction>,
-  ReversedMapper<FinancialTransactionEntity, FinancialTransaction> {
-  constructor() { }
+    Mapper<FinancialTransactionEntity, FinancialTransaction>,
+    ReversedMapper<FinancialTransactionEntity, FinancialTransaction>
+{
+  constructor() {}
 
   toObject(fromObject: FinancialTransactionEntity): FinancialTransaction {
     return new FinancialTransaction(
