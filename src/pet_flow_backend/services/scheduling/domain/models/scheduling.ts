@@ -1,13 +1,14 @@
 export class Scheduling {
   constructor(
     public id?: string,
-    public date?: Date,
-    public time?: string,
+    public clinicId?: string,
+    public tutorId?: string,
     public petId?: string,
-    public serviceId?: string,
     public employeeId?: string,
+    public dateTime?: Date,
     public status?: string,
+    public totalValue?: number,
+    public notes?: string,
     public createdAt?: Date,
-    public updatedAt?: Date,
   ) {}
 }
