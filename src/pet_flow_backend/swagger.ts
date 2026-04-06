@@ -3,7 +3,7 @@ import swaggerAutogen from "swagger-autogen";
 const doc = {
     info: {
         title: "Pet Flow API",
-        description: "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação e Gestão Financeira.",
+        description: "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
         version: "1.2.0"
     },
     host: "petflow-beta.vercel.app",
@@ -19,7 +19,8 @@ const doc = {
     },
     tags: [
         { name: "Autenticação", description: "Gestão de acesso e registro de funcionários" },
-        { name: "Financeiro", description: "Controle de transações financeiras e fluxo de caixa" }
+        { name: "Financeiro", description: "Controle de transações financeiras e fluxo de caixa" },
+        { name: "Agendamentos", description: "Gestão de agendamentos de atendimento" }
     ],
     definitions: {
         LoginRequest: {
@@ -75,6 +76,38 @@ const doc = {
             employeeId: "uuid-do-funcionario",
             clinicId: "uuid-da-clinica",
             createdAt: "2026-03-31T20:00:00Z"
+        },
+        SchedulingCreateRequest: {
+            clinicId: "uuid-da-clinica",
+            tutorId: "uuid-do-tutor",
+            petId: "uuid-do-pet",
+            employeeId: "uuid-do-funcionario",
+            dateTime: "2026-04-10T14:00:00.000Z",
+            status: "Agendado",
+            totalValue: 120.00,
+            notes: "Banho e tosa completa"
+        },
+        SchedulingUpdateRequest: {
+            clinicId: "uuid-da-clinica",
+            tutorId: "uuid-do-tutor",
+            petId: "uuid-do-pet",
+            employeeId: "uuid-do-funcionario",
+            dateTime: "2026-04-11T10:30:00.000Z",
+            status: "Confirmado",
+            totalValue: 140.00,
+            notes: "Confirmado por telefone"
+        },
+        SchedulingResponse: {
+            id: "uuid-do-agendamento",
+            clinicId: "uuid-da-clinica",
+            tutorId: "uuid-do-tutor",
+            petId: "uuid-do-pet",
+            employeeId: "uuid-do-funcionario",
+            dateTime: "2026-04-10T14:00:00.000Z",
+            status: "Agendado",
+            totalValue: 120.00,
+            notes: "Banho e tosa completa",
+            createdAt: "2026-04-01T12:00:00.000Z"
         }
     }
 };

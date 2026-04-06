@@ -128,4 +128,97 @@ router.delete("/financial/", () => {
     */
 });
 
+/* ==========================================================================
+   AGENDAMENTOS (SCHEDULING)
+   ========================================================================== */
+
+router.get("/scheduling/", () => {
+    /* #swagger.tags = ['Agendamentos']
+       #swagger.description = 'Lista todos os agendamentos cadastrados.'
+       #swagger.responses[200] = {
+          description: 'Lista de agendamentos recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/SchedulingResponse' } }
+       }
+       #swagger.responses[500] = { description: 'Erro interno do servidor' }
+    */
+});
+
+router.get("/scheduling/{id}", () => {
+    /* #swagger.tags = ['Agendamentos']
+       #swagger.description = 'Busca um agendamento pelo identificador.'
+       #swagger.parameters['id'] = {
+          in: 'path',
+          description: 'ID do agendamento',
+          required: true,
+          type: 'string'
+       }
+       #swagger.responses[200] = {
+          description: 'Agendamento encontrado com sucesso',
+          schema: { $ref: '#/definitions/SchedulingResponse' }
+       }
+       #swagger.responses[400] = { description: 'Parâmetros inválidos' }
+       #swagger.responses[404] = { description: 'Agendamento não encontrado' }
+       #swagger.responses[500] = { description: 'Erro interno do servidor' }
+    */
+});
+
+router.post("/scheduling/", () => {
+    /* #swagger.tags = ['Agendamentos']
+       #swagger.description = 'Cria um novo agendamento.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados do agendamento',
+          required: true,
+          schema: { $ref: '#/definitions/SchedulingCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Agendamento criado com sucesso',
+          schema: { $ref: '#/definitions/SchedulingResponse' }
+       }
+       #swagger.responses[400] = { description: 'Dados inválidos para criação' }
+       #swagger.responses[500] = { description: 'Erro interno do servidor' }
+    */
+});
+
+router.put("/scheduling/{id}", () => {
+    /* #swagger.tags = ['Agendamentos']
+       #swagger.description = 'Atualiza um agendamento existente.'
+       #swagger.parameters['id'] = {
+          in: 'path',
+          description: 'ID do agendamento',
+          required: true,
+          type: 'string'
+       }
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados do agendamento',
+          required: true,
+          schema: { $ref: '#/definitions/SchedulingUpdateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Agendamento atualizado com sucesso',
+          schema: { $ref: '#/definitions/SchedulingResponse' }
+       }
+       #swagger.responses[400] = { description: 'Dados inválidos para atualização' }
+       #swagger.responses[404] = { description: 'Agendamento não encontrado' }
+       #swagger.responses[500] = { description: 'Erro interno do servidor' }
+    */
+});
+
+router.delete("/scheduling/{id}", () => {
+    /* #swagger.tags = ['Agendamentos']
+       #swagger.description = 'Remove um agendamento existente.'
+       #swagger.parameters['id'] = {
+          in: 'path',
+          description: 'ID do agendamento',
+          required: true,
+          type: 'string'
+       }
+       #swagger.responses[204] = { description: 'Agendamento removido com sucesso' }
+       #swagger.responses[400] = { description: 'Parâmetros inválidos' }
+       #swagger.responses[404] = { description: 'Agendamento não encontrado' }
+       #swagger.responses[500] = { description: 'Erro interno do servidor' }
+    */
+});
+
 export default router;
