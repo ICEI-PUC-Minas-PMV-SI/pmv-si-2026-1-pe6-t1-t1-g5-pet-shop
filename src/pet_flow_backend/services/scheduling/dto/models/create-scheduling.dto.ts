@@ -1,5 +1,4 @@
-export interface SchedulingResponseDto {
-  id: string;
+export interface CreateSchedulingDto {
   clinicId: string;
   tutorId: string;
   petId: string;
@@ -7,6 +6,5 @@ export interface SchedulingResponseDto {
   dateTime: Date;
   status: string;
   totalValue: number;
-  notes: string;
-  createdAt: Date;
+  notes: string | null;
 }

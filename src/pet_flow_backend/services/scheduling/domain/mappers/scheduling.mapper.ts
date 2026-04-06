@@ -12,28 +12,30 @@ export class SchedulingMapper
   toObject(fromObject: SchedulingEntity): Scheduling {
     return new Scheduling(
       fromObject.id,
-      fromObject.date,
-      fromObject.time,
-      fromObject.petId,
-      fromObject.serviceId,
-      fromObject.employeeId,
+      fromObject.clinic_id,
+      fromObject.tutor_id,
+      fromObject.pet_id,
+      fromObject.employee_id,
+      fromObject.date_time,
       fromObject.status,
+      fromObject.total_value,
+      fromObject.notes,
       fromObject.created_at,
-      fromObject.updated_at,
     );
   }
 
   toReversedObject(toObject: Scheduling): SchedulingEntity {
     return new SchedulingEntity(
       toObject.id,
-      toObject.date,
-      toObject.time,
+      toObject.clinicId,
+      toObject.tutorId,
       toObject.petId,
-      toObject.serviceId,
       toObject.employeeId,
+      toObject.dateTime,
       toObject.status,
+      toObject.totalValue,
+      toObject.notes,
       toObject.createdAt,
-      toObject.updatedAt,
     );
   }
 
