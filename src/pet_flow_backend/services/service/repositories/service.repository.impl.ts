@@ -12,7 +12,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
 
   async getServices(): Promise<Service[]> {
     try {
-      const { data, error } = await this.datasource.findAll();
+      const { data, error } = await this.datasource.getAll();
       if (error || !data) return [];
       return this.mapper.toObjects(data);
     } catch (error) {
@@ -23,7 +23,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
 
   async getServiceById(id: string): Promise<Service> {
     try {
-      const { data, error } = await this.datasource.findById(id);
+      const { data, error } = await this.datasource.getById(id);
       if (error || !data) throw new Error("Serviço não encontrado");
       return this.mapper.toObject(data);
     } catch (error) {
