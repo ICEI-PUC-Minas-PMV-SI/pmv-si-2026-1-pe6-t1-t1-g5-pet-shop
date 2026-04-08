@@ -6,12 +6,6 @@ const doc = {
         description: "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
         version: "1.2.0"
     },
-  },
-  tags: [
-    {
-      name: "Autenticação",
-      description: "Gestão de acesso e registro de funcionários",
-    },
     tags: [
         { name: "Autenticação", description: "Gestão de acesso e registro de funcionários" },
         { name: "Financeiro", description: "Controle de transações financeiras e fluxo de caixa" },
