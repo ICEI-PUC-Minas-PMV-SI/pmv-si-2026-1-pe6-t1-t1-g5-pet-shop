@@ -8,7 +8,7 @@ import { DbResult } from "../../../shared/utils/supabase.extensions";
 export class AuthRepositoryImpl implements AuthRepository {
   private readonly mapper = new AuthMapper();
 
-  constructor(private readonly datasource: AuthDatasource) { }
+  constructor(private readonly datasource: AuthDatasource) {}
 
   async login(email: string, password: string): Promise<DbResult<Auth>> {
     const encryptedPassword = CryptoUtils.encrypt(password);
@@ -16,7 +16,7 @@ export class AuthRepositoryImpl implements AuthRepository {
     if (result.error) return { data: null, error: result.error };
     return {
       data: result.data ? this.mapper.toObject(result.data) : null,
-      error: null
+      error: null,
     };
   }
 
@@ -26,7 +26,7 @@ export class AuthRepositoryImpl implements AuthRepository {
     if (result.error) return { data: null, error: result.error };
     return {
       data: result.data ? this.mapper.toObject(result.data) : null,
-      error: null
+      error: null,
     };
   }
 }

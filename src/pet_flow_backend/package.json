@@ -9,7 +9,7 @@
     "swagger": "ts-node swagger.ts",
     "build": "npm run swagger && tsc",
     "start": "node dist/server.js",
-    "dev": "npm run swagger && ts-node-dev server.ts"
+    "dev": "npm run swagger && ts-node-dev server.ts && npx eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",

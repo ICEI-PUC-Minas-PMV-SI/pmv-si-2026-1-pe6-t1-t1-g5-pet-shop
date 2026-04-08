@@ -6,7 +6,7 @@ import { AuthDtoMapper } from "./dto/mappers/auth-dto.mapper";
 export class AuthController {
   private readonly mapper = new AuthDtoMapper();
 
-  constructor(private readonly service: AuthService) { }
+  constructor(private readonly service: AuthService) {}
 
   async login(req: Request, res: Response): Promise<void> {
     try {
@@ -29,7 +29,7 @@ export class AuthController {
       }
 
       res.status(200).json(this.mapper.toObject(data));
-    } catch (err: any) {
+    } catch (err: unknown) {
       Logger.error("[AuthController] login error:", err);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -56,7 +56,7 @@ export class AuthController {
       }
 
       res.status(201).json(this.mapper.toObject(data));
-    } catch (err: any) {
+    } catch (err: unknown) {
       Logger.error("[AuthController] register error:", err);
       res.status(500).json({ error: "Internal Server Error" });
     }

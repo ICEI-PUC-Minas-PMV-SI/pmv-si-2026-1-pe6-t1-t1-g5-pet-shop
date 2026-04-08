@@ -6,16 +6,11 @@ const doc = {
         description: "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
         version: "1.2.0"
     },
-    host: "petflow-beta.vercel.app",
-    basePath: "/api/v1",
-    schemes: ["https", "http"],
-    securityDefinitions: {
-        Bearer: {
-            type: "apiKey",
-            name: "Authorization",
-            in: "header",
-            description: "Insira o token JWT no formato: Bearer {token}"
-        }
+  },
+  tags: [
+    {
+      name: "Autenticação",
+      description: "Gestão de acesso e registro de funcionários",
     },
     tags: [
         { name: "Autenticação", description: "Gestão de acesso e registro de funcionários" },

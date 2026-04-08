@@ -1,5 +1,5 @@
 /**
- * Este arquivo serve apenas para documentação do Swagger. 
+ * Este arquivo serve apenas para documentação do Swagger.
  * Permite manter o código de produção limpo de comentários.
  */
 
@@ -12,7 +12,7 @@ const router = Router();
    ========================================================================== */
 
 router.post("/auth/login", () => {
-    /* #swagger.tags = ['Autenticação']
+  /* #swagger.tags = ['Autenticação']
        #swagger.description = 'Realiza o login de um funcionário na plataforma.'
        #swagger.parameters['body'] = {
           in: 'body',
@@ -29,7 +29,7 @@ router.post("/auth/login", () => {
 });
 
 router.post("/auth/register", () => {
-    /* #swagger.tags = ['Autenticação']
+  /* #swagger.tags = ['Autenticação']
        #swagger.description = 'Registra um novo funcionário vinculado a uma clínica.'
        #swagger.parameters['body'] = {
           in: 'body',
@@ -50,7 +50,7 @@ router.post("/auth/register", () => {
    ========================================================================== */
 
 router.post("/financial/all", () => {
-    /* #swagger.tags = ['Financeiro']
+  /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Lista todas as transações financeiras filtradas por clínica e opcionalmente por funcionário.'
        #swagger.parameters['body'] = {
           in: 'body',
@@ -66,7 +66,7 @@ router.post("/financial/all", () => {
 });
 
 router.post("/financial/detail", () => {
-    /* #swagger.tags = ['Financeiro']
+  /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Obtém os detalhes de uma transação financeira específica.'
        #swagger.parameters['body'] = {
           in: 'body',
@@ -83,7 +83,7 @@ router.post("/financial/detail", () => {
 });
 
 router.post("/financial/", () => {
-    /* #swagger.tags = ['Financeiro']
+  /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Cria um novo registro de transação financeira.'
        #swagger.parameters['body'] = {
           in: 'body',
@@ -99,7 +99,7 @@ router.post("/financial/", () => {
 });
 
 router.put("/financial/", () => {
-    /* #swagger.tags = ['Financeiro']
+  /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Atualiza os dados de uma transação financeira existente.'
        #swagger.parameters['body'] = {
           in: 'body',
@@ -115,7 +115,7 @@ router.put("/financial/", () => {
 });
 
 router.delete("/financial/", () => {
-    /* #swagger.tags = ['Financeiro']
+  /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Remove permanentemente uma transação financeira.'
        #swagger.parameters['body'] = {
           in: 'body',

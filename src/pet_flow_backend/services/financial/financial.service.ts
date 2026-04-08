@@ -2,7 +2,7 @@ import { FinancialTransactionRepository } from "./repositories/financial-transac
 import { FinancialTransaction } from "./domain/models/financial-transaction";
 
 export class FinancialService {
-  constructor(private readonly repository: FinancialTransactionRepository) { }
+  constructor(private readonly repository: FinancialTransactionRepository) {}
 
   async getAllFinancials(filters: {
     clinicId?: string | undefined;
@@ -11,7 +11,10 @@ export class FinancialService {
     return this.repository.getAllFinancials(filters);
   }
 
-  async getFinancialById(id: string, clinicId?: string | undefined): Promise<FinancialTransaction | null> {
+  async getFinancialById(
+    id: string,
+    clinicId?: string | undefined,
+  ): Promise<FinancialTransaction | null> {
     return this.repository.getFinancialById(id, clinicId);
   }
 

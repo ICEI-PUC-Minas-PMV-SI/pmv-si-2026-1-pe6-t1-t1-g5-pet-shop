@@ -163,9 +163,9 @@ export class SchedulingDtoMapper
     return totalValue;
   }
 
-  private parseNullableString(value: unknown): string | null {
+  private parseNullableString(value: unknown): string | undefined {
     if (value == null) {
-      return null;
+      return undefined;
     }
 
     return String(value).trim();

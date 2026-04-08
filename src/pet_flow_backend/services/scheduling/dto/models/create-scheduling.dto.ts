@@ -6,5 +6,5 @@ export interface CreateSchedulingDto {
   dateTime: Date;
   status: string;
   totalValue: number;
-  notes: string | null;
+  notes?: string;
 }
