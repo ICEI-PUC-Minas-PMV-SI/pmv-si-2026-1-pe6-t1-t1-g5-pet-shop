@@ -1,6 +1,6 @@
 # 📊 Relatório de Contribuições do Projeto
 
-**Última atualização:** 08/04/2026 21:31
+**Última atualização:** 08/04/2026 21:39
 
 ---
 
@@ -15,9 +15,9 @@
 | Natália Kiefer          |         3 |       848 |       250 |         17 |              0 |               0 |
 | Natália Kiefer Ferreira |         4 |        19 |        19 |          1 |              1 |               1 |
 | Rafael Silva            |         6 |        24 |        36 |          3 |              6 |               3 |
-| Vinicius Neves          |        66 |   1298361 |   1287416 |       5668 |             26 |               6 |
+| Vinicius Neves          |        67 |   1298361 |   1287416 |       5668 |             26 |               6 |
 | Vinicius-O-Neves        |         2 |        11 |         4 |          4 |              1 |               1 |
-| chamorim21              |         2 |        29 |        21 |          3 |              2 |               1 |
+| chamorim21              |         2 |        28 |        20 |          3 |              2 |               1 |
 | github-actions[bot]     |         1 |        28 |        31 |          3 |              1 |               1 |
 | github-classroom[bot]   |         1 |      2152 |         0 |         45 |              1 |              13 |
 | juliamascari            |         3 |       284 |        92 |         12 |              0 |               0 |
@@ -26,7 +26,7 @@
 
 ## 📅 Contribuições Semanais (Todo o Semestre)
 
-**2026-04-01**: Cristiano Amorim: 8, Júlia Mascari: 2, Natália Kiefer: 2, Natália Kiefer Ferreira: 3, Vinicius Neves: 16, chamorim21: 2, juliamascari: 3
+**2026-04-01**: Cristiano Amorim: 8, Júlia Mascari: 2, Natália Kiefer: 2, Natália Kiefer Ferreira: 3, Vinicius Neves: 17, chamorim21: 2, juliamascari: 3
 
 **2026-03-25**: Natália Kiefer: 1, Vinicius Neves: 11
 
