@@ -201,7 +201,7 @@ Authorization: Bearer SEU_TOKEN
 
 Demonstração do teste do módulo de Serviço realiza no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
 
-![Teste service](docs/img/teste-service.gif)
+![Teste service](../docs/img/teste-service.gif)
 
 # Referências
 
