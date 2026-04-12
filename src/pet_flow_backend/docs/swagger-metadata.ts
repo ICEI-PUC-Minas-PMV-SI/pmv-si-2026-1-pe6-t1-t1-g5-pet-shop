@@ -221,4 +221,71 @@ router.delete("/scheduling/{id}", () => {
     */
 });
 
+/* ==========================================================================
+   SERVIÇOS (SERVICE)
+   ========================================================================== */
+
+router.get("/service/", () => {
+  /* #swagger.tags = ['Serviços']
+       #swagger.description = 'Lista todos os serviços disponíveis.'
+       #swagger.responses[200] = {
+          description: 'Lista de serviços recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/ServiceResponse' } }
+       }
+    */
+});
+
+router.get("/service/:id", () => {
+  /* #swagger.tags = ['Serviços']
+       #swagger.description = 'Busca um serviço pelo ID.'
+       #swagger.responses[200] = {
+          description: 'Serviço encontrado',
+          schema: { $ref: '#/definitions/ServiceResponse' }
+       }
+       #swagger.responses[404] = { description: 'Serviço não encontrado' }
+    */
+});
+
+router.post("/service/", () => {
+  /* #swagger.tags = ['Serviços']
+       #swagger.description = 'Cria um novo serviço.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados do novo serviço',
+          required: true,
+          schema: { $ref: '#/definitions/ServiceCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Serviço criado com sucesso',
+          schema: { $ref: '#/definitions/ServiceResponse' }
+       }
+       #swagger.responses[400] = { description: 'Dados inválidos' }
+    */
+});
+
+router.put("/service/:id", () => {
+  /* #swagger.tags = ['Serviços']
+       #swagger.description = 'Atualiza os dados de um serviço existente.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados do serviço',
+          required: true,
+          schema: { $ref: '#/definitions/ServiceUpdateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Serviço atualizado com sucesso',
+          schema: { $ref: '#/definitions/ServiceResponse' }
+       }
+       #swagger.responses[404] = { description: 'Serviço não encontrado' }
+    */
+});
+
+router.delete("/service/:id", () => {
+  /* #swagger.tags = ['Serviços']
+       #swagger.description = 'Remove permanentemente um serviço.'
+       #swagger.responses[204] = { description: 'Serviço excluído com sucesso' }
+       #swagger.responses[404] = { description: 'Serviço não encontrado' }
+    */
+});
+
 export default router;
