@@ -9,7 +9,8 @@ const doc = {
     tags: [
         { name: "Autenticação", description: "Gestão de acesso e registro de funcionários" },
         { name: "Financeiro", description: "Controle de transações financeiras e fluxo de caixa" },
-        { name: "Agendamentos", description: "Gestão de agendamentos de atendimento" }
+        { name: "Agendamentos", description: "Gestão de agendamentos de atendimento" },
+        { name: "Serviços", description: "Cadastro e gestão de serviços oferecidos pelo pet shop" }
     ],
     definitions: {
         LoginRequest: {
@@ -97,6 +98,25 @@ const doc = {
             totalValue: 120.00,
             notes: "Banho e tosa completa",
             createdAt: "2026-04-01T12:00:00.000Z"
+        },
+        ServiceCreateRequest: {
+            name: "Banho e tosa",
+            description: "Banho e tosa em cachorro",
+            price: 90.00,
+            duration: 90
+        },
+        ServiceUpdateRequest: {
+            name: "Banho e tosa",
+            description: "Banho e tosa completo",
+            price: 100.00,
+            duration: 90
+        },
+        ServiceResponse: {
+            id: "uuid-do-servico",
+            name: "Banho e tosa",
+            description: "Banho e tosa completo",
+            price: 120.00,
+            duration: 90
         }
     }
 };
