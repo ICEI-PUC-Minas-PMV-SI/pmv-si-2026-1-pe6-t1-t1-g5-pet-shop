@@ -1,17 +1,20 @@
 # APIs e Web Services
 
-O planejamento de uma aplicação de APIS Web é uma etapa fundamental para o sucesso do projeto. Ao planejar adequadamente, você pode evitar muitos problemas e garantir que a sua API seja segura, escalável e eficiente.
+O Pet Flow é uma solução voltada para gestão de pet shops, criada para facilitar a organização das rotinas operacionais e melhorar a qualidade do atendimento ao cliente. A plataforma permite centralizar informações importantes do dia a dia do estabelecimento, como agendamentos de serviços, cadastro de clientes e registro dos pets, além do controle de estoque e da parte financeira, tornando esses processos mais práticos.
 
-Aqui estão algumas etapas importantes que devem ser consideradas no planejamento de uma aplicação de APIS Web.
-
-[Inclua uma breve descrição do projeto.]
+O sistema é estruturado em uma arquitetura distribuída, na qual diferentes partes funcionam de forma independente, mas conectadas. A integração entre a interface e o banco de dados ocorre por meio de uma API, que permite o envio e a atualização das informações em tempo real, garantindo acesso seguro e centralizado.
 
 ## Objetivos da API
 
-O primeiro passo é definir os objetivos da sua API. O que você espera alcançar com ela? Você quer que ela seja usada por clientes externos ou apenas por aplicações internas? Quais são os recursos que a API deve fornecer?
+A API é o núcleo do sistema, responsável por conectar as interfaces web e mobile ao banco de dados, garantindo que as informações sejam acessadas de forma segura, organizada e consistente. Sua estrutura em camadas facilita a manutenção e evolução da aplicação, centralizando toda a lógica de negócio em um único ponto.
 
-[Inclua os objetivos da sua api.]
-
+- **Autenticação de usuários:** acesso seguro ao sistema por meio de JWT, com controle de permissões por perfil  
+- **Gestão de usuários:** cadastro, login e manutenção de dados, com validações para garantir integridade das informações  
+- **Gestão de pets:** cadastro, atualização e consulta de dados dos animais, permitindo o acompanhamento das informações  
+- **Controle de serviços:** cadastro, edição e consulta dos serviços oferecidos pelo estabelecimento  
+- **Gestão de agendamentos:** criação, atualização e cancelamento de atendimentos, com validação para evitar conflitos de horário  
+- **Gestão financeira:** registro e controle de receitas e despesas do pet shop  
+- **Gestão de estoque:** acompanhamento e controle de produtos disponíveis  
 
 ## Modelagem da Aplicação
 
@@ -20,9 +23,24 @@ O primeiro passo é definir os objetivos da sua API. O que você espera alcança
 
 ## Tecnologias Utilizadas
 
-Existem muitas tecnologias diferentes que podem ser usadas para desenvolver APIs Web. A tecnologia certa para o seu projeto dependerá dos seus objetivos, dos seus clientes e dos recursos que a API deve fornecer.
+As principais tecnologias utilizadas no desenvolvimento da API são:
 
-[Lista das tecnologias principais que serão utilizadas no projeto.]
+### Backend
+- Node.js  
+- Express.js  
+- TypeScript  
+- JWT (JSON Web Token para autenticação)  
+- Zod (validação de dados)  
+- Swagger / OpenAPI (documentação da API)  
+- bcrypt (hash de senhas)  
+- AES-256-CBC (criptografia de dados sensíveis)  
+
+### Banco de Dados
+- PostgreSQL (via Supabase)  
+
+### Ferramentas de Desenvolvimento
+- ESLint (padronização de código)  
+- Prettier (formatação de código)  
 
 ## API Endpoints
 
@@ -55,8 +73,9 @@ Existem muitas tecnologias diferentes que podem ser usadas para desenvolver APIs
 
 ## Considerações de Segurança
 
-[Discuta as considerações de segurança relevantes para a aplicação distribuída, como autenticação, autorização, proteção contra ataques, etc.]
+A API adota práticas de segurança para proteger os dados e garantir o controle de acesso, incluindo autenticação via JWT, uso de middlewares para validação de tokens e tratamento de erros.
 
+As senhas são armazenadas com hash utilizando bcrypt, enquanto dados sensíveis são protegidos com criptografia AES-256-CBC. Além disso, a validação de entradas ajuda a evitar inconsistências e acessos indevidos, garantindo maior segurança nas operações do sistema.
 ## Implantação
 
 [Instruções para implantar a aplicação distribuída em um ambiente de produção.]
