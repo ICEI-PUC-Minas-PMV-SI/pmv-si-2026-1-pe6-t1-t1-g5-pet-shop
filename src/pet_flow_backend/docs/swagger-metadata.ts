@@ -288,4 +288,388 @@ router.delete("/service/:id", () => {
     */
 });
 
+/* ==========================================================================
+   CLÍNICA (CLINIC)
+   ========================================================================== */
+
+router.get("/clinic/", () => {
+  /* #swagger.tags = ['Clínica']
+       #swagger.description = 'Lista todas as clínicas cadastradas.'
+       #swagger.responses[200] = {
+          description: 'Lista de clínicas recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/ClinicResponse' } }
+       }
+    */
+});
+
+router.get("/clinic/:id", () => {
+  /* #swagger.tags = ['Clínica']
+       #swagger.description = 'Busca uma clínica pelo ID.'
+       #swagger.responses[200] = {
+          description: 'Clínica encontrada',
+          schema: { $ref: '#/definitions/ClinicResponse' }
+       }
+       #swagger.responses[404] = { description: 'Clínica não encontrada' }
+    */
+});
+
+router.post("/clinic/", () => {
+  /* #swagger.tags = ['Clínica']
+       #swagger.description = 'Cria uma nova clínica.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados da nova clínica',
+          required: true,
+          schema: { $ref: '#/definitions/ClinicCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Clínica criada com sucesso',
+          schema: { $ref: '#/definitions/ClinicResponse' }
+       }
+    */
+});
+
+router.put("/clinic/:id", () => {
+  /* #swagger.tags = ['Clínica']
+       #swagger.description = 'Atualiza os dados de uma clínica existente.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados da clínica',
+          required: true,
+          schema: { $ref: '#/definitions/ClinicCreateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Clínica atualizada com sucesso',
+          schema: { $ref: '#/definitions/ClinicResponse' }
+       }
+    */
+});
+
+router.delete("/clinic/:id", () => {
+  /* #swagger.tags = ['Clínica']
+       #swagger.description = 'Remove permanentemente uma clínica.'
+       #swagger.responses[204] = { description: 'Clínica excluída com sucesso' }
+    */
+});
+
+/* ==========================================================================
+   FUNCIONÁRIO (EMPLOYEE)
+   ========================================================================== */
+
+router.get("/employee/", () => {
+  /* #swagger.tags = ['Funcionário']
+       #swagger.description = 'Lista todos os funcionários cadastrados.'
+       #swagger.responses[200] = {
+          description: 'Lista de funcionários recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/EmployeeResponse' } }
+       }
+    */
+});
+
+router.get("/employee/:id", () => {
+  /* #swagger.tags = ['Funcionário']
+       #swagger.description = 'Busca um funcionário pelo ID.'
+       #swagger.responses[200] = {
+          description: 'Funcionário encontrado',
+          schema: { $ref: '#/definitions/EmployeeResponse' }
+       }
+       #swagger.responses[404] = { description: 'Funcionário não encontrado' }
+    */
+});
+
+router.post("/employee/", () => {
+  /* #swagger.tags = ['Funcionário']
+       #swagger.description = 'Cria um novo funcionário.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados do novo funcionário',
+          required: true,
+          schema: { $ref: '#/definitions/EmployeeCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Funcionário criado com sucesso',
+          schema: { $ref: '#/definitions/EmployeeResponse' }
+       }
+    */
+});
+
+router.put("/employee/:id", () => {
+  /* #swagger.tags = ['Funcionário']
+       #swagger.description = 'Atualiza os dados de um funcionário existente.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados do funcionário',
+          required: true,
+          schema: { $ref: '#/definitions/EmployeeCreateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Funcionário atualizado com sucesso',
+          schema: { $ref: '#/definitions/EmployeeResponse' }
+       }
+    */
+});
+
+router.delete("/employee/:id", () => {
+  /* #swagger.tags = ['Funcionário']
+       #swagger.description = 'Remove permanentemente um funcionário.'
+       #swagger.responses[204] = { description: 'Funcionário excluído com sucesso' }
+    */
+});
+
+/* ==========================================================================
+   PET
+   ========================================================================== */
+
+router.get("/pet/", () => {
+  /* #swagger.tags = ['Pet']
+       #swagger.description = 'Lista todos os pets cadastrados.'
+       #swagger.responses[200] = {
+          description: 'Lista de pets recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/PetResponse' } }
+       }
+    */
+});
+
+router.get("/pet/:id", () => {
+  /* #swagger.tags = ['Pet']
+       #swagger.description = 'Busca um pet pelo ID.'
+       #swagger.responses[200] = {
+          description: 'Pet encontrado',
+          schema: { $ref: '#/definitions/PetResponse' }
+       }
+       #swagger.responses[404] = { description: 'Pet não encontrado' }
+    */
+});
+
+router.post("/pet/", () => {
+  /* #swagger.tags = ['Pet']
+       #swagger.description = 'Cria um novo pet.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados do novo pet',
+          required: true,
+          schema: { $ref: '#/definitions/PetCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Pet criado com sucesso',
+          schema: { $ref: '#/definitions/PetResponse' }
+       }
+    */
+});
+
+router.put("/pet/:id", () => {
+  /* #swagger.tags = ['Pet']
+       #swagger.description = 'Atualiza os dados de um pet existente.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados do pet',
+          required: true,
+          schema: { $ref: '#/definitions/PetCreateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Pet atualizado com sucesso',
+          schema: { $ref: '#/definitions/PetResponse' }
+       }
+    */
+});
+
+router.delete("/pet/:id", () => {
+  /* #swagger.tags = ['Pet']
+       #swagger.description = 'Remove permanentemente um pet.'
+       #swagger.responses[204] = { description: 'Pet excluído com sucesso' }
+    */
+});
+
+/* ==========================================================================
+   TUTOR
+   ========================================================================== */
+
+router.get("/tutor/", () => {
+  /* #swagger.tags = ['Tutor']
+       #swagger.description = 'Lista todos os tutores cadastrados.'
+       #swagger.responses[200] = {
+          description: 'Lista de tutores recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/TutorResponse' } }
+       }
+    */
+});
+
+router.get("/tutor/:id", () => {
+  /* #swagger.tags = ['Tutor']
+       #swagger.description = 'Busca um tutor pelo ID.'
+       #swagger.responses[200] = {
+          description: 'Tutor encontrado',
+          schema: { $ref: '#/definitions/TutorResponse' }
+       }
+       #swagger.responses[404] = { description: 'Tutor não encontrado' }
+    */
+});
+
+router.post("/tutor/", () => {
+  /* #swagger.tags = ['Tutor']
+       #swagger.description = 'Cria um novo tutor.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados do novo tutor',
+          required: true,
+          schema: { $ref: '#/definitions/TutorCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Tutor criado com sucesso',
+          schema: { $ref: '#/definitions/TutorResponse' }
+       }
+    */
+});
+
+router.put("/tutor/:id", () => {
+  /* #swagger.tags = ['Tutor']
+       #swagger.description = 'Atualiza os dados de um tutor existente.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados do tutor',
+          required: true,
+          schema: { $ref: '#/definitions/TutorCreateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Tutor atualizado com sucesso',
+          schema: { $ref: '#/definitions/TutorResponse' }
+       }
+    */
+});
+
+router.delete("/tutor/:id", () => {
+  /* #swagger.tags = ['Tutor']
+       #swagger.description = 'Remove permanentemente um tutor.'
+       #swagger.responses[204] = { description: 'Tutor excluído com sucesso' }
+    */
+});
+
+/* ==========================================================================
+   VACINA (VACCINE)
+   ========================================================================== */
+
+router.get("/vaccine/", () => {
+  /* #swagger.tags = ['Vacina']
+       #swagger.description = 'Lista todas as vacinas cadastradas.'
+       #swagger.responses[200] = {
+          description: 'Lista de vacinas recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/VaccineResponse' } }
+       }
+    */
+});
+
+router.get("/vaccine/:id", () => {
+  /* #swagger.tags = ['Vacina']
+       #swagger.description = 'Busca uma vacina pelo ID.'
+       #swagger.responses[200] = {
+          description: 'Vacina encontrada',
+          schema: { $ref: '#/definitions/VaccineResponse' }
+       }
+       #swagger.responses[404] = { description: 'Vacina não encontrada' }
+    */
+});
+
+router.post("/vaccine/", () => {
+  /* #swagger.tags = ['Vacina']
+       #swagger.description = 'Cria uma nova vacina.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados da nova vacina',
+          required: true,
+          schema: { $ref: '#/definitions/VaccineCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Vacina criada com sucesso',
+          schema: { $ref: '#/definitions/VaccineResponse' }
+       }
+    */
+});
+
+router.put("/vaccine/:id", () => {
+  /* #swagger.tags = ['Vacina']
+       #swagger.description = 'Atualiza os dados de uma vacina existente.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados da vacina',
+          required: true,
+          schema: { $ref: '#/definitions/VaccineCreateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Vacina atualizada com sucesso',
+          schema: { $ref: '#/definitions/VaccineResponse' }
+       }
+    */
+});
+
+router.delete("/vaccine/:id", () => {
+  /* #swagger.tags = ['Vacina']
+       #swagger.description = 'Remove permanentemente uma vacina.'
+       #swagger.responses[204] = { description: 'Vacina excluída com sucesso' }
+    */
+});
+
+/* ==========================================================================
+   PRODUTO (PRODUCT)
+   ========================================================================== */
+
+router.get("/product/", () => {
+  /* #swagger.tags = ['Produto']
+       #swagger.description = 'Lista todos os produtos cadastrados.'
+       #swagger.responses[200] = {
+          description: 'Lista de produtos recuperada com sucesso',
+          schema: { type: 'array', items: { $ref: '#/definitions/ProductResponse' } }
+       }
+    */
+});
+
+router.get("/product/:id", () => {
+  /* #swagger.tags = ['Produto']
+       #swagger.description = 'Busca um produto pelo ID.'
+       #swagger.responses[200] = {
+          description: 'Produto encontrado',
+          schema: { $ref: '#/definitions/ProductResponse' }
+       }
+       #swagger.responses[404] = { description: 'Produto não encontrado' }
+    */
+});
+
+router.post("/product/", () => {
+  /* #swagger.tags = ['Produto']
+       #swagger.description = 'Cria um novo produto.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados do novo produto',
+          required: true,
+          schema: { $ref: '#/definitions/ProductCreateRequest' }
+       }
+       #swagger.responses[201] = {
+          description: 'Produto criado com sucesso',
+          schema: { $ref: '#/definitions/ProductResponse' }
+       }
+    */
+});
+
+router.put("/product/:id", () => {
+  /* #swagger.tags = ['Produto']
+       #swagger.description = 'Atualiza os dados de um produto existente.'
+       #swagger.parameters['body'] = {
+          in: 'body',
+          description: 'Dados atualizados do produto',
+          required: true,
+          schema: { $ref: '#/definitions/ProductCreateRequest' }
+       }
+       #swagger.responses[200] = {
+          description: 'Produto atualizado com sucesso',
+          schema: { $ref: '#/definitions/ProductResponse' }
+       }
+    */
+});
+
+router.delete("/product/:id", () => {
+  /* #swagger.tags = ['Produto']
+       #swagger.description = 'Remove permanentemente um produto.'
+       #swagger.responses[204] = { description: 'Produto excluído com sucesso' }
+    */
+});
+
 export default router;
