@@ -30,7 +30,7 @@ export class ServiceController {
     try {
       const services = await this.service.list();
       res.status(200).json(this.mapper.toObjects(services));
-    } catch (error) {
+    } catch {
       res.status(500).json({ error: "Erro interno" });
     }
   }
