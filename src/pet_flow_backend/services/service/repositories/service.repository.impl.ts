@@ -7,7 +7,7 @@ import { Logger } from "../../../shared/utils/logger";
 export class ServiceRepositoryImpl implements ServiceRepository {
   constructor(
     private readonly datasource: ServiceDatasource,
-    private readonly mapper: ServiceMapper
+    private readonly mapper: ServiceMapper,
   ) {}
 
   async getServices(): Promise<Service[]> {
@@ -36,7 +36,8 @@ export class ServiceRepositoryImpl implements ServiceRepository {
     try {
       const entity = this.mapper.toReversedObject(data as Service);
       const { data: created, error } = await this.datasource.create(entity);
-      if (error || !created) throw new Error(error?.message || "Erro ao criar serviço");
+      if (error || !created)
+        throw new Error(error?.message || "Erro ao criar serviço");
       return this.mapper.toObject(created);
     } catch (error) {
       Logger.error("Error creating service:", error);
@@ -48,7 +49,8 @@ export class ServiceRepositoryImpl implements ServiceRepository {
     try {
       const entity = this.mapper.toReversedObject(data as Service);
       const { data: updated, error } = await this.datasource.update(id, entity);
-      if (error || !updated) throw new Error(error?.message || "Serviço não encontrado");
+      if (error || !updated)
+        throw new Error(error?.message || "Serviço não encontrado");
       return this.mapper.toObject(updated);
     } catch (error) {
       Logger.error(`Error updating service with id ${id}:`, error);

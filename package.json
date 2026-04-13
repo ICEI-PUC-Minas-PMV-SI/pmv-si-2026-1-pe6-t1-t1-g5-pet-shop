@@ -9,7 +9,10 @@
     "scripts": {
         "install:all": "npm install && cd src/pet_flow_backend && npm install",
         "prepare": "if [ -f node_modules/.bin/husky ]; then husky; fi",
-        "build": "cd src/pet_flow_backend && npm run build"
+        "build": "cd src/pet_flow_backend && npm run build",
+        "dev": "cd src/pet_flow_backend && npm run dev",
+        "start": "cd src/pet_flow_backend && npm run start",
+        "test": "cd src/pet_flow_backend && npm test"
     },
     "devDependencies": {
         "husky": "^9.1.5",

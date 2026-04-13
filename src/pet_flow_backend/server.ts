@@ -9,5 +9,7 @@ app.listen(PORT, () => {
       : `http://localhost:${PORT}`;
 
   console.log(`[server]: Server is running at ${baseUrl}`);
-  console.log(`[swagger]: API Documentation available at ${baseUrl}/api-docs`);
+  console.log(
+    `[swagger]: API Documentation available at ${baseUrl}/api/v1/api-docs`,
+  );
 });

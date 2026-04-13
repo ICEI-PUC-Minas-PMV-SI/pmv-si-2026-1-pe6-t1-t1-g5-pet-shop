@@ -13,10 +13,8 @@ export class FinancialTransactionMapper
     return new FinancialTransaction(
       fromObject.id,
       fromObject.scheduling_id,
-      fromObject.category,
       fromObject.description,
       fromObject.amount,
-      fromObject.payment_date,
       fromObject.payment_method,
       fromObject.employee_id,
       fromObject.clinic_id,
@@ -28,10 +26,8 @@ export class FinancialTransactionMapper
     return new FinancialTransactionEntity(
       toObject.id,
       toObject.schedulingId,
-      toObject.category,
       toObject.description,
       toObject.amount,
-      toObject.paymentDate,
       toObject.paymentMethod,
       toObject.employeeId,
       toObject.clinicId,

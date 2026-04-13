@@ -12,11 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet({ contentSecurityPolicy: false }));
 
-try {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-} catch {
-  console.log("Swagger documentation not generated yet.");
-}
+app.use("/api/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const appRouter = new AppRouter();
 app.use("/api/v1", appRouter.router);
