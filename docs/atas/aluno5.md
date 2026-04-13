@@ -8,11 +8,11 @@
 | 16/02 - 22/02 | Gestão de Serviços de TI - Unidade 2 | ✅ |  |  |
 | 23/02 - 01/03 | Arquitetura de Software Distribuído - Unidade 1 e 2 | ✅ |  |  |
 | 02/03 - 08/03 | Arquitetura de Software Distribuído - Unidade 3 | ✅ |  |  |
-| 09/03 - 15/03 | APIs e Web Services - Unidade 1 | ✅ |  |  |
-| 16/03 - 22/03 | APIs e Web Services - Unidade 2 | ✅ |  |  |
-| 23/03 - 29/03 | APIs e Web Services - Unidade 2 | ✅ |  |  |
-| 30/03 - 05/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 1 | ✅ |  |  |
-| 06/04 - 12/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 2 | ✅ |  |  |
+| 09/03 - 15/03 | APIs e Web Services - Unidade 1 | ✅ | Desenvolvimento da API de Agendamento (CRUD) - routes, controller e service | Implementadas as rotas, controller e service da API de scheduling com suporte a CRUD completo (GET, POST, PUT, DELETE) |
+| 16/03 - 22/03 | APIs e Web Services - Unidade 2 | ✅ | Implementação do datasource, repository e DTOs do módulo de scheduling | Desenvolvidos datasource (integração com Supabase), repository e DTOs de criação, atualização e resposta do scheduling |
+| 23/03 - 29/03 | APIs e Web Services - Unidade 2 | ✅ | Validações, mapeadores e testes da API de scheduling | Implementados mapeadores de DTO, validações de campos obrigatórios, status permitidos e tratamento de erros com SchedulingError |
+| 30/03 - 05/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 1 | ✅ | Validações, mapeadores e testes da API de scheduling | Revisão e refinamento das validações da API de scheduling; ajustes nos mapeadores de domínio e DTO |
+| 06/04 - 12/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 2 | ✅ | Documentação Swagger da API de scheduling | Gerada e publicada a documentação Swagger da API de scheduling com descrição dos endpoints, parâmetros e respostas |
 | 13/04 - 19/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 1 | ✅ |  |  |
 | 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ✅ |  |  |
 | 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ✅ |  |  |
