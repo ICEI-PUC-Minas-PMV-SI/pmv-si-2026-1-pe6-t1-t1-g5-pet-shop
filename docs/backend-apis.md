@@ -86,48 +86,6 @@ Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (excet
 }
 ```
 
-A documentação completa e interativa dos endpoints da API está disponível no Swagger UI em http://localhost:3000/api-docs (ou na URL de produção). Nela é possível testar todas as rotas diretamente na interface, visualizar os esquemas de request/response e entender os parâmetros obrigatórios.
-
-Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (exceto autenticação) requerem um token JWT no header, obtido via login.
-
-### Autenticação (`/auth`)
-
-#### `POST /api/v1/auth/register` — Criar Usuário
-
-- Descrição: cria um novo usuário no sistema.
-  
-**Body (JSON):**
-
-```json
-{
-  "clinicId": "uuid-da-clinica",
-  "name": "nome-usuario",
-  "email": "email@exemplo.com",
-  "password": "senha-segura",
-  "role": "cargo-usuario",
-  "phone": "telefone-usuario"
-}
-```
-
-**Respostas:**
-
-`201 Created` — Usuário criado com sucesso
-
-```json
-{
-  "user_id": "uuid-do-usuario",
-  "token": "token-do-usuario"
-}
-```
-
-`400 Bad Request` —  Dados inválidos ou falha no cadastro
-
-```json
-{
-  "error": "Dados inválidos ou usuário não cadastrado"
-}
-```
-
 ### Funcionários
 
 #### 1. Registro de Funcionário
