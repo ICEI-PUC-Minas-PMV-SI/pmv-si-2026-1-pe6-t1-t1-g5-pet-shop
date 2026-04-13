@@ -46,7 +46,33 @@ const doc = {
       name: "Serviços",
       description: "Cadastro e gestão de serviços oferecidos pelo pet shop",
     },
+    {
+      name: "Clínica",
+      description: "Gestão de informações da clínica",
+    },
+    {
+      name: "Funcionário",
+      description: "Gestão de funcionários",
+    },
+    {
+      name: "Pet",
+      description: "Gestão de pets",
+    },
+    {
+      name: "Tutor",
+      description: "Gestão de tutores",
+    },
+    {
+      name: "Vacina",
+      description: "Gestão de vacinas",
+    },
+    {
+      name: "Produto",
+      description: "Gestão de produtos",
+    },
   ],
+
+
   definitions: {
     LoginRequest: {
       email: "funcionario@exemplo.com",
@@ -146,7 +172,107 @@ const doc = {
       price: 120.0,
       duration: 90,
     },
+    ClinicCreateRequest: {
+      name: "Pet Flow Clinic",
+      cnpj: "12.345.678/0001-90",
+      address: "Rua das Flores, 123",
+      phone: "(11) 99999-9999",
+      email: "contato@petflow.com",
+    },
+    ClinicResponse: {
+      id: "uuid-da-clinica",
+      name: "Pet Flow Clinic",
+      cnpj: "12.345.678/0001-90",
+      address: "Rua das Flores, 123",
+      phone: "(11) 99999-9999",
+      email: "contato@petflow.com",
+      createdAt: "2026-04-13T12:00:00Z",
+    },
+    EmployeeCreateRequest: {
+      name: "João Silva",
+      cpf: "123.456.789-00",
+      address: "Av. Paulista, 1000",
+      phone: "(11) 88888-8888",
+      email: "joao@exemplo.com",
+      role: "Veterinário",
+    },
+    EmployeeResponse: {
+      id: "uuid-do-funcionario",
+      name: "João Silva",
+      cpf: "123.456.789-00",
+      address: "Av. Paulista, 1000",
+      phone: "(11) 88888-8888",
+      email: "joao@exemplo.com",
+      role: "Veterinário",
+      createdAt: "2026-04-13T12:00:00Z",
+    },
+    PetCreateRequest: {
+      name: "Rex",
+      species: "Cachorro",
+      breed: "Labrador",
+      age: 5,
+      weight: 30.5,
+      tutorId: "uuid-do-tutor",
+    },
+    PetResponse: {
+      id: "uuid-do-pet",
+      name: "Rex",
+      species: "Cachorro",
+      breed: "Labrador",
+      age: 5,
+      weight: 30.5,
+      tutorId: "uuid-do-tutor",
+      createdAt: "2026-04-13T12:00:00Z",
+    },
+    TutorCreateRequest: {
+      name: "Maria Oliveira",
+      cpf: "987.654.321-00",
+      address: "Rua Aclimação, 50",
+      phone: "(11) 77777-7777",
+      email: "maria@exemplo.com",
+    },
+    TutorResponse: {
+      id: "uuid-do-tutor",
+      name: "Maria Oliveira",
+      cpf: "987.654.321-00",
+      address: "Rua Aclimação, 50",
+      phone: "(11) 77777-7777",
+      email: "maria@exemplo.com",
+      createdAt: "2026-04-13T12:00:00Z",
+    },
+    VaccineCreateRequest: {
+      name: "V10",
+      description: "Vacina múltipla para cães",
+      batch: "AB1234",
+      expirationDate: "2027-01-01T00:00:00Z",
+    },
+    VaccineResponse: {
+      id: "uuid-da-vacina",
+      name: "V10",
+      description: "Vacina múltipla para cães",
+      batch: "AB1234",
+      expirationDate: "2027-01-01T00:00:00Z",
+      createdAt: "2026-04-13T12:00:00Z",
+    },
+    ProductCreateRequest: {
+      name: "Ração Premium",
+      description: "Ração para cães adultos de porte médio",
+      price: 150.0,
+      stock: 50,
+      category: "Alimentação",
+    },
+    ProductResponse: {
+      id: "uuid-do-produto",
+      name: "Ração Premium",
+      description: "Ração para cães adultos de porte médio",
+      price: 150.0,
+      stock: 50,
+      category: "Alimentação",
+      createdAt: "2026-04-13T12:00:00Z",
+    },
   },
+
+
 };
 
 const outputFile = "./swagger_output.json";

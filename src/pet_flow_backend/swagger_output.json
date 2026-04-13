@@ -3,9 +3,9 @@
   "info": {
     "title": "Pet Flow API",
     "description": "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
-  "host": "pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -23,10 +23,34 @@
     {
       "name": "Serviços",
       "description": "Cadastro e gestão de serviços oferecidos pelo pet shop"
+    },
+    {
+      "name": "Clínica",
+      "description": "Gestão de informações da clínica"
+    },
+    {
+      "name": "Funcionário",
+      "description": "Gestão de funcionários"
+    },
+    {
+      "name": "Pet",
+      "description": "Gestão de pets"
+    },
+    {
+      "name": "Tutor",
+      "description": "Gestão de tutores"
+    },
+    {
+      "name": "Vacina",
+      "description": "Gestão de vacinas"
+    },
+    {
+      "name": "Produto",
+      "description": "Gestão de produtos"
     }
   ],
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "bearerAuth": {
@@ -105,15 +129,29 @@
     },
     "/clinic/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Clínica"
         ],
+        "description": "Lista todas as clínicas cadastradas.",
         "responses": {
+          "200": {
+            "description": "Lista de clínicas recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/ClinicResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -123,15 +161,28 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Clínica"
+        ],
+        "description": "Cria uma nova clínica.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados da nova clínica",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClinicCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Clínica criada com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ClinicResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -143,23 +194,30 @@
     },
     "/clinic/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Clínica"
+        ],
+        "description": "Busca uma clínica pelo ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Clínica encontrada",
+            "schema": {
+              "$ref": "#/definitions/ClinicResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Clínica não encontrada"
           },
           "500": {
             "description": "Internal Server Error"
@@ -167,7 +225,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Clínica"
+        ],
+        "description": "Atualiza os dados de uma clínica existente.",
         "parameters": [
           {
             "name": "id",
@@ -176,12 +237,22 @@
             "type": "string"
           },
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados da clínica",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ClinicCreateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Clínica atualizada com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ClinicResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -191,21 +262,22 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Clínica"
+        ],
+        "description": "Remove permanentemente uma clínica.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Clínica excluída com sucesso"
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -217,15 +289,29 @@
     },
     "/employee/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Funcionário"
         ],
+        "description": "Lista todos os funcionários cadastrados.",
         "responses": {
+          "200": {
+            "description": "Lista de funcionários recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/EmployeeResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -235,15 +321,28 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Funcionário"
+        ],
+        "description": "Cria um novo funcionário.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados do novo funcionário",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmployeeCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Funcionário criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/EmployeeResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -255,23 +354,30 @@
     },
     "/employee/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Funcionário"
+        ],
+        "description": "Busca um funcionário pelo ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Funcionário encontrado",
+            "schema": {
+              "$ref": "#/definitions/EmployeeResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Funcionário não encontrado"
           },
           "500": {
             "description": "Internal Server Error"
@@ -279,7 +385,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Funcionário"
+        ],
+        "description": "Atualiza os dados de um funcionário existente.",
         "parameters": [
           {
             "name": "id",
@@ -288,12 +397,22 @@
             "type": "string"
           },
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados do funcionário",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/EmployeeCreateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Funcionário atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/EmployeeResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -303,21 +422,22 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Funcionário"
+        ],
+        "description": "Remove permanentemente um funcionário.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Funcionário excluído com sucesso"
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -505,15 +625,29 @@
     },
     "/pet/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Pet"
         ],
+        "description": "Lista todos os pets cadastrados.",
         "responses": {
+          "200": {
+            "description": "Lista de pets recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/PetResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -523,15 +657,28 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Pet"
+        ],
+        "description": "Cria um novo pet.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados do novo pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Pet criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/PetResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -543,23 +690,30 @@
     },
     "/pet/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Pet"
+        ],
+        "description": "Busca um pet pelo ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Pet encontrado",
+            "schema": {
+              "$ref": "#/definitions/PetResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Pet não encontrado"
           },
           "500": {
             "description": "Internal Server Error"
@@ -567,7 +721,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Pet"
+        ],
+        "description": "Atualiza os dados de um pet existente.",
         "parameters": [
           {
             "name": "id",
@@ -576,12 +733,22 @@
             "type": "string"
           },
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados do pet",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetCreateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Pet atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/PetResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -591,21 +758,22 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Pet"
+        ],
+        "description": "Remove permanentemente um pet.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Pet excluído com sucesso"
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -967,15 +1135,29 @@
     },
     "/tutor/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Tutor"
         ],
+        "description": "Lista todos os tutores cadastrados.",
         "responses": {
+          "200": {
+            "description": "Lista de tutores recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/TutorResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -985,15 +1167,28 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Tutor"
+        ],
+        "description": "Cria um novo tutor.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados do novo tutor",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TutorCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Tutor criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/TutorResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1005,23 +1200,30 @@
     },
     "/tutor/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Tutor"
+        ],
+        "description": "Busca um tutor pelo ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Tutor encontrado",
+            "schema": {
+              "$ref": "#/definitions/TutorResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Tutor não encontrado"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1029,7 +1231,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Tutor"
+        ],
+        "description": "Atualiza os dados de um tutor existente.",
         "parameters": [
           {
             "name": "id",
@@ -1038,12 +1243,22 @@
             "type": "string"
           },
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados do tutor",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TutorCreateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Tutor atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/TutorResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1053,21 +1268,22 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Tutor"
+        ],
+        "description": "Remove permanentemente um tutor.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Tutor excluído com sucesso"
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1079,15 +1295,29 @@
     },
     "/vaccine/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Vacina"
         ],
+        "description": "Lista todas as vacinas cadastradas.",
         "responses": {
+          "200": {
+            "description": "Lista de vacinas recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/VaccineResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1097,15 +1327,28 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Vacina"
+        ],
+        "description": "Cria uma nova vacina.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados da nova vacina",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VaccineCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Vacina criada com sucesso",
+            "schema": {
+              "$ref": "#/definitions/VaccineResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1117,23 +1360,30 @@
     },
     "/vaccine/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Vacina"
+        ],
+        "description": "Busca uma vacina pelo ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Vacina encontrada",
+            "schema": {
+              "$ref": "#/definitions/VaccineResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Vacina não encontrada"
           },
           "500": {
             "description": "Internal Server Error"
@@ -1141,7 +1391,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Vacina"
+        ],
+        "description": "Atualiza os dados de uma vacina existente.",
         "parameters": [
           {
             "name": "id",
@@ -1150,12 +1403,22 @@
             "type": "string"
           },
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados da vacina",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/VaccineCreateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Vacina atualizada com sucesso",
+            "schema": {
+              "$ref": "#/definitions/VaccineResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -1165,7 +1428,115 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Vacina"
+        ],
+        "description": "Remove permanentemente uma vacina.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Vacina excluída com sucesso"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/": {
+      "get": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Lista todos os produtos cadastrados.",
+        "responses": {
+          "200": {
+            "description": "Lista de produtos recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/ProductResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Cria um novo produto.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do novo produto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ProductResponse"
+            }
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Busca um produto pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto encontrado",
+            "schema": {
+              "$ref": "#/definitions/ProductResponse"
+            }
+          },
+          "404": {
+            "description": "Produto não encontrado"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Atualiza os dados de um produto existente.",
         "parameters": [
           {
             "name": "id",
@@ -1174,17 +1545,40 @@
             "type": "string"
           },
           {
-            "name": "authorization",
-            "in": "header",
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados do produto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ProductResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Remove permanentemente um produto.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
             "type": "string"
           }
         ],
         "responses": {
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Internal Server Error"
+          "204": {
+            "description": "Produto excluído com sucesso"
           }
         }
       }
@@ -1538,6 +1932,362 @@
         "duration": {
           "type": "number",
           "example": 90
+        }
+      }
+    },
+    "ClinicCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Pet Flow Clinic"
+        },
+        "cnpj": {
+          "type": "string",
+          "example": "12.345.678/0001-90"
+        },
+        "address": {
+          "type": "string",
+          "example": "Rua das Flores, 123"
+        },
+        "phone": {
+          "type": "string",
+          "example": "(11) 99999-9999"
+        },
+        "email": {
+          "type": "string",
+          "example": "contato@petflow.com"
+        }
+      }
+    },
+    "ClinicResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "name": {
+          "type": "string",
+          "example": "Pet Flow Clinic"
+        },
+        "cnpj": {
+          "type": "string",
+          "example": "12.345.678/0001-90"
+        },
+        "address": {
+          "type": "string",
+          "example": "Rua das Flores, 123"
+        },
+        "phone": {
+          "type": "string",
+          "example": "(11) 99999-9999"
+        },
+        "email": {
+          "type": "string",
+          "example": "contato@petflow.com"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-04-13T12:00:00Z"
+        }
+      }
+    },
+    "EmployeeCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "João Silva"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "123.456.789-00"
+        },
+        "address": {
+          "type": "string",
+          "example": "Av. Paulista, 1000"
+        },
+        "phone": {
+          "type": "string",
+          "example": "(11) 88888-8888"
+        },
+        "email": {
+          "type": "string",
+          "example": "joao@exemplo.com"
+        },
+        "role": {
+          "type": "string",
+          "example": "Veterinário"
+        }
+      }
+    },
+    "EmployeeResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-do-funcionario"
+        },
+        "name": {
+          "type": "string",
+          "example": "João Silva"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "123.456.789-00"
+        },
+        "address": {
+          "type": "string",
+          "example": "Av. Paulista, 1000"
+        },
+        "phone": {
+          "type": "string",
+          "example": "(11) 88888-8888"
+        },
+        "email": {
+          "type": "string",
+          "example": "joao@exemplo.com"
+        },
+        "role": {
+          "type": "string",
+          "example": "Veterinário"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-04-13T12:00:00Z"
+        }
+      }
+    },
+    "PetCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Rex"
+        },
+        "species": {
+          "type": "string",
+          "example": "Cachorro"
+        },
+        "breed": {
+          "type": "string",
+          "example": "Labrador"
+        },
+        "age": {
+          "type": "number",
+          "example": 5
+        },
+        "weight": {
+          "type": "number",
+          "example": 30.5
+        },
+        "tutorId": {
+          "type": "string",
+          "example": "uuid-do-tutor"
+        }
+      }
+    },
+    "PetResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-do-pet"
+        },
+        "name": {
+          "type": "string",
+          "example": "Rex"
+        },
+        "species": {
+          "type": "string",
+          "example": "Cachorro"
+        },
+        "breed": {
+          "type": "string",
+          "example": "Labrador"
+        },
+        "age": {
+          "type": "number",
+          "example": 5
+        },
+        "weight": {
+          "type": "number",
+          "example": 30.5
+        },
+        "tutorId": {
+          "type": "string",
+          "example": "uuid-do-tutor"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-04-13T12:00:00Z"
+        }
+      }
+    },
+    "TutorCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Maria Oliveira"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "987.654.321-00"
+        },
+        "address": {
+          "type": "string",
+          "example": "Rua Aclimação, 50"
+        },
+        "phone": {
+          "type": "string",
+          "example": "(11) 77777-7777"
+        },
+        "email": {
+          "type": "string",
+          "example": "maria@exemplo.com"
+        }
+      }
+    },
+    "TutorResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-do-tutor"
+        },
+        "name": {
+          "type": "string",
+          "example": "Maria Oliveira"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "987.654.321-00"
+        },
+        "address": {
+          "type": "string",
+          "example": "Rua Aclimação, 50"
+        },
+        "phone": {
+          "type": "string",
+          "example": "(11) 77777-7777"
+        },
+        "email": {
+          "type": "string",
+          "example": "maria@exemplo.com"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-04-13T12:00:00Z"
+        }
+      }
+    },
+    "VaccineCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "V10"
+        },
+        "description": {
+          "type": "string",
+          "example": "Vacina múltipla para cães"
+        },
+        "batch": {
+          "type": "string",
+          "example": "AB1234"
+        },
+        "expirationDate": {
+          "type": "string",
+          "example": "2027-01-01T00:00:00Z"
+        }
+      }
+    },
+    "VaccineResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-da-vacina"
+        },
+        "name": {
+          "type": "string",
+          "example": "V10"
+        },
+        "description": {
+          "type": "string",
+          "example": "Vacina múltipla para cães"
+        },
+        "batch": {
+          "type": "string",
+          "example": "AB1234"
+        },
+        "expirationDate": {
+          "type": "string",
+          "example": "2027-01-01T00:00:00Z"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-04-13T12:00:00Z"
+        }
+      }
+    },
+    "ProductCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Ração Premium"
+        },
+        "description": {
+          "type": "string",
+          "example": "Ração para cães adultos de porte médio"
+        },
+        "price": {
+          "type": "number",
+          "example": 150
+        },
+        "stock": {
+          "type": "number",
+          "example": 50
+        },
+        "category": {
+          "type": "string",
+          "example": "Alimentação"
+        }
+      }
+    },
+    "ProductResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-do-produto"
+        },
+        "name": {
+          "type": "string",
+          "example": "Ração Premium"
+        },
+        "description": {
+          "type": "string",
+          "example": "Ração para cães adultos de porte médio"
+        },
+        "price": {
+          "type": "number",
+          "example": 150
+        },
+        "stock": {
+          "type": "number",
+          "example": 50
+        },
+        "category": {
+          "type": "string",
+          "example": "Alimentação"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-04-13T12:00:00Z"
         }
       }
     }
