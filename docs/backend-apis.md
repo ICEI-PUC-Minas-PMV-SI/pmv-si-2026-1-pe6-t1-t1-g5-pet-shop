@@ -44,6 +44,90 @@ As principais tecnologias utilizadas no desenvolvimento da API são:
 
 ## API Endpoints
 
+A documentação completa e interativa dos endpoints da API está disponível no Swagger UI em http://localhost:3000/api-docs (ou na URL de produção). Nela é possível testar todas as rotas diretamente na interface, visualizar os esquemas de request/response e entender os parâmetros obrigatórios.
+
+Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (exceto autenticação) requerem um token JWT no header, obtido via login.
+
+### Autenticação (`/auth`)
+
+#### `POST /api/v1/auth/register` — Criar Usuário
+
+- Descrição: cria um novo usuário no sistema.
+  
+**Body (JSON):**
+
+```json
+{
+  "clinicId": "uuid-da-clinica",
+  "name": "nome-usuario",
+  "email": "email@exemplo.com",
+  "password": "senha-segura",
+  "role": "cargo-usuario",
+  "phone": "telefone-usuario"
+}
+```
+
+**Respostas:**
+
+`201 Created` — Usuário criado com sucesso
+
+```json
+{
+  "user_id": "uuid-do-usuario",
+  "token": "token-do-usuario"
+}
+```
+
+`400 Bad Request` —  Dados inválidos ou falha no cadastro
+
+```json
+{
+  "error": "Dados inválidos ou usuário não cadastrado"
+}
+```
+
+A documentação completa e interativa dos endpoints da API está disponível no Swagger UI em http://localhost:3000/api-docs (ou na URL de produção). Nela é possível testar todas as rotas diretamente na interface, visualizar os esquemas de request/response e entender os parâmetros obrigatórios.
+
+Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (exceto autenticação) requerem um token JWT no header, obtido via login.
+
+### Autenticação (`/auth`)
+
+#### `POST /api/v1/auth/register` — Criar Usuário
+
+- Descrição: cria um novo usuário no sistema.
+  
+**Body (JSON):**
+
+```json
+{
+  "clinicId": "uuid-da-clinica",
+  "name": "nome-usuario",
+  "email": "email@exemplo.com",
+  "password": "senha-segura",
+  "role": "cargo-usuario",
+  "phone": "telefone-usuario"
+}
+```
+
+**Respostas:**
+
+`201 Created` — Usuário criado com sucesso
+
+```json
+{
+  "user_id": "uuid-do-usuario",
+  "token": "token-do-usuario"
+}
+```
+
+`400 Bad Request` —  Dados inválidos ou falha no cadastro
+
+```json
+{
+  "error": "Dados inválidos ou usuário não cadastrado"
+}
+```
+
 ### Funcionários
 
 #### 1. Registro de Funcionário
@@ -564,47 +648,6 @@ As principais tecnologias utilizadas no desenvolvimento da API são:
       }
     }
     ```
-A documentação completa e interativa dos endpoints da API está disponível no Swagger UI em http://localhost:3000/api-docs (ou na URL de produção). Nela é possível testar todas as rotas diretamente na interface, visualizar os esquemas de request/response e entender os parâmetros obrigatórios.
-
-Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (exceto autenticação) requerem um token JWT no header, obtido via login.
-
-### Autenticação (`/auth`)
-
-#### `POST /api/v1/auth/register` — Criar Usuário
-
-- Descrição: cria um novo usuário no sistema.
-  
-**Body (JSON):**
-
-```json
-{
-  "clinicId": "uuid-da-clinica",
-  "name": "nome-usuario",
-  "email": "email@exemplo.com",
-  "password": "senha-segura",
-  "role": "cargo-usuario",
-  "phone": "telefone-usuario"
-}
-```
-
-**Respostas:**
-
-`201 Created` — Usuário criado com sucesso
-
-```json
-{
-  "user_id": "uuid-do-usuario",
-  "token": "token-do-usuario"
-}
-```
-
-`400 Bad Request` —  Dados inválidos ou falha no cadastro
-
-```json
-{
-  "error": "Dados inválidos ou usuário não cadastrado"
-}
-```
 
 ### Serviço (`/service`)
 
@@ -974,8 +1017,96 @@ curl -X DELETE http://localhost:3000/api/v1/financial/ -H "Content-Type: applica
 ### 5. Exclusão
 ![Evidência de exclusão](../docs/img/evidencia%20financial%205.png)
 
+---
 
-Demonstração do teste do módulo de Serviço realiza no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
+### Listagem, cadastro, exclusão e atualização de serviços
+
+## Registro e Login de Funcionários
+Demonstração do teste do módulo de Serviço realizada no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
+
+### 1. Registro
+
+POST http://localhost:3000/api/v1/auth/register
+
+curl -X POST http://localhost:3000/api/v1/auth/register -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
+
+Parâmetros
+email: Email do funcionário
+password: Senha
+
+### 2. Login
+
+POST http://localhost:3000/api/v1/auth/login
+
+curl -X POST http://localhost:3000/api/v1/auth/login -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
+
+## Evidências
+
+### 1. Registro
+![Evidência de registro](../docs/img/evidencia%20auth%201.png)
+
+### 2. Login
+![Evidência de login](../docs/img/evidencia%20auth%202.png)
+
+
+## Cadastro, exclusão e atualização de Transações Financeiras
+
+### 1. Listar todas as transações
+
+POST http://localhost:3000/api/v1/financial/all
+
+curl -X POST http://localhost:3000/api/v1/financial/all -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"clinicId\":\"ID_CLINICA\"}"
+
+Parâmetros
+clinicId: ID da clínica (opcional)
+employeeId: ID do funcionário (opcional)
+
+### 2. Obter detalhes
+
+POST http://localhost:3000/api/v1/financial/detail
+
+curl -X POST http://localhost:3000/api/v1/financial/detail -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
+
+### 3. Criar transação
+
+POST http://localhost:3000/api/v1/financial/
+
+curl -X POST http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"scheduling_id\":\"ID_AGENDAMENTO\",\"description\":\"Descrição\",\"amount\":150.0,\"payment_method\":\"Cartão\",\"employee_id\":\"ID_FUNC\",\"clinic_id\":\"ID_CLINICA\"}"
+
+### 4. Atualizar transação
+
+PUT http://localhost:3000/api/v1/financial/
+
+curl -X PUT http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\",\"description\":\"Descrição Atualizada\"}"
+
+### 5. Excluir transação
+
+DELETE http://localhost:3000/api/v1/financial/
+
+curl -X DELETE http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
+
+## Evidências
+
+### 1. Listar transações
+![Evidência de listagem](../docs/img/evidencia%20financial%201.png)
+
+### 2. Detalhes
+![Evidência de detalhes](../docs/img/evidencia%20financial%202.png)
+
+### 3. Criação
+![Evidência de criação](../docs/img/evidencia%20financial%203.png)
+
+### 4. Atualização
+![Evidência de atualização](../docs/img/evidencia%20financial%204.png)
+
+### 5. Exclusão
+![Evidência de exclusão](../docs/img/evidencia%20financial%205.png)
+
+---
+
+### Listagem, cadastro, exclusão e atualização de serviços
+
+Demonstração do teste do módulo de Serviço realizada no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
 
 ![Teste service](../docs/img/teste-service.gif)
 
