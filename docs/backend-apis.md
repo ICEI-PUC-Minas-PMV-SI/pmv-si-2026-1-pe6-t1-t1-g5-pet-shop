@@ -172,29 +172,30 @@ Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (excet
     }
     ```
 
-### Financeiro
+### Financeiro (`/financial`)
+
+O módulo financeiro permite o controle completo das transações financeiras do pet shop, incluindo receitas e despesas. Todas as rotas requerem autenticação via token JWT no header `Authorization: Bearer TOKEN`.
 
 #### 1. Listar todas as transações
 - **Método:** `POST`
 - **URL:** `/api/v1/financial/all`
+- **Descrição:** Retorna todas as transações financeiras. Aceita filtros opcionais por clínica e/ou funcionário.
 - **Parâmetros (Body JSON):**
-  - `clinicId`: ID da clínica (String) — opcional para filtrar por clínica
-  - `employeeId`: ID do funcionário (String) — opcional para filtrar por funcionário
+  - `clinicId`: ID da clínica (String) — opcional, filtra transações por clínica
+  - `employeeId`: ID do funcionário (String) — opcional, filtra transações por funcionário
 - **Resposta:**
   - Sucesso (200 OK)
     ```json
     [
       {
         "id": "uuid-da-transacao",
-        "scheduling_id": "uuid-do-agendamento",
-        "category": "Receita",
+        "schedulingId": "uuid-do-agendamento",
         "description": "Pagamento de Banho e Tosa",
         "amount": 150.0,
-        "payment_date": "2026-03-31T20:00:00Z",
-        "payment_method": "Cartão de Crédito",
-        "employee_id": "uuid-do-funcionario",
-        "clinic_id": "uuid-da-clinica",
-        "created_at": "2026-03-31T20:00:00Z"
+        "paymentMethod": "Cartão de Crédito",
+        "employeeId": "uuid-do-funcionario",
+        "clinicId": "uuid-da-clinica",
+        "createdAt": "2026-03-31T20:00:00.000Z"
       }
     ]
     ```
@@ -202,27 +203,38 @@ Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (excet
     ```json
     []
     ```
+  - Erro (500 Internal Server Error)
+    ```json
+    {
+      "error": "Internal Server Error"
+    }
+    ```
 
 #### 2. Obter detalhes de uma transação
 - **Método:** `POST`
 - **URL:** `/api/v1/financial/detail`
+- **Descrição:** Retorna os detalhes de uma transação específica. Requer `id` e `clinicId` para garantir isolamento por clínica.
 - **Parâmetros (Body JSON):**
-  - `id`: ID da transação (String)
-  - `clinicId`: ID da clínica (String)
+  - `id`: ID da transação (String) — **obrigatório**
+  - `clinicId`: ID da clínica (String) — **obrigatório**
 - **Resposta:**
   - Sucesso (200 OK)
     ```json
     {
       "id": "uuid-da-transacao",
-      "scheduling_id": "uuid-do-agendamento",
-      "category": "Receita",
+      "schedulingId": "uuid-do-agendamento",
       "description": "Pagamento de Banho e Tosa",
       "amount": 150.0,
-      "payment_date": "2026-03-31T20:00:00Z",
-      "payment_method": "Cartão de Crédito",
-      "employee_id": "uuid-do-funcionario",
-      "clinic_id": "uuid-da-clinica",
-      "created_at": "2026-03-31T20:00:00Z"
+      "paymentMethod": "Cartão de Crédito",
+      "employeeId": "uuid-do-funcionario",
+      "clinicId": "uuid-da-clinica",
+      "createdAt": "2026-03-31T20:00:00.000Z"
+    }
+    ```
+  - Erro (400 Bad Request) — campos obrigatórios ausentes
+    ```json
+    {
+      "error": "id and clinicId are required in body"
     }
     ```
   - Erro (404 Not Found)
@@ -235,29 +247,26 @@ Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (excet
 #### 3. Criar transação financeira
 - **Método:** `POST`
 - **URL:** `/api/v1/financial/`
+- **Descrição:** Cria uma nova transação financeira vinculada a um agendamento, funcionário e clínica.
 - **Parâmetros (Body JSON):**
   - `scheduling_id`: ID do agendamento (String)
-  - `category`: Categoria da transação (String)
-  - `description`: Descrição (String)
-  - `amount`: Valor (Number)
-  - `payment_date`: Data do pagamento (String)
+  - `description`: Descrição da transação (String)
+  - `amount`: Valor da transação (Number)
   - `payment_method`: Método de pagamento (String)
-  - `employee_id`: ID do funcionário (String)
+  - `employee_id`: ID do funcionário responsável (String)
   - `clinic_id`: ID da clínica (String)
 - **Resposta:**
   - Sucesso (201 Created)
     ```json
     {
       "id": "uuid-da-transacao",
-      "scheduling_id": "uuid-do-agendamento",
-      "category": "Receita",
+      "schedulingId": "uuid-do-agendamento",
       "description": "Pagamento de Banho e Tosa",
       "amount": 150.0,
-      "payment_date": "2026-03-31T20:00:00Z",
-      "payment_method": "Cartão de Crédito",
-      "employee_id": "uuid-do-funcionario",
-      "clinic_id": "uuid-da-clinica",
-      "created_at": "2026-03-31T20:00:00Z"
+      "paymentMethod": "Cartão de Crédito",
+      "employeeId": "uuid-do-funcionario",
+      "clinicId": "uuid-da-clinica",
+      "createdAt": "2026-03-31T20:00:00.000Z"
     }
     ```
   - Erro (400 Bad Request)
@@ -270,33 +279,36 @@ Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (excet
 #### 4. Atualizar transação financeira
 - **Método:** `PUT`
 - **URL:** `/api/v1/financial/`
+- **Descrição:** Atualiza uma transação existente. Requer `id` e `clinicId` no body para validar a autorização. Os demais campos são opcionais.
 - **Parâmetros (Body JSON):**
-  - `id`: ID da transação (String)
-  - `clinicId`: ID da clínica (String)
-  - `scheduling_id`: ID do agendamento (String)
-  - `category`: Categoria da transação (String)
-  - `description`: Descrição (String)
-  - `amount`: Valor (Number)
-  - `payment_date`: Data do pagamento (String)
-  - `payment_method`: Método de pagamento (String)
-  - `employee_id`: ID do funcionário (String)
+  - `id`: ID da transação (String) — **obrigatório**
+  - `clinicId`: ID da clínica (String) — **obrigatório**
+  - `scheduling_id`: ID do agendamento (String) — opcional
+  - `description`: Descrição da transação (String) — opcional
+  - `amount`: Valor da transação (Number) — opcional
+  - `payment_method`: Método de pagamento (String) — opcional
+  - `employee_id`: ID do funcionário responsável (String) — opcional
 - **Resposta:**
   - Sucesso (200 OK)
     ```json
     {
       "id": "uuid-da-transacao",
-      "scheduling_id": "uuid-do-agendamento",
-      "category": "Receita",
+      "schedulingId": "uuid-do-agendamento",
       "description": "Pagamento de Banho e Tosa",
       "amount": 150.0,
-      "payment_date": "2026-03-31T20:00:00Z",
-      "payment_method": "Cartão de Crédito",
-      "employee_id": "uuid-do-funcionario",
-      "clinic_id": "uuid-da-clinica",
-      "created_at": "2026-03-31T20:00:00Z"
+      "paymentMethod": "Cartão de Crédito",
+      "employeeId": "uuid-do-funcionario",
+      "clinicId": "uuid-da-clinica",
+      "createdAt": "2026-03-31T20:00:00.000Z"
     }
     ```
-  - Erro (400 Bad Request)
+  - Erro (400 Bad Request) — campos obrigatórios ausentes
+    ```json
+    {
+      "error": "id and clinicId are required in request body"
+    }
+    ```
+  - Erro (400 Bad Request) — falha na atualização
     ```json
     {
       "error": "Failed to update or not authorized"
@@ -306,12 +318,19 @@ Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (excet
 #### 5. Excluir transação financeira
 - **Método:** `DELETE`
 - **URL:** `/api/v1/financial/`
+- **Descrição:** Remove permanentemente uma transação financeira. Requer `id` e `clinicId` para validar a autorização.
 - **Parâmetros (Body JSON):**
-  - `id`: ID da transação (String)
-  - `clinicId`: ID da clínica (String)
+  - `id`: ID da transação (String) — **obrigatório**
+  - `clinicId`: ID da clínica (String) — **obrigatório**
 - **Resposta:**
-  - Sucesso (204 No Content)
-  - Erro (400 Bad Request)
+  - Sucesso (204 No Content) — sem corpo de resposta
+  - Erro (400 Bad Request) — campos obrigatórios ausentes
+    ```json
+    {
+      "error": "id and clinicId are required in body"
+    }
+    ```
+  - Erro (400 Bad Request) — falha na exclusão
     ```json
     {
       "error": "Failed to delete or not authorized"
@@ -966,126 +985,153 @@ curl -X POST http://localhost:3000/api/v1/auth/login -H "Content-Type: applicati
 
 ## Cadastro, exclusão e atualização de Transações Financeiras
 
-### 1. Listar todas as transações
+Testes do módulo financeiro realizados via Postman/cURL, validando o funcionamento correto das rotas, autenticação JWT e retorno das requisições.
 
-POST http://localhost:3000/api/v1/financial/all
-
-curl -X POST http://localhost:3000/api/v1/financial/all -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"clinicId\":\"ID_CLINICA\"}"
-
-Parâmetros
-clinicId: ID da clínica (opcional)
-employeeId: ID do funcionário (opcional)
-
-### 2. Obter detalhes
-
-POST http://localhost:3000/api/v1/financial/detail
-
-curl -X POST http://localhost:3000/api/v1/financial/detail -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
-
-### 3. Criar transação
-
-POST http://localhost:3000/api/v1/financial/
-
-curl -X POST http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"scheduling_id\":\"ID_AGENDAMENTO\",\"description\":\"Descrição\",\"amount\":150.0,\"payment_method\":\"Cartão\",\"employee_id\":\"ID_FUNC\",\"clinic_id\":\"ID_CLINICA\"}"
-
-### 4. Atualizar transação
-
-PUT http://localhost:3000/api/v1/financial/
-
-curl -X PUT http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\",\"description\":\"Descrição Atualizada\"}"
-
-### 5. Excluir transação
-
-DELETE http://localhost:3000/api/v1/financial/
-
-curl -X DELETE http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
-
-## Evidências
-
-### 1. Listar transações
-![Evidência de listagem](../docs/img/evidencia%20financial%201.png)
-
-### 2. Detalhes
-![Evidência de detalhes](../docs/img/evidencia%20financial%202.png)
-
-### 3. Criação
-![Evidência de criação](../docs/img/evidencia%20financial%203.png)
-
-### 4. Atualização
-![Evidência de atualização](../docs/img/evidencia%20financial%204.png)
-
-### 5. Exclusão
-![Evidência de exclusão](../docs/img/evidencia%20financial%205.png)
-
----
-
-### Listagem, cadastro, exclusão e atualização de serviços
-
-## Registro e Login de Funcionários
-Demonstração do teste do módulo de Serviço realizada no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
-
-### 1. Registro
-
-POST http://localhost:3000/api/v1/auth/register
-
-curl -X POST http://localhost:3000/api/v1/auth/register -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
-
-Parâmetros
-email: Email do funcionário
-password: Senha
-
-### 2. Login
-
-POST http://localhost:3000/api/v1/auth/login
-
-curl -X POST http://localhost:3000/api/v1/auth/login -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
-
-## Evidências
-
-### 1. Registro
-![Evidência de registro](../docs/img/evidencia%20auth%201.png)
-
-### 2. Login
-![Evidência de login](../docs/img/evidencia%20auth%202.png)
-
-
-## Cadastro, exclusão e atualização de Transações Financeiras
+> **Pré-requisito:** Todas as rotas financeiras requerem autenticação. Obtenha o token via `POST /api/v1/auth/login` e inclua no header `Authorization: Bearer TOKEN`.
 
 ### 1. Listar todas as transações
 
-POST http://localhost:3000/api/v1/financial/all
+`POST http://localhost:3000/api/v1/financial/all`
 
-curl -X POST http://localhost:3000/api/v1/financial/all -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"clinicId\":\"ID_CLINICA\"}"
+```bash
+curl -X POST http://localhost:3000/api/v1/financial/all \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -d '{"clinicId":"ID_CLINICA"}'
+```
 
-Parâmetros
-clinicId: ID da clínica (opcional)
-employeeId: ID do funcionário (opcional)
+Parâmetros (opcionais):
+- `clinicId`: ID da clínica — filtra transações por clínica
+- `employeeId`: ID do funcionário — filtra transações por funcionário
 
-### 2. Obter detalhes
+**Resposta esperada (200 OK):**
+```json
+[
+  {
+    "id": "uuid-da-transacao",
+    "schedulingId": "uuid-do-agendamento",
+    "description": "Pagamento de Banho e Tosa",
+    "amount": 150.0,
+    "paymentMethod": "Cartão de Crédito",
+    "employeeId": "uuid-do-funcionario",
+    "clinicId": "uuid-da-clinica",
+    "createdAt": "2026-03-31T20:00:00.000Z"
+  }
+]
+```
 
-POST http://localhost:3000/api/v1/financial/detail
+### 2. Obter detalhes de uma transação
 
-curl -X POST http://localhost:3000/api/v1/financial/detail -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
+`POST http://localhost:3000/api/v1/financial/detail`
+
+```bash
+curl -X POST http://localhost:3000/api/v1/financial/detail \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -d '{"id":"ID_TRANSACAO","clinicId":"ID_CLINICA"}'
+```
+
+Parâmetros (obrigatórios):
+- `id`: ID da transação
+- `clinicId`: ID da clínica
+
+**Resposta esperada (200 OK):**
+```json
+{
+  "id": "uuid-da-transacao",
+  "schedulingId": "uuid-do-agendamento",
+  "description": "Pagamento de Banho e Tosa",
+  "amount": 150.0,
+  "paymentMethod": "Cartão de Crédito",
+  "employeeId": "uuid-do-funcionario",
+  "clinicId": "uuid-da-clinica",
+  "createdAt": "2026-03-31T20:00:00.000Z"
+}
+```
 
 ### 3. Criar transação
 
-POST http://localhost:3000/api/v1/financial/
+`POST http://localhost:3000/api/v1/financial/`
 
-curl -X POST http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"scheduling_id\":\"ID_AGENDAMENTO\",\"description\":\"Descrição\",\"amount\":150.0,\"payment_method\":\"Cartão\",\"employee_id\":\"ID_FUNC\",\"clinic_id\":\"ID_CLINICA\"}"
+```bash
+curl -X POST http://localhost:3000/api/v1/financial/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -d '{"scheduling_id":"ID_AGENDAMENTO","description":"Pagamento de Banho e Tosa","amount":150.0,"payment_method":"Cartão de Crédito","employee_id":"ID_FUNC","clinic_id":"ID_CLINICA"}'
+```
+
+Parâmetros:
+- `scheduling_id`: ID do agendamento
+- `description`: Descrição da transação
+- `amount`: Valor (numérico)
+- `payment_method`: Método de pagamento
+- `employee_id`: ID do funcionário
+- `clinic_id`: ID da clínica
+
+**Resposta esperada (201 Created):**
+```json
+{
+  "id": "uuid-da-transacao",
+  "schedulingId": "uuid-do-agendamento",
+  "description": "Pagamento de Banho e Tosa",
+  "amount": 150.0,
+  "paymentMethod": "Cartão de Crédito",
+  "employeeId": "uuid-do-funcionario",
+  "clinicId": "uuid-da-clinica",
+  "createdAt": "2026-03-31T20:00:00.000Z"
+}
+```
 
 ### 4. Atualizar transação
 
-PUT http://localhost:3000/api/v1/financial/
+`PUT http://localhost:3000/api/v1/financial/`
 
-curl -X PUT http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\",\"description\":\"Descrição Atualizada\"}"
+```bash
+curl -X PUT http://localhost:3000/api/v1/financial/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -d '{"id":"ID_TRANSACAO","clinicId":"ID_CLINICA","description":"Descrição Atualizada","amount":200.0}'
+```
+
+Parâmetros obrigatórios:
+- `id`: ID da transação
+- `clinicId`: ID da clínica
+
+Parâmetros opcionais (campos a atualizar):
+- `scheduling_id`, `description`, `amount`, `payment_method`, `employee_id`
+
+**Resposta esperada (200 OK):**
+```json
+{
+  "id": "uuid-da-transacao",
+  "schedulingId": "uuid-do-agendamento",
+  "description": "Descrição Atualizada",
+  "amount": 200.0,
+  "paymentMethod": "Cartão de Crédito",
+  "employeeId": "uuid-do-funcionario",
+  "clinicId": "uuid-da-clinica",
+  "createdAt": "2026-03-31T20:00:00.000Z"
+}
+```
 
 ### 5. Excluir transação
 
-DELETE http://localhost:3000/api/v1/financial/
+`DELETE http://localhost:3000/api/v1/financial/`
 
-curl -X DELETE http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
+```bash
+curl -X DELETE http://localhost:3000/api/v1/financial/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -d '{"id":"ID_TRANSACAO","clinicId":"ID_CLINICA"}'
+```
 
-## Evidências
+Parâmetros (obrigatórios):
+- `id`: ID da transação
+- `clinicId`: ID da clínica
+
+**Resposta esperada (204 No Content):** sem corpo de resposta
+
+## Evidências — Transações Financeiras
 
 ### 1. Listar transações
 ![Evidência de listagem](../docs/img/evidencia%20financial%201.png)
