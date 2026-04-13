@@ -14,4 +14,3 @@ const dtoMapper = new TutorDtoMapper();
 const controller = new TutorController(service, dtoMapper);
 
 export const tutorRoutes = new TutorRoutes(controller).router;
-

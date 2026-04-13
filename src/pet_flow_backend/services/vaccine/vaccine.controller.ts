@@ -5,7 +5,7 @@ import { VaccineDtoMapper } from "./dto/mappers/vaccine-dto.mapper";
 export class VaccineController {
   constructor(
     private readonly service: VaccineService,
-    private readonly mapper: VaccineDtoMapper
+    private readonly mapper: VaccineDtoMapper,
   ) {}
 
   async list(req: Request, res: Response): Promise<void> {
@@ -14,6 +14,7 @@ export class VaccineController {
       const response = this.mapper.toObjects(vaccines);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -25,6 +26,7 @@ export class VaccineController {
       const response = this.mapper.toObject(vaccine);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: "Vaccine not found" });
     }
   }
@@ -35,6 +37,7 @@ export class VaccineController {
       const response = this.mapper.toObject(vaccine);
       res.status(201).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -46,6 +49,7 @@ export class VaccineController {
       const response = this.mapper.toObject(vaccine);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -56,8 +60,8 @@ export class VaccineController {
       await this.service.deleteVaccine(id);
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
 }
-

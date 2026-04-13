@@ -14,4 +14,3 @@ const dtoMapper = new VaccineDtoMapper();
 const controller = new VaccineController(service, dtoMapper);
 
 export const vaccineRoutes = new VaccineRoutes(controller).router;
-

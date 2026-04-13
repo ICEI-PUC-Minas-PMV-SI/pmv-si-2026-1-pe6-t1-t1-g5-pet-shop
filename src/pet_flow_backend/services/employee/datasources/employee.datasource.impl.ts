@@ -1,6 +1,9 @@
 import { EmployeeDatasource } from "./employee.datasource";
 import { EmployeeEntity } from "./entities/employee.entity";
-import { supabaseExtensions, DbResult } from "../../../shared/utils/supabase.extensions";
+import {
+  supabaseExtensions,
+  DbResult,
+} from "../../../shared/utils/supabase.extensions";
 
 export class EmployeeDatasourceImpl implements EmployeeDatasource {
   private readonly table = "employees";
@@ -17,7 +20,10 @@ export class EmployeeDatasourceImpl implements EmployeeDatasource {
     return supabaseExtensions.create<EmployeeEntity>(this.table, employee);
   }
 
-  async update(id: string, employee: Partial<EmployeeEntity>): Promise<DbResult<EmployeeEntity>> {
+  async update(
+    id: string,
+    employee: Partial<EmployeeEntity>,
+  ): Promise<DbResult<EmployeeEntity>> {
     return supabaseExtensions.update<EmployeeEntity>(this.table, id, employee);
   }
 
@@ -25,4 +31,3 @@ export class EmployeeDatasourceImpl implements EmployeeDatasource {
     return supabaseExtensions.delete(this.table, id);
   }
 }
-

@@ -6,7 +6,7 @@ import { EmployeeRepository } from "./employee.repository";
 export class EmployeeRepositoryImpl implements EmployeeRepository {
   constructor(
     private readonly datasource: EmployeeDatasource,
-    private readonly mapper: EmployeeMapper
+    private readonly mapper: EmployeeMapper,
   ) {}
 
   async list(): Promise<Employee[]> {
@@ -15,6 +15,7 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
       if (error) return [];
       return this.mapper.toObjects(data || []);
     } catch (error) {
+      console.error(error);
       return [];
     }
   }
@@ -25,6 +26,7 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -36,6 +38,7 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -47,6 +50,7 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -56,8 +60,8 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
       const { error } = await this.datasource.delete(id);
       if (error) throw new Error(error.message);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
 }
-

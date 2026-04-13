@@ -19,6 +19,7 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       if (error || !data) return [];
       return this.mapper.toObjects(data);
     } catch (error) {
+      console.error(error);
       Logger.error(`Error fetching financial transactions:`, error);
       return [];
     }
@@ -36,6 +37,7 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       if (error || !data) return null;
       return this.mapper.toObject(data);
     } catch (error) {
+      console.error(error);
       Logger.error(
         `Error fetching financial transaction with id ${id}:`,
         error,
@@ -55,6 +57,7 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       if (error || !data) throw new Error(error?.message || "Failed to create");
       return this.mapper.toObject(data);
     } catch (error) {
+      console.error(error);
       Logger.error("Error creating financial transaction:", error);
       throw error;
     }
@@ -77,6 +80,7 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       if (error || !data) throw new Error(error?.message || "Failed to update");
       return this.mapper.toObject(data);
     } catch (error) {
+      console.error(error);
       Logger.error(
         `Error updating financial transaction with id ${id} for clinic ${clinicId}:`,
         error,
@@ -96,6 +100,7 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       }
       return true;
     } catch (error) {
+      console.error(error);
       Logger.error(
         `Error deleting financial transaction with id ${id} for clinic ${clinicId}:`,
         error,

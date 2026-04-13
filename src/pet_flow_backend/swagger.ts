@@ -2,7 +2,7 @@ import swaggerAutogen from "swagger-autogen";
 import { VERSION } from "./version";
 
 const doc = {
-  basePath: `/api/v${VERSION.split('.')[0]}`,
+  basePath: `/api/v${VERSION.split(".")[0]}`,
   info: {
     title: "Pet Flow API",
     description:

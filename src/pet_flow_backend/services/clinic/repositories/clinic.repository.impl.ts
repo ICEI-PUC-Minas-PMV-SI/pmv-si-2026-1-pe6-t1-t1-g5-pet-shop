@@ -6,7 +6,7 @@ import { ClinicRepository } from "./clinic.repository";
 export class ClinicRepositoryImpl implements ClinicRepository {
   constructor(
     private readonly datasource: ClinicDatasource,
-    private readonly mapper: ClinicMapper
+    private readonly mapper: ClinicMapper,
   ) {}
 
   async getClinics(): Promise<Clinic[]> {
@@ -15,6 +15,7 @@ export class ClinicRepositoryImpl implements ClinicRepository {
       if (error) return [];
       return this.mapper.toObjects(data || []);
     } catch (error) {
+      console.error(error);
       return [];
     }
   }
@@ -25,6 +26,7 @@ export class ClinicRepositoryImpl implements ClinicRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -36,6 +38,7 @@ export class ClinicRepositoryImpl implements ClinicRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -47,6 +50,7 @@ export class ClinicRepositoryImpl implements ClinicRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -56,8 +60,8 @@ export class ClinicRepositoryImpl implements ClinicRepository {
       const { error } = await this.datasource.delete(id);
       if (error) throw new Error(error.message);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
 }
-

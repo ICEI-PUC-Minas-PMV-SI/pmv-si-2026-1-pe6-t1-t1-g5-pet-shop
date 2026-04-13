@@ -1,6 +1,9 @@
 import { ClinicDatasource } from "./clinic.datasource";
 import { ClinicEntity } from "./entities/clinic.entity";
-import { supabaseExtensions, DbResult } from "../../../shared/utils/supabase.extensions";
+import {
+  supabaseExtensions,
+  DbResult,
+} from "../../../shared/utils/supabase.extensions";
 
 export class ClinicDatasourceImpl implements ClinicDatasource {
   private readonly table = "clinics";
@@ -17,7 +20,10 @@ export class ClinicDatasourceImpl implements ClinicDatasource {
     return supabaseExtensions.create<ClinicEntity>(this.table, clinic);
   }
 
-  async update(id: string, clinic: Partial<ClinicEntity>): Promise<DbResult<ClinicEntity>> {
+  async update(
+    id: string,
+    clinic: Partial<ClinicEntity>,
+  ): Promise<DbResult<ClinicEntity>> {
     return supabaseExtensions.update<ClinicEntity>(this.table, id, clinic);
   }
 
@@ -25,4 +31,3 @@ export class ClinicDatasourceImpl implements ClinicDatasource {
     return supabaseExtensions.delete(this.table, id);
   }
 }
-

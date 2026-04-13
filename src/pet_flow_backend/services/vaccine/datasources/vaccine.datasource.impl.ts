@@ -1,6 +1,9 @@
 import { VaccineDatasource } from "./vaccine.datasource";
 import { VaccineEntity } from "./entities/vaccine.entity";
-import { supabaseExtensions, DbResult } from "../../../shared/utils/supabase.extensions";
+import {
+  supabaseExtensions,
+  DbResult,
+} from "../../../shared/utils/supabase.extensions";
 
 export class VaccineDatasourceImpl implements VaccineDatasource {
   private readonly table = "vaccines";
@@ -13,11 +16,16 @@ export class VaccineDatasourceImpl implements VaccineDatasource {
     return supabaseExtensions.getById<VaccineEntity>(this.table, id);
   }
 
-  async create(vaccine: Partial<VaccineEntity>): Promise<DbResult<VaccineEntity>> {
+  async create(
+    vaccine: Partial<VaccineEntity>,
+  ): Promise<DbResult<VaccineEntity>> {
     return supabaseExtensions.create<VaccineEntity>(this.table, vaccine);
   }
 
-  async update(id: string, vaccine: Partial<VaccineEntity>): Promise<DbResult<VaccineEntity>> {
+  async update(
+    id: string,
+    vaccine: Partial<VaccineEntity>,
+  ): Promise<DbResult<VaccineEntity>> {
     return supabaseExtensions.update<VaccineEntity>(this.table, id, vaccine);
   }
 
@@ -25,4 +33,3 @@ export class VaccineDatasourceImpl implements VaccineDatasource {
     return supabaseExtensions.delete(this.table, id);
   }
 }
-

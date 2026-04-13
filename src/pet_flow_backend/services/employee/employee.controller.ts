@@ -5,7 +5,7 @@ import { EmployeeDtoMapper } from "./dto/mappers/employee-dto.mapper";
 export class EmployeeController {
   constructor(
     private readonly service: EmployeeService,
-    private readonly mapper: EmployeeDtoMapper
+    private readonly mapper: EmployeeDtoMapper,
   ) {}
 
   async list(req: Request, res: Response): Promise<void> {
@@ -14,6 +14,7 @@ export class EmployeeController {
       const response = this.mapper.toObjects(employees);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -25,6 +26,7 @@ export class EmployeeController {
       const response = this.mapper.toObject(employee);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: "Employee not found" });
     }
   }
@@ -35,6 +37,7 @@ export class EmployeeController {
       const response = this.mapper.toObject(employee);
       res.status(201).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -46,6 +49,7 @@ export class EmployeeController {
       const response = this.mapper.toObject(employee);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -56,8 +60,8 @@ export class EmployeeController {
       await this.service.deleteEmployee(id);
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
 }
-

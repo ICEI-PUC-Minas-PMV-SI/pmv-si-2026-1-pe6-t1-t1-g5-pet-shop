@@ -13,9 +13,13 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet({ contentSecurityPolicy: false }));
 
-export const API_PREFIX = `/api/v${VERSION.split('.')[0]}`;
+export const API_PREFIX = `/api/v${VERSION.split(".")[0]}`;
 
-app.use(`${API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(
+  `${API_PREFIX}/api-docs`,
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument),
+);
 
 const appRouter = new AppRouter();
 app.use(API_PREFIX, appRouter.router);

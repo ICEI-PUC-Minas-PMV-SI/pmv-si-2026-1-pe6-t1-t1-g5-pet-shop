@@ -6,7 +6,7 @@ import { VaccineRepository } from "./vaccine.repository";
 export class VaccineRepositoryImpl implements VaccineRepository {
   constructor(
     private readonly datasource: VaccineDatasource,
-    private readonly mapper: VaccineMapper
+    private readonly mapper: VaccineMapper,
   ) {}
 
   async list(): Promise<Vaccine[]> {
@@ -15,6 +15,7 @@ export class VaccineRepositoryImpl implements VaccineRepository {
       if (error) return [];
       return this.mapper.toObjects(data || []);
     } catch (error) {
+      console.error(error);
       return [];
     }
   }
@@ -25,6 +26,7 @@ export class VaccineRepositoryImpl implements VaccineRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -36,6 +38,7 @@ export class VaccineRepositoryImpl implements VaccineRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -47,6 +50,7 @@ export class VaccineRepositoryImpl implements VaccineRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -56,8 +60,8 @@ export class VaccineRepositoryImpl implements VaccineRepository {
       const { error } = await this.datasource.delete(id);
       if (error) throw new Error(error.message);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
 }
-

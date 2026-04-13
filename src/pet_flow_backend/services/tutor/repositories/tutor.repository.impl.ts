@@ -6,7 +6,7 @@ import { TutorRepository } from "./tutor.repository";
 export class TutorRepositoryImpl implements TutorRepository {
   constructor(
     private readonly datasource: TutorDatasource,
-    private readonly mapper: TutorMapper
+    private readonly mapper: TutorMapper,
   ) {}
 
   async getAll(): Promise<Tutor[]> {
@@ -15,6 +15,7 @@ export class TutorRepositoryImpl implements TutorRepository {
       if (error) return [];
       return this.mapper.toObjects(data || []);
     } catch (error) {
+      console.error(error);
       return [];
     }
   }
@@ -25,6 +26,7 @@ export class TutorRepositoryImpl implements TutorRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -36,6 +38,7 @@ export class TutorRepositoryImpl implements TutorRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -47,6 +50,7 @@ export class TutorRepositoryImpl implements TutorRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -56,8 +60,8 @@ export class TutorRepositoryImpl implements TutorRepository {
       const { error } = await this.datasource.delete(id);
       if (error) throw new Error(error.message);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
 }
-

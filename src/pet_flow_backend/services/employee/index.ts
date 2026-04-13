@@ -14,4 +14,3 @@ const dtoMapper = new EmployeeDtoMapper();
 const controller = new EmployeeController(service, dtoMapper);
 
 export const employeeRoutes = new EmployeeRoutes(controller).router;
-

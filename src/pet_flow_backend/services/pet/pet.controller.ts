@@ -5,7 +5,7 @@ import { PetDtoMapper } from "./dto/mappers/pet-dto.mapper";
 export class PetController {
   constructor(
     private readonly service: PetService,
-    private readonly mapper: PetDtoMapper
+    private readonly mapper: PetDtoMapper,
   ) {}
 
   async list(req: Request, res: Response): Promise<void> {
@@ -14,6 +14,7 @@ export class PetController {
       const response = this.mapper.toObjects(pets);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -25,6 +26,7 @@ export class PetController {
       const response = this.mapper.toObject(pet);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: "Pet not found" });
     }
   }
@@ -35,6 +37,7 @@ export class PetController {
       const response = this.mapper.toObject(pet);
       res.status(201).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -46,6 +49,7 @@ export class PetController {
       const response = this.mapper.toObject(pet);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -56,8 +60,8 @@ export class PetController {
       await this.service.deletePet(id);
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
 }
-

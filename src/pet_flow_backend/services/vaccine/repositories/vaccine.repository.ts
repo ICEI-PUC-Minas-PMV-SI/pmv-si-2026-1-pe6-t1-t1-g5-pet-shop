@@ -7,4 +7,3 @@ export interface VaccineRepository {
   update(id: string, vaccine: Partial<Vaccine>): Promise<Vaccine>;
   delete(id: string): Promise<void>;
 }
-

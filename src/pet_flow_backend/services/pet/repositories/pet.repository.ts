@@ -7,4 +7,3 @@ export interface PetRepository {
   update(id: string, pet: Partial<Pet>): Promise<Pet>;
   delete(id: string): Promise<void>;
 }
-

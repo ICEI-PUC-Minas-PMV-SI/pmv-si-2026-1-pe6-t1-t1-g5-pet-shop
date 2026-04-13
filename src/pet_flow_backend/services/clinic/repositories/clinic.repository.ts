@@ -7,4 +7,3 @@ export interface ClinicRepository {
   updateClinic(id: string, clinic: Partial<Clinic>): Promise<Clinic>;
   deleteClinic(id: string): Promise<void>;
 }
-

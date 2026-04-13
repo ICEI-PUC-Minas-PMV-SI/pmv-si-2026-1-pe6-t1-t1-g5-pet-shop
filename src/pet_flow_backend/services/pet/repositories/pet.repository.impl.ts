@@ -6,7 +6,7 @@ import { PetRepository } from "./pet.repository";
 export class PetRepositoryImpl implements PetRepository {
   constructor(
     private readonly datasource: PetDatasource,
-    private readonly mapper: PetMapper
+    private readonly mapper: PetMapper,
   ) {}
 
   async getAll(): Promise<Pet[]> {
@@ -15,6 +15,7 @@ export class PetRepositoryImpl implements PetRepository {
       if (error) return [];
       return this.mapper.toObjects(data || []);
     } catch (error) {
+      console.error(error);
       return [];
     }
   }
@@ -25,6 +26,7 @@ export class PetRepositoryImpl implements PetRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -36,6 +38,7 @@ export class PetRepositoryImpl implements PetRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -47,6 +50,7 @@ export class PetRepositoryImpl implements PetRepository {
       if (error) throw new Error(error.message);
       return this.mapper.toObject(data!);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -56,8 +60,8 @@ export class PetRepositoryImpl implements PetRepository {
       const { error } = await this.datasource.delete(id);
       if (error) throw new Error(error.message);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
 }
-

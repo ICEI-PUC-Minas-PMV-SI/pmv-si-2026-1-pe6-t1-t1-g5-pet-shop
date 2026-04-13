@@ -5,7 +5,7 @@ import { ClinicDtoMapper } from "./dto/mappers/clinic-dto.mapper";
 export class ClinicController {
   constructor(
     private readonly service: ClinicService,
-    private readonly mapper: ClinicDtoMapper
+    private readonly mapper: ClinicDtoMapper,
   ) {}
 
   async list(req: Request, res: Response): Promise<void> {
@@ -14,6 +14,7 @@ export class ClinicController {
       const response = this.mapper.toObjects(clinics);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -25,6 +26,7 @@ export class ClinicController {
       const response = this.mapper.toObject(clinic);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: "Clinic not found" });
     }
   }
@@ -35,6 +37,7 @@ export class ClinicController {
       const response = this.mapper.toObject(clinic);
       res.status(201).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -46,6 +49,7 @@ export class ClinicController {
       const response = this.mapper.toObject(clinic);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -56,8 +60,8 @@ export class ClinicController {
       await this.service.deleteClinic(id);
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
 }
-

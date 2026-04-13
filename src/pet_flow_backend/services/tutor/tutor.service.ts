@@ -27,4 +27,3 @@ export class TutorService {
     return this.repository.delete(id);
   }
 }
-

@@ -27,4 +27,3 @@ export class PetService {
     return this.repository.delete(id);
   }
 }
-

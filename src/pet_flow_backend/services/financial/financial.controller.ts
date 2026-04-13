@@ -20,6 +20,7 @@ export class FinancialController {
       const response = this.mapper.toObjects(transactions);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error(`[FinancialController] getAllFinancials error:`, error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -42,6 +43,7 @@ export class FinancialController {
       const response = this.mapper.toObject(transaction);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] getFinancialById error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -58,6 +60,7 @@ export class FinancialController {
       const response = this.mapper.toObject(transaction);
       res.status(201).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] create error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -87,6 +90,7 @@ export class FinancialController {
       const response = this.mapper.toObject(transaction);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] update error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -110,6 +114,7 @@ export class FinancialController {
       }
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] delete error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }

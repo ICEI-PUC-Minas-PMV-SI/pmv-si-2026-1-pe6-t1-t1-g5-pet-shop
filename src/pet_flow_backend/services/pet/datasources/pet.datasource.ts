@@ -8,4 +8,3 @@ export interface PetDatasource {
   update(id: string, pet: Partial<PetEntity>): Promise<DbResult<PetEntity>>;
   delete(id: string): Promise<DbResult<null>>;
 }
-

@@ -15,5 +15,4 @@ export class VaccineRoutes {
     this.router.put("/:id", (req, res) => this.controller.update(req, res));
     this.router.delete("/:id", (req, res) => this.controller.delete(req, res));
   }
-
 }

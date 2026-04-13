@@ -7,4 +7,3 @@ export interface TutorRepository {
   update(id: string, tutor: Partial<Tutor>): Promise<Tutor>;
   delete(id: string): Promise<void>;
 }
-

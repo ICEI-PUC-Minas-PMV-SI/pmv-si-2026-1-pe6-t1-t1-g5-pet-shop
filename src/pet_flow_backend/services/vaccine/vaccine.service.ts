@@ -27,4 +27,3 @@ export class VaccineService {
     return this.repository.delete(id);
   }
 }
-

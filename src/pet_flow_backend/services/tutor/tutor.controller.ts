@@ -5,7 +5,7 @@ import { TutorDtoMapper } from "./dto/mappers/tutor-dto.mapper";
 export class TutorController {
   constructor(
     private readonly service: TutorService,
-    private readonly mapper: TutorDtoMapper
+    private readonly mapper: TutorDtoMapper,
   ) {}
 
   async list(req: Request, res: Response): Promise<void> {
@@ -14,6 +14,7 @@ export class TutorController {
       const response = this.mapper.toObjects(tutors);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
@@ -25,6 +26,7 @@ export class TutorController {
       const response = this.mapper.toObject(tutor);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: "Tutor not found" });
     }
   }
@@ -35,6 +37,7 @@ export class TutorController {
       const response = this.mapper.toObject(tutor);
       res.status(201).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -46,6 +49,7 @@ export class TutorController {
       const response = this.mapper.toObject(tutor);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -56,8 +60,8 @@ export class TutorController {
       await this.service.deleteTutor(id);
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
 }
-

@@ -14,4 +14,3 @@ const dtoMapper = new PetDtoMapper();
 const controller = new PetController(service, dtoMapper);
 
 export const petRoutes = new PetRoutes(controller).router;
-

@@ -1,6 +1,9 @@
 import { PetDatasource } from "./pet.datasource";
 import { PetEntity } from "./entities/pet.entity";
-import { supabaseExtensions, DbResult } from "../../../shared/utils/supabase.extensions";
+import {
+  supabaseExtensions,
+  DbResult,
+} from "../../../shared/utils/supabase.extensions";
 
 export class PetDatasourceImpl implements PetDatasource {
   private readonly table = "pets";
@@ -17,7 +20,10 @@ export class PetDatasourceImpl implements PetDatasource {
     return supabaseExtensions.create<PetEntity>(this.table, pet);
   }
 
-  async update(id: string, pet: Partial<PetEntity>): Promise<DbResult<PetEntity>> {
+  async update(
+    id: string,
+    pet: Partial<PetEntity>,
+  ): Promise<DbResult<PetEntity>> {
     return supabaseExtensions.update<PetEntity>(this.table, id, pet);
   }
 
@@ -25,4 +31,3 @@ export class PetDatasourceImpl implements PetDatasource {
     return supabaseExtensions.delete(this.table, id);
   }
 }
-

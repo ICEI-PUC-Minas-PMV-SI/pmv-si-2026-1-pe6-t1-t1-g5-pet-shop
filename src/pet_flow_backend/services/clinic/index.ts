@@ -14,4 +14,3 @@ const dtoMapper = new ClinicDtoMapper();
 const controller = new ClinicController(service, dtoMapper);
 
 export const clinicRoutes = new ClinicRoutes(controller).router;
-

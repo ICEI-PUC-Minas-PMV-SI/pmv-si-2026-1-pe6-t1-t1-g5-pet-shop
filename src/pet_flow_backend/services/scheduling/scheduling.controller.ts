@@ -14,6 +14,7 @@ export class SchedulingController {
       const schedules = await this.service.list();
       res.status(200).json(this.mapper.toObjects(schedules));
     } catch (error) {
+      console.error(error);
       this.handleError(error, res);
     }
   }
@@ -24,6 +25,7 @@ export class SchedulingController {
       const scheduling = await this.service.getById(id);
       res.status(200).json(this.mapper.toObject(scheduling));
     } catch (error) {
+      console.error(error);
       this.handleError(error, res);
     }
   }
@@ -35,6 +37,7 @@ export class SchedulingController {
 
       res.status(201).json(this.mapper.toObject(scheduling));
     } catch (error) {
+      console.error(error);
       this.handleError(error, res);
     }
   }
@@ -46,6 +49,7 @@ export class SchedulingController {
       const scheduling = await this.service.update(id, dto);
       res.status(200).json(this.mapper.toObject(scheduling));
     } catch (error) {
+      console.error(error);
       this.handleError(error, res);
     }
   }
@@ -56,6 +60,7 @@ export class SchedulingController {
       await this.service.delete(id);
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       this.handleError(error, res);
     }
   }

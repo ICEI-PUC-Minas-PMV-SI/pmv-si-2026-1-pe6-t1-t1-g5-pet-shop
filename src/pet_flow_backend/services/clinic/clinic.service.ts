@@ -27,4 +27,3 @@ export class ClinicService {
     return this.repository.deleteClinic(id);
   }
 }
-
