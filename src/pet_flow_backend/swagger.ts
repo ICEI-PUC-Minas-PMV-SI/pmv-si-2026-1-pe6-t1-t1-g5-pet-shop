@@ -72,7 +72,6 @@ const doc = {
     },
   ],
 
-
   definitions: {
     LoginRequest: {
       email: "funcionario@exemplo.com",
@@ -271,8 +270,6 @@ const doc = {
       createdAt: "2026-04-13T12:00:00Z",
     },
   },
-
-
 };
 
 const outputFile = "./swagger_output.json";

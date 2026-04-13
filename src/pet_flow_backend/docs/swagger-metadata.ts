@@ -673,5 +673,3 @@ router.delete("/product/:id", () => {
 });
 
 export default router;
-
-
