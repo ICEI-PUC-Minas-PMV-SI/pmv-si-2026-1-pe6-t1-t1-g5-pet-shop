@@ -11,6 +11,7 @@ export class FinancialTransactionMapper
 
   toObject(fromObject: FinancialTransactionEntity): FinancialTransaction {
     return new FinancialTransaction(
+      fromObject.idx,
       fromObject.id,
       fromObject.scheduling_id,
       fromObject.description,
@@ -24,6 +25,7 @@ export class FinancialTransactionMapper
 
   toReversedObject(toObject: FinancialTransaction): FinancialTransactionEntity {
     return new FinancialTransactionEntity(
+      toObject.idx,
       toObject.id,
       toObject.schedulingId,
       toObject.description,

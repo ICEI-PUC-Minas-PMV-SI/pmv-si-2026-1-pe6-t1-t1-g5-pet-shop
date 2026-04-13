@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import { AppRouter } from "./routes";
 import { errorHandler } from "./shared/middlewares/error.middleware";
 import swaggerDocument from "./swagger_output.json";
+import { VERSION } from "./version";
 
 const app = express();
 
@@ -12,10 +13,12 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet({ contentSecurityPolicy: false }));
 
-app.use("/api/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+export const API_PREFIX = `/api/v${VERSION.split('.')[0]}`;
+
+app.use(`${API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const appRouter = new AppRouter();
-app.use("/api/v1", appRouter.router);
+app.use(API_PREFIX, appRouter.router);
 
 app.use(errorHandler);
 

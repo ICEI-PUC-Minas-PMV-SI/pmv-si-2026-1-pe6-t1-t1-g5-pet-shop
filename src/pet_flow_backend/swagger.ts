@@ -1,12 +1,13 @@
 import swaggerAutogen from "swagger-autogen";
+import { VERSION } from "./version";
 
 const doc = {
-  basePath: "/api/v1",
+  basePath: `/api/v${VERSION.split('.')[0]}`,
   info: {
     title: "Pet Flow API",
     description:
       "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
-    version: "1.2.0",
+    version: VERSION,
   },
   securityDefinitions: {
     bearerAuth: {
@@ -53,42 +54,39 @@ const doc = {
       token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
     },
     FinancialListRequest: {
-      clinicId: "uuid-da-clinica",
-      employeeId: "uuid-do-funcionario (opcional)",
+      clinic_id: "uuid-da-clinica",
+      employee_id: "uuid-do-funcionario (opcional)",
     },
     FinancialGetRequest: {
       id: "uuid-da-transacao",
-      clinicId: "uuid-da-clinica",
+      clinic_id: "uuid-da-clinica",
     },
     FinancialCreateRequest: {
-      schedulingId: "uuid-do-agendamento",
-      category: "Receita",
+      idx: 0,
+      scheduling_id: "uuid-do-agendamento",
       description: "Pagamento de Banho e Tosa",
       amount: 150.0,
-      paymentDate: "2026-03-31",
-      paymentMethod: "Cartão de Crédito",
-      clinicId: "uuid-da-clinica",
+      payment_method: "Cartão de Crédito",
+      clinic_id: "uuid-da-clinica",
     },
     FinancialUpdateRequest: {
       id: "uuid-da-transacao",
-      clinicId: "uuid-da-clinica",
-      category: "Despesa",
+      clinic_id: "uuid-da-clinica",
+      idx: 0,
       description: "Manutenção de Equipamento",
       amount: 300.0,
-      paymentDate: "2026-04-05",
-      paymentMethod: "Pix",
+      payment_method: "Pix",
     },
     FinancialResponse: {
+      idx: 0,
       id: "uuid-da-transacao",
-      schedulingId: "uuid-do-agendamento",
-      category: "Receita",
+      scheduling_id: "uuid-do-agendamento",
       description: "Pagamento de Banho e Tosa",
       amount: 150.0,
-      paymentDate: "2026-03-31",
-      paymentMethod: "Cartão de Crédito",
-      employeeId: "uuid-do-funcionario",
-      clinicId: "uuid-da-clinica",
-      createdAt: "2026-03-31T20:00:00Z",
+      payment_method: "Cartão de Crédito",
+      employee_id: "uuid-do-funcionario",
+      clinic_id: "uuid-da-clinica",
+      created_at: "2026-03-31T20:00:00Z",
     },
     SchedulingCreateRequest: {
       clinicId: "uuid-da-clinica",

@@ -296,8 +296,7 @@ O desenvolvimento do sistema Pet Flow será realizado utilizando tecnologias vol
 ## Hospedagem
 A hospedagem do sistema Pet Flow será realizada utilizando serviços de computação em nuvem com planos gratuitos, adequados ao contexto do projeto.
 O frontend da aplicação será hospedado na plataforma Vercel, permitindo que os usuários acessem o sistema por meio do navegador de forma rápida e segura.
-O backend da API REST, responsável pelas regras de negócio e pela comunicação com o banco de dados, também será hospedado na Vercel, aproveitando os recursos de funções serverless da plataforma.
-Já o backend responsável pela comunicação em tempo real via WebSocket será hospedado na Render, garantindo maior estabilidade para conexões persistentes entre o servidor e os clientes.
+O backend da API REST, responsável pelas regras de negócio e pela comunicação com o banco de dados, também será hospedado na Render, buscando manter todo o sistema unificado em uma mesma infraestrutura.
 O banco de dados será hospedado no Supabase, um serviço gerenciado que oferece banco PostgreSQL, autenticação e outras funcionalidades úteis para o desenvolvimento da aplicação.
 Todo o código do projeto será armazenado e versionado no GitHub, permitindo controle de versões, colaboração entre os membros da equipe e atualização contínua da aplicação.
 Essa arquitetura permite que o sistema funcione de forma distribuída, escalável e acessível pela internet, possibilitando que diferentes usuários utilizem o sistema simultaneamente.

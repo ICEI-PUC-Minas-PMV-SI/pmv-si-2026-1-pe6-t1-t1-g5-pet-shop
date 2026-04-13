@@ -1,5 +1,6 @@
 export class FinancialTransaction {
   constructor(
+    public idx?: number,
     public id?: string,
     public schedulingId?: string,
     public description?: string,

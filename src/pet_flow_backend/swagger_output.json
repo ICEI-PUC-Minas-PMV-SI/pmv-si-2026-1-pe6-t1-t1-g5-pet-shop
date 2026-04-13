@@ -673,11 +673,11 @@
     "FinancialListRequest": {
       "type": "object",
       "properties": {
-        "clinicId": {
+        "clinic_id": {
           "type": "string",
           "example": "uuid-da-clinica"
         },
-        "employeeId": {
+        "employee_id": {
           "type": "string",
           "example": "uuid-do-funcionario (opcional)"
         }
@@ -690,7 +690,7 @@
           "type": "string",
           "example": "uuid-da-transacao"
         },
-        "clinicId": {
+        "clinic_id": {
           "type": "string",
           "example": "uuid-da-clinica"
         }
@@ -699,13 +699,13 @@
     "FinancialCreateRequest": {
       "type": "object",
       "properties": {
-        "schedulingId": {
+        "idx": {
+          "type": "number",
+          "example": 0
+        },
+        "scheduling_id": {
           "type": "string",
           "example": "uuid-do-agendamento"
-        },
-        "category": {
-          "type": "string",
-          "example": "Receita"
         },
         "description": {
           "type": "string",
@@ -715,15 +715,11 @@
           "type": "number",
           "example": 150
         },
-        "paymentDate": {
-          "type": "string",
-          "example": "2026-03-31"
-        },
-        "paymentMethod": {
+        "payment_method": {
           "type": "string",
           "example": "Cartão de Crédito"
         },
-        "clinicId": {
+        "clinic_id": {
           "type": "string",
           "example": "uuid-da-clinica"
         }
@@ -736,13 +732,13 @@
           "type": "string",
           "example": "uuid-da-transacao"
         },
-        "clinicId": {
+        "clinic_id": {
           "type": "string",
           "example": "uuid-da-clinica"
         },
-        "category": {
-          "type": "string",
-          "example": "Despesa"
+        "idx": {
+          "type": "number",
+          "example": 0
         },
         "description": {
           "type": "string",
@@ -752,11 +748,7 @@
           "type": "number",
           "example": 300
         },
-        "paymentDate": {
-          "type": "string",
-          "example": "2026-04-05"
-        },
-        "paymentMethod": {
+        "payment_method": {
           "type": "string",
           "example": "Pix"
         }
@@ -765,17 +757,17 @@
     "FinancialResponse": {
       "type": "object",
       "properties": {
+        "idx": {
+          "type": "number",
+          "example": 0
+        },
         "id": {
           "type": "string",
           "example": "uuid-da-transacao"
         },
-        "schedulingId": {
+        "scheduling_id": {
           "type": "string",
           "example": "uuid-do-agendamento"
-        },
-        "category": {
-          "type": "string",
-          "example": "Receita"
         },
         "description": {
           "type": "string",
@@ -785,23 +777,19 @@
           "type": "number",
           "example": 150
         },
-        "paymentDate": {
-          "type": "string",
-          "example": "2026-03-31"
-        },
-        "paymentMethod": {
+        "payment_method": {
           "type": "string",
           "example": "Cartão de Crédito"
         },
-        "employeeId": {
+        "employee_id": {
           "type": "string",
           "example": "uuid-do-funcionario"
         },
-        "clinicId": {
+        "clinic_id": {
           "type": "string",
           "example": "uuid-da-clinica"
         },
-        "createdAt": {
+        "created_at": {
           "type": "string",
           "example": "2026-03-31T20:00:00Z"
         }
