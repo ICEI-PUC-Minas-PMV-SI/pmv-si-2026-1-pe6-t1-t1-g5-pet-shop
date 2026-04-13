@@ -21,7 +21,7 @@ export class VaccineController {
 
   async getById(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const vaccine = await this.service.getVaccineById(id);
       const response = this.mapper.toObject(vaccine);
       res.status(200).json(response);
@@ -44,7 +44,7 @@ export class VaccineController {
 
   async update(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const vaccine = await this.service.updateVaccine(id, req.body);
       const response = this.mapper.toObject(vaccine);
       res.status(200).json(response);
@@ -56,7 +56,7 @@ export class VaccineController {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await this.service.deleteVaccine(id);
       res.status(204).send();
     } catch (error) {
