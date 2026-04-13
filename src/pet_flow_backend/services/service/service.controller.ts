@@ -45,6 +45,7 @@ export class ServiceController {
       const service = await this.service.findById(id);
       res.status(200).json(this.mapper.toObject(service));
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: (error as Error).message });
     }
   }
@@ -61,6 +62,7 @@ export class ServiceController {
       const service = await this.service.create(validation.data);
       res.status(201).json(this.mapper.toObject(service));
     } catch (error) {
+      console.error(error);
       res.status(400).json({ error: (error as Error).message });
     }
   }
@@ -82,6 +84,7 @@ export class ServiceController {
       const service = await this.service.update(id, validation.data);
       res.status(200).json(this.mapper.toObject(service));
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: (error as Error).message });
     }
   }
@@ -96,6 +99,7 @@ export class ServiceController {
       await this.service.delete(id);
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       res.status(404).json({ error: (error as Error).message });
     }
   }

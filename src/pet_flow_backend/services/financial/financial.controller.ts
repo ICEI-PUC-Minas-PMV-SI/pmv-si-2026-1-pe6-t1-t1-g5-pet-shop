@@ -11,7 +11,7 @@ export class FinancialController {
 
   async getAllFinancials(req: Request, res: Response): Promise<void> {
     try {
-      const { clinicId, employeeId } = req.body;
+      const { clinic_id: clinicId, employee_id: employeeId } = req.body;
 
       const transactions = await this.service.getAllFinancials({
         clinicId,
@@ -20,6 +20,7 @@ export class FinancialController {
       const response = this.mapper.toObjects(transactions);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error(`[FinancialController] getAllFinancials error:`, error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -27,7 +28,7 @@ export class FinancialController {
 
   async getFinancialById(req: Request, res: Response): Promise<void> {
     try {
-      const { id, clinicId } = req.body;
+      const { id, clinic_id: clinicId } = req.body;
 
       if (!id || !clinicId) {
         res.status(400).json({ error: "id and clinicId are required in body" });
@@ -42,6 +43,7 @@ export class FinancialController {
       const response = this.mapper.toObject(transaction);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] getFinancialById error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -49,7 +51,8 @@ export class FinancialController {
 
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const transaction = await this.service.create(req.body);
+      const transactionModel = this.mapper.toReversedObject(req.body);
+      const transaction = await this.service.create(transactionModel);
       if (!transaction) {
         res.status(400).json({ error: "Failed to create" });
         return;
@@ -57,6 +60,7 @@ export class FinancialController {
       const response = this.mapper.toObject(transaction);
       res.status(201).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] create error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -64,16 +68,21 @@ export class FinancialController {
 
   async update(req: Request, res: Response): Promise<void> {
     try {
-      const { id, clinicId } = req.body;
+      const { id, clinic_id: clinicId } = req.body;
 
       if (!id || !clinicId) {
         res
           .status(400)
-          .json({ error: "id and clinicId are required in request body" });
+          .json({ error: "id and clinic_id are required in request body" });
         return;
       }
 
-      const transaction = await this.service.update(id, clinicId, req.body);
+      const transactionModel = this.mapper.toReversedObject(req.body);
+      const transaction = await this.service.update(
+        id,
+        clinicId,
+        transactionModel,
+      );
       if (!transaction) {
         res.status(400).json({ error: "Failed to update or not authorized" });
         return;
@@ -81,6 +90,7 @@ export class FinancialController {
       const response = this.mapper.toObject(transaction);
       res.status(200).json(response);
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] update error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
@@ -88,10 +98,12 @@ export class FinancialController {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const { id, clinicId } = req.body;
+      const { id, clinic_id: clinicId } = req.body;
 
       if (!id || !clinicId) {
-        res.status(400).json({ error: "id and clinicId are required in body" });
+        res
+          .status(400)
+          .json({ error: "id and clinic_id are required in body" });
         return;
       }
 
@@ -102,6 +114,7 @@ export class FinancialController {
       }
       res.status(204).send();
     } catch (error) {
+      console.error(error);
       Logger.error("[FinancialController] delete error:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }

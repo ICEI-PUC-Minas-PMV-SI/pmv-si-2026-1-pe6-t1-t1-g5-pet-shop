@@ -11,14 +11,15 @@ export class FinancialTransactionDtoMapper
 
   toObject(fromObject: FinancialTransaction): FinancialTransactionResponseDto {
     return {
+      idx: fromObject.idx,
       id: fromObject.id || "",
-      schedulingId: fromObject.schedulingId || "",
+      scheduling_id: fromObject.schedulingId || "",
       description: fromObject.description || "",
       amount: fromObject.amount || 0,
-      paymentMethod: fromObject.paymentMethod || "",
-      employeeId: fromObject.employeeId || "",
-      clinicId: fromObject.clinicId || "",
-      createdAt: fromObject.createdAt || new Date(),
+      payment_method: fromObject.paymentMethod || "",
+      employee_id: fromObject.employeeId || "",
+      clinic_id: fromObject.clinicId || "",
+      created_at: fromObject.createdAt || new Date(),
     };
   }
 
@@ -26,14 +27,15 @@ export class FinancialTransactionDtoMapper
     toObject: FinancialTransactionResponseDto,
   ): FinancialTransaction {
     return new FinancialTransaction(
+      toObject.idx,
       toObject.id,
-      toObject.schedulingId,
+      toObject.scheduling_id,
       toObject.description,
       toObject.amount,
-      toObject.paymentMethod,
-      toObject.employeeId,
-      toObject.clinicId,
-      toObject.createdAt,
+      toObject.payment_method,
+      toObject.employee_id,
+      toObject.clinic_id,
+      toObject.created_at,
     );
   }
 

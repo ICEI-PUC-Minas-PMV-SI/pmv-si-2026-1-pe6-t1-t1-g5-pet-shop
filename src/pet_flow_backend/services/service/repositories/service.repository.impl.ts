@@ -16,6 +16,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
       if (error || !data) return [];
       return this.mapper.toObjects(data);
     } catch (error) {
+      console.error(error);
       Logger.error("Error fetching services:", error);
       return [];
     }
@@ -27,6 +28,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
       if (error || !data) throw new Error("Serviço não encontrado");
       return this.mapper.toObject(data);
     } catch (error) {
+      console.error(error);
       Logger.error(`Error fetching service with id ${id}:`, error);
       throw error;
     }
@@ -40,6 +42,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
         throw new Error(error?.message || "Erro ao criar serviço");
       return this.mapper.toObject(created);
     } catch (error) {
+      console.error(error);
       Logger.error("Error creating service:", error);
       throw error;
     }
@@ -53,6 +56,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
         throw new Error(error?.message || "Serviço não encontrado");
       return this.mapper.toObject(updated);
     } catch (error) {
+      console.error(error);
       Logger.error(`Error updating service with id ${id}:`, error);
       throw error;
     }
@@ -63,6 +67,7 @@ export class ServiceRepositoryImpl implements ServiceRepository {
       const { error } = await this.datasource.delete(id);
       if (error) throw new Error(error.message);
     } catch (error) {
+      console.error(error);
       Logger.error(`Error deleting service with id ${id}:`, error);
       throw error;
     }

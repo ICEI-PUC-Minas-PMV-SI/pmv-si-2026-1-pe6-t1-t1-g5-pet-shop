@@ -1,10 +1,11 @@
 export interface FinancialTransactionResponseDto {
+  idx?: number | undefined;
   id: string;
-  schedulingId: string;
+  scheduling_id: string;
   description: string;
   amount: number;
-  paymentMethod: string;
-  employeeId: string;
-  clinicId: string;
-  createdAt: Date;
+  payment_method: string;
+  employee_id: string;
+  clinic_id: string;
+  created_at: Date;
 }
