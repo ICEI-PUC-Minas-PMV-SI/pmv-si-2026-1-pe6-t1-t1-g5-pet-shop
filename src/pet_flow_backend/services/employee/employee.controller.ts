@@ -21,7 +21,7 @@ export class EmployeeController {
 
   async getById(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const employee = await this.service.getEmployeeById(id);
       const response = this.mapper.toObject(employee);
       res.status(200).json(response);
@@ -44,7 +44,7 @@ export class EmployeeController {
 
   async update(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const employee = await this.service.updateEmployee(id, req.body);
       const response = this.mapper.toObject(employee);
       res.status(200).json(response);
@@ -56,7 +56,7 @@ export class EmployeeController {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await this.service.deleteEmployee(id);
       res.status(204).send();
     } catch (error) {

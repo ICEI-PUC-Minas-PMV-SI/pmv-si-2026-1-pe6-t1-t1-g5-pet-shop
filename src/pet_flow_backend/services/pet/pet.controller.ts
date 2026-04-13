@@ -21,7 +21,7 @@ export class PetController {
 
   async getById(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const pet = await this.service.getPetById(id);
       const response = this.mapper.toObject(pet);
       res.status(200).json(response);
@@ -44,7 +44,7 @@ export class PetController {
 
   async update(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const pet = await this.service.updatePet(id, req.body);
       const response = this.mapper.toObject(pet);
       res.status(200).json(response);
@@ -56,7 +56,7 @@ export class PetController {
 
   async delete(req: Request, res: Response): Promise<void> {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       await this.service.deletePet(id);
       res.status(204).send();
     } catch (error) {
