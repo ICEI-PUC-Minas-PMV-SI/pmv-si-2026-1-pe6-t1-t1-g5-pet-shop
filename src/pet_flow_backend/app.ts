@@ -12,7 +12,6 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet({ contentSecurityPolicy: false }));
 
-
 app.use("/api/v1/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const appRouter = new AppRouter();

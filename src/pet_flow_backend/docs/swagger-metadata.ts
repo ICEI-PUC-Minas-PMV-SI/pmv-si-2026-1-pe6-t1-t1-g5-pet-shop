@@ -133,7 +133,7 @@ router.delete("/financial/", () => {
    ========================================================================== */
 
 router.get("/scheduling/", () => {
-    /* #swagger.tags = ['Agendamentos']
+  /* #swagger.tags = ['Agendamentos']
        #swagger.description = 'Lista todos os agendamentos cadastrados.'
        #swagger.responses[200] = {
           description: 'Lista de agendamentos recuperada com sucesso',
@@ -144,7 +144,7 @@ router.get("/scheduling/", () => {
 });
 
 router.get("/scheduling/{id}", () => {
-    /* #swagger.tags = ['Agendamentos']
+  /* #swagger.tags = ['Agendamentos']
        #swagger.description = 'Busca um agendamento pelo identificador.'
        #swagger.parameters['id'] = {
           in: 'path',
@@ -163,7 +163,7 @@ router.get("/scheduling/{id}", () => {
 });
 
 router.post("/scheduling/", () => {
-    /* #swagger.tags = ['Agendamentos']
+  /* #swagger.tags = ['Agendamentos']
        #swagger.description = 'Cria um novo agendamento.'
        #swagger.parameters['body'] = {
           in: 'body',
@@ -181,7 +181,7 @@ router.post("/scheduling/", () => {
 });
 
 router.put("/scheduling/{id}", () => {
-    /* #swagger.tags = ['Agendamentos']
+  /* #swagger.tags = ['Agendamentos']
        #swagger.description = 'Atualiza um agendamento existente.'
        #swagger.parameters['id'] = {
           in: 'path',
@@ -206,7 +206,7 @@ router.put("/scheduling/{id}", () => {
 });
 
 router.delete("/scheduling/{id}", () => {
-    /* #swagger.tags = ['Agendamentos']
+  /* #swagger.tags = ['Agendamentos']
        #swagger.description = 'Remove um agendamento existente.'
        #swagger.parameters['id'] = {
           in: 'path',

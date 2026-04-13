@@ -12,7 +12,10 @@ const createServiceSchema = z.object({
 
 const updateServiceSchema = z.object({
   name: z.string().min(3, "Nome deve ter no mínimo 3 caracteres").optional(),
-  description: z.string().min(10, "Descrição deve ter no mínimo 10 caracteres").optional(),
+  description: z
+    .string()
+    .min(10, "Descrição deve ter no mínimo 10 caracteres")
+    .optional(),
   price: z.number().positive().optional(),
   duration: z.number().positive().optional(),
 });
@@ -20,7 +23,7 @@ const updateServiceSchema = z.object({
 export class ServiceController {
   constructor(
     private readonly service: ServiceService,
-    private readonly mapper: ServiceDtoMapper
+    private readonly mapper: ServiceDtoMapper,
   ) {}
 
   async list(req: Request, res: Response): Promise<void> {
@@ -35,7 +38,10 @@ export class ServiceController {
   async findById(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params["id"] as string;
-      if (!id) { res.status(400).json({ error: "ID obrigatório" }); return; }
+      if (!id) {
+        res.status(400).json({ error: "ID obrigatório" });
+        return;
+      }
       const service = await this.service.findById(id);
       res.status(200).json(this.mapper.toObject(service));
     } catch (error) {
@@ -47,7 +53,9 @@ export class ServiceController {
     try {
       const validation = createServiceSchema.safeParse(req.body);
       if (!validation.success) {
-        res.status(400).json({ error: validation.error.issues.map(i => i.message) });
+        res
+          .status(400)
+          .json({ error: validation.error.issues.map((i) => i.message) });
         return;
       }
       const service = await this.service.create(validation.data);
@@ -60,10 +68,15 @@ export class ServiceController {
   async update(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params["id"] as string;
-      if (!id) { res.status(400).json({ error: "ID obrigatório" }); return; }
+      if (!id) {
+        res.status(400).json({ error: "ID obrigatório" });
+        return;
+      }
       const validation = updateServiceSchema.safeParse(req.body);
       if (!validation.success) {
-        res.status(400).json({ error: validation.error.issues.map(i => i.message) });
+        res
+          .status(400)
+          .json({ error: validation.error.issues.map((i) => i.message) });
         return;
       }
       const service = await this.service.update(id, validation.data);
@@ -76,7 +89,10 @@ export class ServiceController {
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params["id"] as string;
-      if (!id) { res.status(400).json({ error: "ID obrigatório" }); return; }
+      if (!id) {
+        res.status(400).json({ error: "ID obrigatório" });
+        return;
+      }
       await this.service.delete(id);
       res.status(204).send();
     } catch (error) {

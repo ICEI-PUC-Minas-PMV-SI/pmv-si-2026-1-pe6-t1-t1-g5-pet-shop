@@ -1,6 +1,9 @@
 import { ServiceDatasource } from "./service.datasource";
 import { ServiceEntity } from "./entities/service.entity";
-import { supabaseExtensions, DbResult } from "../../../shared/utils/supabase.extensions";
+import {
+  supabaseExtensions,
+  DbResult,
+} from "../../../shared/utils/supabase.extensions";
 
 export class ServiceDatasourceImpl implements ServiceDatasource {
   private readonly table = "service";
@@ -17,9 +20,12 @@ export class ServiceDatasourceImpl implements ServiceDatasource {
     return supabaseExtensions.create<ServiceEntity>(this.table, data);
   }
 
-  async update(id: string, data: Partial<ServiceEntity>): Promise<DbResult<ServiceEntity>> {
-  return supabaseExtensions.update<ServiceEntity>(this.table, id, data);
-}
+  async update(
+    id: string,
+    data: Partial<ServiceEntity>,
+  ): Promise<DbResult<ServiceEntity>> {
+    return supabaseExtensions.update<ServiceEntity>(this.table, id, data);
+  }
 
   async delete(id: string): Promise<DbResult<null>> {
     return supabaseExtensions.delete(this.table, id);
