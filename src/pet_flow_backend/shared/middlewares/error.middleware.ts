@@ -1,10 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { Logger } from "../utils/logger";
 
 export const errorHandler = (
   err: unknown,
   req: Request,
   res: Response,
+  _next: NextFunction,
 ): void => {
   Logger.error(
     `[${req.method}] ${req.originalUrl} - ${
@@ -18,3 +19,4 @@ export const errorHandler = (
 
   res.status(status).json({ error: message });
 };
+
