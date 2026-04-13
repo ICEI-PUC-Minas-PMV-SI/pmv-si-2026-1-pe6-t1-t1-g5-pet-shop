@@ -1,11 +1,25 @@
 import swaggerAutogen from "swagger-autogen";
 
 const doc = {
+    basePath: "/api/v1",
     info: {
         title: "Pet Flow API",
         description: "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
         version: "1.2.0"
     },
+    securityDefinitions: {
+        bearerAuth: {
+            type: "apiKey",
+            name: "Authorization",
+            in: "header",
+            description: "Insira o token Bearer, ex: Bearer {token}"
+        }
+    },
+    security: [
+        {
+            bearerAuth: []
+        }
+    ],
     tags: [
         { name: "Autenticação", description: "Gestão de acesso e registro de funcionários" },
         { name: "Financeiro", description: "Controle de transações financeiras e fluxo de caixa" },
@@ -18,12 +32,8 @@ const doc = {
             password: "minhasenha123"
         },
         RegisterRequest: {
-            clinicId: "uuid-da-clinica",
-            name: "Nome do Funcionário",
             email: "novo@exemplo.com",
-            password: "senha-segura",
-            role: "Atendente",
-            phone: "11988887777"
+            password: "senha-segura"
         },
         AuthResponse: {
             user_id: "uuid-do-usuario",

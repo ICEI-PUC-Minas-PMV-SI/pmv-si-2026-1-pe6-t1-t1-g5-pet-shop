@@ -44,6 +44,196 @@ As principais tecnologias utilizadas no desenvolvimento da API são:
 
 ## API Endpoints
 
+### Funcionários
+
+#### 1. Registro de Funcionário
+- **Método:** `POST`
+- **URL:** `/api/v1/auth/register`
+- **Parâmetros (Body JSON):**
+  - `email`: Email do funcionário (String)
+  - `password`: Senha do funcionário (String)
+- **Resposta:**
+  - Sucesso (201 Created)
+    ```json
+    {
+      "user_id": "uuid-do-usuario",
+      "token": "token-de-autenticacao"
+    }
+    ```
+  - Erro (400 Bad Request)
+    ```json
+    {
+      "error": "Dados inválidos ou usuário não cadastrado"
+    }
+    ```
+
+#### 2. Login de Funcionário
+- **Método:** `POST`
+- **URL:** `/api/v1/auth/login`
+- **Parâmetros (Body JSON):**
+  - `email`: Email do funcionário (String)
+  - `password`: Senha do funcionário (String)
+- **Resposta:**
+  - Sucesso (200 OK)
+    ```json
+    {
+      "user_id": "uuid-do-usuario",
+      "token": "token-de-autenticacao"
+    }
+    ```
+  - Erro (401 Unauthorized)
+    ```json
+    {
+      "error": "Invalid credentials"
+    }
+    ```
+
+### Financeiro
+
+#### 1. Listar todas as transações
+- **Método:** `POST`
+- **URL:** `/api/v1/financial/all`
+- **Parâmetros (Body JSON):**
+  - `clinicId`: ID da clínica (String) — opcional para filtrar por clínica
+  - `employeeId`: ID do funcionário (String) — opcional para filtrar por funcionário
+- **Resposta:**
+  - Sucesso (200 OK)
+    ```json
+    [
+      {
+        "id": "uuid-da-transacao",
+        "scheduling_id": "uuid-do-agendamento",
+        "category": "Receita",
+        "description": "Pagamento de Banho e Tosa",
+        "amount": 150.0,
+        "payment_date": "2026-03-31T20:00:00Z",
+        "payment_method": "Cartão de Crédito",
+        "employee_id": "uuid-do-funcionario",
+        "clinic_id": "uuid-da-clinica",
+        "created_at": "2026-03-31T20:00:00Z"
+      }
+    ]
+    ```
+  - Sucesso sem resultados (200 OK)
+    ```json
+    []
+    ```
+
+#### 2. Obter detalhes de uma transação
+- **Método:** `POST`
+- **URL:** `/api/v1/financial/detail`
+- **Parâmetros (Body JSON):**
+  - `id`: ID da transação (String)
+  - `clinicId`: ID da clínica (String)
+- **Resposta:**
+  - Sucesso (200 OK)
+    ```json
+    {
+      "id": "uuid-da-transacao",
+      "scheduling_id": "uuid-do-agendamento",
+      "category": "Receita",
+      "description": "Pagamento de Banho e Tosa",
+      "amount": 150.0,
+      "payment_date": "2026-03-31T20:00:00Z",
+      "payment_method": "Cartão de Crédito",
+      "employee_id": "uuid-do-funcionario",
+      "clinic_id": "uuid-da-clinica",
+      "created_at": "2026-03-31T20:00:00Z"
+    }
+    ```
+  - Erro (404 Not Found)
+    ```json
+    {
+      "error": "Not Found or Unauthorized"
+    }
+    ```
+
+#### 3. Criar transação financeira
+- **Método:** `POST`
+- **URL:** `/api/v1/financial/`
+- **Parâmetros (Body JSON):**
+  - `scheduling_id`: ID do agendamento (String)
+  - `category`: Categoria da transação (String)
+  - `description`: Descrição (String)
+  - `amount`: Valor (Number)
+  - `payment_date`: Data do pagamento (String)
+  - `payment_method`: Método de pagamento (String)
+  - `employee_id`: ID do funcionário (String)
+  - `clinic_id`: ID da clínica (String)
+- **Resposta:**
+  - Sucesso (201 Created)
+    ```json
+    {
+      "id": "uuid-da-transacao",
+      "scheduling_id": "uuid-do-agendamento",
+      "category": "Receita",
+      "description": "Pagamento de Banho e Tosa",
+      "amount": 150.0,
+      "payment_date": "2026-03-31T20:00:00Z",
+      "payment_method": "Cartão de Crédito",
+      "employee_id": "uuid-do-funcionario",
+      "clinic_id": "uuid-da-clinica",
+      "created_at": "2026-03-31T20:00:00Z"
+    }
+    ```
+  - Erro (400 Bad Request)
+    ```json
+    {
+      "error": "Failed to create"
+    }
+    ```
+
+#### 4. Atualizar transação financeira
+- **Método:** `PUT`
+- **URL:** `/api/v1/financial/`
+- **Parâmetros (Body JSON):**
+  - `id`: ID da transação (String)
+  - `clinicId`: ID da clínica (String)
+  - `scheduling_id`: ID do agendamento (String)
+  - `category`: Categoria da transação (String)
+  - `description`: Descrição (String)
+  - `amount`: Valor (Number)
+  - `payment_date`: Data do pagamento (String)
+  - `payment_method`: Método de pagamento (String)
+  - `employee_id`: ID do funcionário (String)
+- **Resposta:**
+  - Sucesso (200 OK)
+    ```json
+    {
+      "id": "uuid-da-transacao",
+      "scheduling_id": "uuid-do-agendamento",
+      "category": "Receita",
+      "description": "Pagamento de Banho e Tosa",
+      "amount": 150.0,
+      "payment_date": "2026-03-31T20:00:00Z",
+      "payment_method": "Cartão de Crédito",
+      "employee_id": "uuid-do-funcionario",
+      "clinic_id": "uuid-da-clinica",
+      "created_at": "2026-03-31T20:00:00Z"
+    }
+    ```
+  - Erro (400 Bad Request)
+    ```json
+    {
+      "error": "Failed to update or not authorized"
+    }
+    ```
+
+#### 5. Excluir transação financeira
+- **Método:** `DELETE`
+- **URL:** `/api/v1/financial/`
+- **Parâmetros (Body JSON):**
+  - `id`: ID da transação (String)
+  - `clinicId`: ID da clínica (String)
+- **Resposta:**
+  - Sucesso (204 No Content)
+  - Erro (400 Bad Request)
+    ```json
+    {
+      "error": "Failed to delete or not authorized"
+    }
+    ```
+
 ###  Clínicas
 
 #### 1. Cadastro de Clínica
@@ -702,6 +892,87 @@ curl -X DELETE http://localhost:3000/api/vaccines/ID
 ### 3. Atualização Vacinas
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%202.png)
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%201.png)
+
+
+## Registro e Login de Funcionários
+
+### 1. Registro
+
+POST http://localhost:3000/api/v1/auth/register
+
+curl -X POST http://localhost:3000/api/v1/auth/register -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
+
+Parâmetros
+email: Email do funcionário
+password: Senha
+
+### 2. Login
+
+POST http://localhost:3000/api/v1/auth/login
+
+curl -X POST http://localhost:3000/api/v1/auth/login -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
+
+## Evidências
+
+### 1. Registro
+![Evidência de registro](../docs/img/evidencia%20auth%201.png)
+
+### 2. Login
+![Evidência de login](../docs/img/evidencia%20auth%202.png)
+
+
+## Cadastro, exclusão e atualização de Transações Financeiras
+
+### 1. Listar todas as transações
+
+POST http://localhost:3000/api/v1/financial/all
+
+curl -X POST http://localhost:3000/api/v1/financial/all -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"clinicId\":\"ID_CLINICA\"}"
+
+Parâmetros
+clinicId: ID da clínica (opcional)
+employeeId: ID do funcionário (opcional)
+
+### 2. Obter detalhes
+
+POST http://localhost:3000/api/v1/financial/detail
+
+curl -X POST http://localhost:3000/api/v1/financial/detail -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
+
+### 3. Criar transação
+
+POST http://localhost:3000/api/v1/financial/
+
+curl -X POST http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"scheduling_id\":\"ID_AGENDAMENTO\",\"description\":\"Descrição\",\"amount\":150.0,\"payment_method\":\"Cartão\",\"employee_id\":\"ID_FUNC\",\"clinic_id\":\"ID_CLINICA\"}"
+
+### 4. Atualizar transação
+
+PUT http://localhost:3000/api/v1/financial/
+
+curl -X PUT http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\",\"description\":\"Descrição Atualizada\"}"
+
+### 5. Excluir transação
+
+DELETE http://localhost:3000/api/v1/financial/
+
+curl -X DELETE http://localhost:3000/api/v1/financial/ -H "Content-Type: application/json" -H "Authorization: Bearer TOKEN" -d "{\"id\":\"ID_TRANSACAO\",\"clinicId\":\"ID_CLINICA\"}"
+
+## Evidências
+
+### 1. Listar transações
+![Evidência de listagem](../docs/img/evidencia%20financial%201.png)
+
+### 2. Detalhes
+![Evidência de detalhes](../docs/img/evidencia%20financial%202.png)
+
+### 3. Criação
+![Evidência de criação](../docs/img/evidencia%20financial%203.png)
+
+### 4. Atualização
+![Evidência de atualização](../docs/img/evidencia%20financial%204.png)
+
+### 5. Exclusão
+![Evidência de exclusão](../docs/img/evidencia%20financial%205.png)
 
 
 Demonstração do teste do módulo de Serviço realiza no Postman, validando o funcionamento das rotas e o retorno correto das requisições.

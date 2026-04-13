@@ -8,6 +8,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const envSchema = z.object({
   SUPABASE_URL: z.string().url(),
   SUPABASE_ANON_KEY: z.string().min(1),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
   SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
   PORT: z.string().default("3000").transform(Number),
   NODE_ENV: z

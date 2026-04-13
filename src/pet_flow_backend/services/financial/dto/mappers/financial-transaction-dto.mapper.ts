@@ -13,10 +13,8 @@ export class FinancialTransactionDtoMapper
     return {
       id: fromObject.id || "",
       schedulingId: fromObject.schedulingId || "",
-      category: fromObject.category || "",
       description: fromObject.description || "",
       amount: fromObject.amount || 0,
-      paymentDate: fromObject.paymentDate || new Date(),
       paymentMethod: fromObject.paymentMethod || "",
       employeeId: fromObject.employeeId || "",
       clinicId: fromObject.clinicId || "",
@@ -30,10 +28,8 @@ export class FinancialTransactionDtoMapper
     return new FinancialTransaction(
       toObject.id,
       toObject.schedulingId,
-      toObject.category,
       toObject.description,
       toObject.amount,
-      toObject.paymentDate,
       toObject.paymentMethod,
       toObject.employeeId,
       toObject.clinicId,

@@ -15,13 +15,14 @@ export class FinancialTransactionDatasourceImpl implements FinancialTransactionD
   }): Promise<DbResult<FinancialTransactionEntity[]>> {
     let query = supabase.from(this.table).select("*");
 
-    if (filters.clinicId) {
-      query = query.eq("clinic_id", filters.clinicId);
-    }
-    if (filters.employeeId) {
+    if (filters.employeeId && filters.clinicId) {
       query = query
         .eq("clinic_id", filters.clinicId)
         .eq("employee_id", filters.employeeId);
+    } else if (filters.employeeId) {
+      query = query.eq("employee_id", filters.employeeId);
+    } else if (filters.clinicId) {
+      query = query.eq("clinic_id", filters.clinicId);
     }
 
     const { data, error } = await query;

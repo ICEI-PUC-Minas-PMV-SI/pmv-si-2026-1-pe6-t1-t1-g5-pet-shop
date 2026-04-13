@@ -1,5 +1,6 @@
 node_modules/
 .env
+src/pet_flow_backend/.env
 dist/
 *.log
 .DS_Store

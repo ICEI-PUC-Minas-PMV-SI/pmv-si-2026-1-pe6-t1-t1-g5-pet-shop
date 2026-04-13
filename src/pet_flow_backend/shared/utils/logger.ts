@@ -1,4 +1,13 @@
+import util from "node:util";
+
 export class Logger {
+  private static serializeParam(value: unknown): string {
+    if (value instanceof Error) {
+      return `${value.name}: ${value.message}`;
+    }
+    return util.inspect(value, { depth: null, compact: true, sorted: true });
+  }
+
   private static formatMessage(
     level: string,
     message: string,
@@ -6,7 +15,7 @@ export class Logger {
   ): string {
     const timestamp = new Date().toISOString();
     const extra = optionalParams.length
-      ? ` ${JSON.stringify(optionalParams)}`
+      ? ` ${optionalParams.map(this.serializeParam).join(" ")}`
       : "";
     return `[${timestamp}] [${level}] ${message}${extra}\n`;
   }

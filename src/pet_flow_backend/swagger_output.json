@@ -2,10 +2,10 @@
   "swagger": "2.0",
   "info": {
     "title": "Pet Flow API",
-    "description": "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação e Gestão Financeira.",
+    "description": "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
     "version": "1.2.0"
   },
-  "host": "petflow-beta.vercel.app",
+  "host": "localhost:3000",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -15,18 +15,25 @@
     {
       "name": "Financeiro",
       "description": "Controle de transações financeiras e fluxo de caixa"
+    },
+    {
+      "name": "Agendamentos",
+      "description": "Gestão de agendamentos de atendimento"
+    },
+    {
+      "name": "Serviços",
+      "description": "Cadastro e gestão de serviços oferecidos pelo pet shop"
     }
   ],
   "schemes": [
-    "https",
     "http"
   ],
   "securityDefinitions": {
-    "Bearer": {
+    "bearerAuth": {
       "type": "apiKey",
       "name": "Authorization",
       "in": "header",
-      "description": "Insira o token JWT no formato: Bearer {token}"
+      "description": "Insira o token Bearer, ex: Bearer {token}"
     }
   },
   "paths": {
@@ -274,127 +281,210 @@
     },
     "/scheduling/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Agendamentos"
         ],
+        "description": "Lista todos os agendamentos cadastrados.",
         "responses": {
+          "200": {
+            "description": "Lista de agendamentos recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/SchedulingResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Agendamentos"
+        ],
+        "description": "Cria um novo agendamento.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados do agendamento",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchedulingCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Agendamento criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/SchedulingResponse"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos para criação"
+          },
           "401": {
             "description": "Unauthorized"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor"
           }
         }
       }
     },
     "/scheduling/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Agendamentos"
+        ],
+        "description": "Busca um agendamento pelo identificador.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "type": "string",
+            "description": "ID do agendamento"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Agendamento encontrado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/SchedulingResponse"
+            }
+          },
+          "400": {
+            "description": "Parâmetros inválidos"
+          },
           "401": {
             "description": "Unauthorized"
           },
+          "404": {
+            "description": "Agendamento não encontrado"
+          },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor"
           }
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Agendamentos"
+        ],
+        "description": "Atualiza um agendamento existente.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "ID do agendamento"
           },
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados do agendamento",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SchedulingUpdateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Agendamento atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/SchedulingResponse"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos para atualização"
+          },
           "401": {
             "description": "Unauthorized"
           },
+          "404": {
+            "description": "Agendamento não encontrado"
+          },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor"
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Agendamentos"
+        ],
+        "description": "Remove um agendamento existente.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "type": "string",
+            "description": "ID do agendamento"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Agendamento removido com sucesso"
+          },
+          "400": {
+            "description": "Parâmetros inválidos"
+          },
           "401": {
             "description": "Unauthorized"
           },
+          "404": {
+            "description": "Agendamento não encontrado"
+          },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro interno do servidor"
           }
         }
       }
     },
     "/service/": {
       "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
-          }
+        "tags": [
+          "Serviços"
         ],
+        "description": "Lista todos os serviços disponíveis.",
         "responses": {
+          "200": {
+            "description": "Lista de serviços recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/ServiceResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -404,15 +494,31 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Serviços"
+        ],
+        "description": "Cria um novo serviço.",
         "parameters": [
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados do novo serviço",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceCreateRequest"
+            }
           }
         ],
         "responses": {
+          "201": {
+            "description": "Serviço criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponse"
+            }
+          },
+          "400": {
+            "description": "Dados inválidos"
+          },
           "401": {
             "description": "Unauthorized"
           },
@@ -424,23 +530,30 @@
     },
     "/service/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Serviços"
+        ],
+        "description": "Busca um serviço pelo ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "200": {
+            "description": "Serviço encontrado",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Serviço não encontrado"
           },
           "500": {
             "description": "Internal Server Error"
@@ -448,7 +561,10 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Serviços"
+        ],
+        "description": "Atualiza os dados de um serviço existente.",
         "parameters": [
           {
             "name": "id",
@@ -457,14 +573,27 @@
             "type": "string"
           },
           {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados do serviço",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ServiceUpdateRequest"
+            }
           }
         ],
         "responses": {
+          "200": {
+            "description": "Serviço atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ServiceResponse"
+            }
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Serviço não encontrado"
           },
           "500": {
             "description": "Internal Server Error"
@@ -472,23 +601,27 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Serviços"
+        ],
+        "description": "Remove permanentemente um serviço.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "authorization",
-            "in": "header",
-            "type": "string"
           }
         ],
         "responses": {
+          "204": {
+            "description": "Serviço excluído com sucesso"
+          },
           "401": {
             "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Serviço não encontrado"
           },
           "500": {
             "description": "Internal Server Error"
@@ -514,14 +647,6 @@
     "RegisterRequest": {
       "type": "object",
       "properties": {
-        "clinicId": {
-          "type": "string",
-          "example": "uuid-da-clinica"
-        },
-        "name": {
-          "type": "string",
-          "example": "Nome do Funcionário"
-        },
         "email": {
           "type": "string",
           "example": "novo@exemplo.com"
@@ -529,14 +654,6 @@
         "password": {
           "type": "string",
           "example": "senha-segura"
-        },
-        "role": {
-          "type": "string",
-          "example": "Atendente"
-        },
-        "phone": {
-          "type": "string",
-          "example": "11988887777"
         }
       }
     },
@@ -689,6 +806,197 @@
           "example": "2026-03-31T20:00:00Z"
         }
       }
+    },
+    "SchedulingCreateRequest": {
+      "type": "object",
+      "properties": {
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "tutorId": {
+          "type": "string",
+          "example": "uuid-do-tutor"
+        },
+        "petId": {
+          "type": "string",
+          "example": "uuid-do-pet"
+        },
+        "employeeId": {
+          "type": "string",
+          "example": "uuid-do-funcionario"
+        },
+        "dateTime": {
+          "type": "string",
+          "example": "2026-04-10T14:00:00.000Z"
+        },
+        "status": {
+          "type": "string",
+          "example": "Agendado"
+        },
+        "totalValue": {
+          "type": "number",
+          "example": 120
+        },
+        "notes": {
+          "type": "string",
+          "example": "Banho e tosa completa"
+        }
+      }
+    },
+    "SchedulingUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "tutorId": {
+          "type": "string",
+          "example": "uuid-do-tutor"
+        },
+        "petId": {
+          "type": "string",
+          "example": "uuid-do-pet"
+        },
+        "employeeId": {
+          "type": "string",
+          "example": "uuid-do-funcionario"
+        },
+        "dateTime": {
+          "type": "string",
+          "example": "2026-04-11T10:30:00.000Z"
+        },
+        "status": {
+          "type": "string",
+          "example": "Confirmado"
+        },
+        "totalValue": {
+          "type": "number",
+          "example": 140
+        },
+        "notes": {
+          "type": "string",
+          "example": "Confirmado por telefone"
+        }
+      }
+    },
+    "SchedulingResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-do-agendamento"
+        },
+        "clinicId": {
+          "type": "string",
+          "example": "uuid-da-clinica"
+        },
+        "tutorId": {
+          "type": "string",
+          "example": "uuid-do-tutor"
+        },
+        "petId": {
+          "type": "string",
+          "example": "uuid-do-pet"
+        },
+        "employeeId": {
+          "type": "string",
+          "example": "uuid-do-funcionario"
+        },
+        "dateTime": {
+          "type": "string",
+          "example": "2026-04-10T14:00:00.000Z"
+        },
+        "status": {
+          "type": "string",
+          "example": "Agendado"
+        },
+        "totalValue": {
+          "type": "number",
+          "example": 120
+        },
+        "notes": {
+          "type": "string",
+          "example": "Banho e tosa completa"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2026-04-01T12:00:00.000Z"
+        }
+      }
+    },
+    "ServiceCreateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Banho e tosa"
+        },
+        "description": {
+          "type": "string",
+          "example": "Banho e tosa em cachorro"
+        },
+        "price": {
+          "type": "number",
+          "example": 90
+        },
+        "duration": {
+          "type": "number",
+          "example": 90
+        }
+      }
+    },
+    "ServiceUpdateRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Banho e tosa"
+        },
+        "description": {
+          "type": "string",
+          "example": "Banho e tosa completo"
+        },
+        "price": {
+          "type": "number",
+          "example": 100
+        },
+        "duration": {
+          "type": "number",
+          "example": 90
+        }
+      }
+    },
+    "ServiceResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "uuid-do-servico"
+        },
+        "name": {
+          "type": "string",
+          "example": "Banho e tosa"
+        },
+        "description": {
+          "type": "string",
+          "example": "Banho e tosa completo"
+        },
+        "price": {
+          "type": "number",
+          "example": 120
+        },
+        "duration": {
+          "type": "number",
+          "example": 90
+        }
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }
