@@ -6,7 +6,7 @@ import {
 } from "../../../shared/utils/supabase.extensions";
 
 export class ClinicDatasourceImpl implements ClinicDatasource {
-  private readonly table = "clinics";
+  private readonly table = "clinic";
 
   async getAll(): Promise<DbResult<ClinicEntity[]>> {
     return supabaseExtensions.getAll<ClinicEntity>(this.table);

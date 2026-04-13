@@ -6,7 +6,7 @@ import {
 } from "../../../shared/utils/supabase.extensions";
 
 export class PetDatasourceImpl implements PetDatasource {
-  private readonly table = "pets";
+  private readonly table = "pet";
 
   async getAll(): Promise<DbResult<PetEntity[]>> {
     return supabaseExtensions.getAll<PetEntity>(this.table);
