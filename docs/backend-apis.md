@@ -44,6 +44,48 @@ As principais tecnologias utilizadas no desenvolvimento da API são:
 
 ## API Endpoints
 
+A documentação completa e interativa dos endpoints da API está disponível no Swagger UI em http://localhost:3000/api-docs (ou na URL de produção). Nela é possível testar todas as rotas diretamente na interface, visualizar os esquemas de request/response e entender os parâmetros obrigatórios.
+
+Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (exceto autenticação) requerem um token JWT no header, obtido via login.
+
+### Autenticação (`/auth`)
+
+#### `POST /api/v1/auth/register` — Criar Usuário
+
+- Descrição: cria um novo usuário no sistema.
+  
+**Body (JSON):**
+
+```json
+{
+  "clinicId": "uuid-da-clinica",
+  "name": "nome-usuario",
+  "email": "email@exemplo.com",
+  "password": "senha-segura",
+  "role": "cargo-usuario",
+  "phone": "telefone-usuario"
+}
+```
+
+**Respostas:**
+
+`201 Created` — Usuário criado com sucesso
+
+```json
+{
+  "user_id": "uuid-do-usuario",
+  "token": "token-do-usuario"
+}
+```
+
+`400 Bad Request` —  Dados inválidos ou falha no cadastro
+
+```json
+{
+  "error": "Dados inválidos ou usuário não cadastrado"
+}
+```
+
 ###  Clínicas
 
 #### 1. Cadastro de Clínica
@@ -374,47 +416,6 @@ As principais tecnologias utilizadas no desenvolvimento da API são:
       }
     }
     ```
-A documentação completa e interativa dos endpoints da API está disponível no Swagger UI em http://localhost:3000/api-docs (ou na URL de produção). Nela é possível testar todas as rotas diretamente na interface, visualizar os esquemas de request/response e entender os parâmetros obrigatórios.
-
-Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (exceto autenticação) requerem um token JWT no header, obtido via login.
-
-### Autenticação (`/auth`)
-
-#### `POST /api/v1/auth/register` — Criar Usuário
-
-- Descrição: cria um novo usuário no sistema.
-  
-**Body (JSON):**
-
-```json
-{
-  "clinicId": "uuid-da-clinica",
-  "name": "nome-usuario",
-  "email": "email@exemplo.com",
-  "password": "senha-segura",
-  "role": "cargo-usuario",
-  "phone": "telefone-usuario"
-}
-```
-
-**Respostas:**
-
-`201 Created` — Usuário criado com sucesso
-
-```json
-{
-  "user_id": "uuid-do-usuario",
-  "token": "token-do-usuario"
-}
-```
-
-`400 Bad Request` —  Dados inválidos ou falha no cadastro
-
-```json
-{
-  "error": "Dados inválidos ou usuário não cadastrado"
-}
-```
 
 ### Serviço (`/service`)
 
@@ -703,8 +704,11 @@ curl -X DELETE http://localhost:3000/api/vaccines/ID
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%202.png)
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%201.png)
 
+---
 
-Demonstração do teste do módulo de Serviço realiza no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
+### Listagem, cadastro, exclusão e atualização de serviços
+
+Demonstração do teste do módulo de Serviço realizada no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
 
 ![Teste service](../docs/img/teste-service.gif)
 
