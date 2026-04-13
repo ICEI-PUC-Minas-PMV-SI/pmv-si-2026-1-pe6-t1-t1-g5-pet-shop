@@ -1,14 +1,22 @@
 import swaggerAutogen from "swagger-autogen";
 import { VERSION } from "./version";
 
+const host =
+  process.env.NODE_ENV === "production"
+    ? "pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com"
+    : "localhost:3000";
+
 const doc = {
+  host: host,
+  schemes: process.env.NODE_ENV === "production" ? ["https"] : ["http"],
   basePath: `/api/v${VERSION.split(".")[0]}`,
   info: {
     title: "Pet Flow API",
     description:
-      "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Gestão Financeira e Agendamentos.",
+      "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Clientes (Tutores), Pets, Vacinas, Produtos, Gestão Financeira e Agendamentos.",
     version: VERSION,
   },
+
   securityDefinitions: {
     bearerAuth: {
       type: "apiKey",
