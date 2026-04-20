@@ -295,6 +295,173 @@ O módulo financeiro permite o controle completo das transações financeiras do
     }
     ```
 
+### Agendamentos (`/scheduling`)
+
+O módulo de agendamentos gerencia a criação, visualização, atualização e cancelamento de atendimentos. Ele garante que o horário esteja disponível, valida dados de cliente, pet e serviço, e associa o agendamento a uma clínica e um funcionário.
+
+#### 1. Criar agendamento
+- **Método:** `POST`
+- **URL:** `/api/v1/scheduling`
+- **Descrição:** Cria um novo agendamento no sistema.
+- **Parâmetros (Body JSON):**
+  - `clinicId`: ID da clínica (String)
+  - `tutorId`: ID do tutor (String)
+  - `petId`: ID do pet (String)
+  - `serviceId`: ID do serviço (String)
+  - `employeeId`: ID do funcionário (String)
+  - `scheduledAt`: Data e hora do atendimento (String, formato ISO 8601)
+  - `status`: Status do agendamento (String, ex: `scheduled`, `completed`, `canceled`)
+- **Resposta:**
+  - Sucesso (201 Created)
+    ```json
+    {
+      "id": "uuid-do-agendamento",
+      "clinicId": "uuid-da-clinica",
+      "tutorId": "uuid-do-tutor",
+      "petId": "uuid-do-pet",
+      "serviceId": "uuid-do-servico",
+      "employeeId": "uuid-do-funcionario",
+      "scheduledAt": "2026-04-15T10:00:00.000Z",
+      "status": "scheduled"
+    }
+    ```
+  - Erro (400 Bad Request)
+    ```json
+    {
+      "error": "Dados inválidos ou falta de campos obrigatórios"
+    }
+    ```
+
+#### 2. Listar agendamentos
+- **Método:** `POST`
+- **URL:** `/api/v1/scheduling/all`
+- **Descrição:** Retorna todos os agendamentos com filtros opcionais.
+- **Parâmetros (Body JSON):**
+  - `clinicId`: ID da clínica (String) — opcional
+  - `tutorId`: ID do tutor (String) — opcional
+  - `petId`: ID do pet (String) — opcional
+  - `date`: Data do agendamento (String, formato `YYYY-MM-DD`) — opcional
+- **Resposta:**
+  - Sucesso (200 OK)
+    ```json
+    [
+      {
+        "id": "uuid-do-agendamento",
+        "clinicId": "uuid-da-clinica",
+        "tutorId": "uuid-do-tutor",
+        "petId": "uuid-do-pet",
+        "serviceId": "uuid-do-servico",
+        "employeeId": "uuid-do-funcionario",
+        "scheduledAt": "2026-04-15T10:00:00.000Z",
+        "status": "scheduled"
+      }
+    ]
+    ```
+  - Sucesso sem resultados (200 OK)
+    ```json
+    []
+    ```
+  - Erro (500 Internal Server Error)
+    ```json
+    {
+      "error": "Internal Server Error"
+    }
+    ```
+
+#### 3. Obter detalhes de um agendamento
+- **Método:** `POST`
+- **URL:** `/api/v1/scheduling/detail`
+- **Descrição:** Retorna os detalhes de um agendamento específico.
+- **Parâmetros (Body JSON):**
+  - `id`: ID do agendamento (String) — **obrigatório**
+  - `clinicId`: ID da clínica (String) — **obrigatório**
+- **Resposta:**
+  - Sucesso (200 OK)
+    ```json
+    {
+      "id": "uuid-do-agendamento",
+      "clinicId": "uuid-da-clinica",
+      "tutorId": "uuid-do-tutor",
+      "petId": "uuid-do-pet",
+      "serviceId": "uuid-do-servico",
+      "employeeId": "uuid-do-funcionario",
+      "scheduledAt": "2026-04-15T10:00:00.000Z",
+      "status": "scheduled"
+    }
+    ```
+  - Erro (400 Bad Request)
+    ```json
+    {
+      "error": "id and clinicId are required in body"
+    }
+    ```
+  - Erro (404 Not Found)
+    ```json
+    {
+      "error": "Not Found or Unauthorized"
+    }
+    ```
+
+#### 4. Atualizar agendamento
+- **Método:** `PUT`
+- **URL:** `/api/v1/scheduling`
+- **Descrição:** Atualiza um agendamento existente. Requer `id` e `clinicId` para validar autorização.
+- **Parâmetros (Body JSON):**
+  - `id`: ID do agendamento (String) — **obrigatório**
+  - `clinicId`: ID da clínica (String) — **obrigatório**
+  - `scheduledAt`: Data e hora do atendimento (String) — opcional
+  - `status`: Status do agendamento (String) — opcional
+  - `serviceId`: ID do serviço (String) — opcional
+  - `employeeId`: ID do funcionário (String) — opcional
+- **Resposta:**
+  - Sucesso (200 OK)
+    ```json
+    {
+      "id": "uuid-do-agendamento",
+      "clinicId": "uuid-da-clinica",
+      "tutorId": "uuid-do-tutor",
+      "petId": "uuid-do-pet",
+      "serviceId": "uuid-do-servico",
+      "employeeId": "uuid-do-funcionario",
+      "scheduledAt": "2026-04-15T10:00:00.000Z",
+      "status": "completed"
+    }
+    ```
+  - Erro (400 Bad Request) — campos obrigatórios ausentes
+    ```json
+    {
+      "error": "id and clinicId are required in request body"
+    }
+    ```
+  - Erro (400 Bad Request) — falha na atualização
+    ```json
+    {
+      "error": "Failed to update or not authorized"
+    }
+    ```
+
+#### 5. Cancelar agendamento
+- **Método:** `DELETE`
+- **URL:** `/api/v1/scheduling`
+- **Descrição:** Remove ou cancela um agendamento existente. Requer `id` e `clinicId`.
+- **Parâmetros (Body JSON):**
+  - `id`: ID do agendamento (String) — **obrigatório**
+  - `clinicId`: ID da clínica (String) — **obrigatório**
+- **Resposta:**
+  - Sucesso (204 No Content) — sem corpo de resposta
+  - Erro (400 Bad Request) — campos obrigatórios ausentes
+    ```json
+    {
+      "error": "id and clinicId are required in body"
+    }
+    ```
+  - Erro (400 Bad Request) — falha na exclusão
+    ```json
+    {
+      "error": "Failed to delete or not authorized"
+    }
+    ```
+
 ###  Clínicas
 
 #### 1. Cadastro de Clínica
