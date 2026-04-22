@@ -1286,10 +1286,12 @@ Parâmetros (obrigatórios):
 ## Evidências — Transações Financeiras
 
 ### 1. Listar transações
-![Evidência de listagem](../docs/img/evidencia%20financial%201.png)
+![Evidência de listagem - request](../docs/img/financial_all_request.png)
+![Evidência de listagem - response](../docs/img/financial_all_response.png)
 
 ### 2. Detalhes
-![Evidência de detalhes](../docs/img/evidencia%20financial%202.png)
+![Evidência de detalhes - request](../docs/img/financial_detail_request.png)
+![Evidência de detalhes - response](../docs/img/financial_detail_response.png)
 
 ### 3. Criação
 ![Evidência de criação](../docs/img/evidencia%20financial%203.png)
