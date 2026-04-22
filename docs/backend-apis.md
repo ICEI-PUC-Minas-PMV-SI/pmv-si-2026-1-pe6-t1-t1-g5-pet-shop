@@ -1102,10 +1102,12 @@ curl -X POST http://localhost:3000/api/v1/auth/login -H "Content-Type: applicati
 ## Evidências
 
 ### 1. Registro
-![Evidência de registro](../docs/img/evidencia%20auth%201.png)
+![Evidência de registro - request](../docs/img/register_request.png)
+![Evidência de registro - response](../docs/img/register_response.png)
 
 ### 2. Login
-![Evidência de login](../docs/img/evidencia%20auth%202.png)
+![Evidência de login - request](../docs/img/login_request.png)
+![Evidência de login - response](../docs/img/login_response.png)
 
 
 ## Cadastro, exclusão e atualização de Transações Financeiras
@@ -1259,10 +1261,12 @@ Parâmetros (obrigatórios):
 ## Evidências — Transações Financeiras
 
 ### 1. Listar transações
-![Evidência de listagem](../docs/img/evidencia%20financial%201.png)
+![Evidência de listagem - request](../docs/img/financial_all_request.png)
+![Evidência de listagem - response](../docs/img/financial_all_response.png)
 
 ### 2. Detalhes
-![Evidência de detalhes](../docs/img/evidencia%20financial%202.png)
+![Evidência de detalhes - request](../docs/img/financial_detail_request.png)
+![Evidência de detalhes - response](../docs/img/financial_detail_response.png)
 
 ### 3. Criação
 ![Evidência de criação](../docs/img/evidencia%20financial%203.png)
