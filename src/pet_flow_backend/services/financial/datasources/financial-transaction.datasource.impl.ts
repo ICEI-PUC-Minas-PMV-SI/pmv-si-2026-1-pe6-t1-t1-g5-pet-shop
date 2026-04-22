@@ -63,7 +63,7 @@ export class FinancialTransactionDatasourceImpl implements FinancialTransactionD
       .eq("id", id)
       .eq("clinic_id", clinicId)
       .select()
-      .single();
+      .maybeSingle();
     return { data: data as FinancialTransactionEntity, error };
   }
 

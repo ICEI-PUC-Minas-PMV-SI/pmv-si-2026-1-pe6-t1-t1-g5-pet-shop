@@ -53,7 +53,16 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       const entity = this.mapper.toReversedObject(
         transaction as FinancialTransaction,
       );
-      const { data, error } = await this.datasource.create(entity);
+
+      const payload = {
+        scheduling_id: entity.scheduling_id ?? null,
+        description: entity.description,
+        amount: entity.amount,
+        payment_method: entity.payment_method,
+        employee_id: entity.employee_id ?? null,
+        clinic_id: entity.clinic_id,
+      };
+      const { data, error } = await this.datasource.create(payload);
       if (error || !data) throw new Error(error?.message || "Failed to create");
       return this.mapper.toObject(data);
     } catch (error) {
@@ -72,12 +81,21 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       const entity = this.mapper.toReversedObject(
         transaction as FinancialTransaction,
       );
+      const payload = this.removeUndefinedFields({
+        scheduling_id: entity.scheduling_id,
+        description: entity.description,
+        amount: entity.amount,
+        payment_method: entity.payment_method,
+        employee_id: entity.employee_id,
+        clinic_id: entity.clinic_id,
+      });
       const { data, error } = await this.datasource.update(
         id,
         clinicId,
-        entity,
+        payload,
       );
-      if (error || !data) throw new Error(error?.message || "Failed to update");
+      if (error) throw new Error(error?.message || "Failed to update");
+      if (!data) return null;
       return this.mapper.toObject(data);
     } catch (error) {
       console.error(error);
@@ -87,6 +105,12 @@ export class FinancialTransactionRepositoryImpl implements FinancialTransactionR
       );
       throw error;
     }
+  }
+
+  private removeUndefinedFields<T extends object>(payload: T): Partial<T> {
+    return Object.fromEntries(
+      Object.entries(payload).filter(([, value]) => value !== undefined),
+    ) as Partial<T>;
   }
 
   async delete(id: string, clinicId: string): Promise<boolean> {
