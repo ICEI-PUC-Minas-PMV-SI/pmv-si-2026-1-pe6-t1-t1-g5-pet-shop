@@ -65,7 +65,7 @@ router.post("/financial/all", () => {
     */
 });
 
-router.post("/financial/detail", () => {
+router.get("/financial/detail", () => {
   /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Obtém os detalhes de uma transação financeira específica.'
        #swagger.parameters['body'] = {
@@ -82,7 +82,7 @@ router.post("/financial/detail", () => {
     */
 });
 
-router.post("/financial/", () => {
+router.get("/financial/", () => {
   /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Cria um novo registro de transação financeira.'
        #swagger.parameters['body'] = {
