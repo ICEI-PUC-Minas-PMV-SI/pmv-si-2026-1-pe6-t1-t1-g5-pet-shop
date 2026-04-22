@@ -1053,15 +1053,15 @@ date: Data da aplicação
 
 ### 2. Atualização
 
-PUT http://localhost:3000/api/vaccines/{id}
+GET (http://localhost:3000/users)
 
 curl -X PUT http://localhost:3000/api/vaccines/ID -H "Content-Type: application/json" -d "{\"name\":\"V10 Atualizada\"}"
 
 ### 3. Exclusão
 
-DELETE http://localhost:3000/api/vaccines/{id}
+DELETE http://localhost:3000/api/clinics/%7Bid%7D
 
-curl -X DELETE http://localhost:3000/api/vaccines/ID
+curl -X DELETE http://localhost:3000/api/clinics/ID
 
 
 ## Evidências
@@ -1080,9 +1080,61 @@ curl -X DELETE http://localhost:3000/api/vaccines/ID
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%202.png)
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%201.png)
 
+## Cadastro, exclusão e atualização de Funcionários
+
+### 1. Cadastro
+
+POST http://localhost:3000/users
+
+curl -X POST http://localhost:3000/users \
+-H "Content-Type: application/json" \
+-d "{
+  \"name\":\"Julia Costa\",
+  \"cpf\":\"12345678901\",
+  \"address\":\"Rua das Flores, 120\",
+  \"phone\":\"11987654321\",
+  \"email\":\"julia.costa@petflow.com\",
+  \"role\":\"recepcionista\"
+}"
+
+Parâmetros
+name: Nome do funcionário
+cpf: CPF
+address: Endereço
+phone: Telefone
+email: Email
+role: Cargo (ex: recepcionista, veterinário, etc.)
+
+### 2. Atualização
+
+PUT http://localhost:3000/api/users/{id}
+
+curl -X PUT http://localhost:3000/api/users/62e16d33-4900-4650-ad26-fb51710d4c37 \
+-H "Content-Type: application/json" \
+-d "{
+  \"name\":\"Juliana Atualizada\"
+}"
+
+### 2. Exclusão
+
+DELET http://localhost:3000/users/{id}
+
+curl -X DELETE http://localhost:3000/users/ID_DO_USUARIO
+
+
+## Evidências
+
+### 1. Cadastro
+<img width="694" height="847" alt="evidencia_usuario_post" src="https://github.com/user-attachments/assets/53c3b70c-3b78-4234-838e-081d97d7f69e" />
+
+### 2. Exclusão
+<img width="723" height="789" alt="evidencia_usuario_delete" src="https://github.com/user-attachments/assets/b4957196-4f04-4922-9105-39a0bd6c0ba0" />
+
+### 3. Atualização
+<img width="669" height="892" alt="evidencia_usuario_put" src="https://github.com/user-attachments/assets/bbdc68ae-591f-4b97-9bfd-d7005347c95b" />
+
 
 ## Registro e Login de Funcionários
-
 Testes do módulo de autenticação realizados via Swagger/cURL, validando o funcionamento correto das rotas, geração de token JWT e retorno das requisições.
 
 ### 1. Registro de Funcionário
@@ -1149,7 +1201,7 @@ Parâmetros:
 
 > Após o login, o token JWT retornado deve ser utilizado no header `Authorization: Bearer TOKEN` em todas as requisições autenticadas da API.
 
-## Evidências — Autenticação
+## Evidências - Autenticação
 
 ### 1. Registro
 ![Evidência de registro - request](../docs/img/register_request.png)
