@@ -1269,13 +1269,16 @@ Parâmetros (obrigatórios):
 ![Evidência de detalhes - response](../docs/img/financial_detail_response.png)
 
 ### 3. Criação
-![Evidência de criação](../docs/img/evidencia%20financial%203.png)
+![Evidência de criação - request](../docs/img/financial_create_request.png)
+![Evidência de criação - response](../docs/img/financial_create_response.png)
 
 ### 4. Atualização
-![Evidência de atualização](../docs/img/evidencia%20financial%204.png)
+![Evidência de atualização - request](../docs/img/financial_update_request.png)
+![Evidência de atualização - response](../docs/img/financial_update_response.png)
 
 ### 5. Exclusão
-![Evidência de exclusão](../docs/img/evidencia%20financial%205.png)
+![Evidência de exclusão - request](../docs/img/financial_delete_request.png)
+![Evidência de exclusão - response](../docs/img/financial_delete_response.png)
 
 ---
 

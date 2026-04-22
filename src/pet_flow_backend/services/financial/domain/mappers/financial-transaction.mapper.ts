@@ -13,11 +13,11 @@ export class FinancialTransactionMapper
     return new FinancialTransaction(
       fromObject.idx,
       fromObject.id,
-      fromObject.scheduling_id,
+      fromObject.scheduling_id ?? undefined,
       fromObject.description,
       fromObject.amount,
       fromObject.payment_method,
-      fromObject.employee_id,
+      fromObject.employee_id ?? undefined,
       fromObject.clinic_id,
       fromObject.created_at,
     );
