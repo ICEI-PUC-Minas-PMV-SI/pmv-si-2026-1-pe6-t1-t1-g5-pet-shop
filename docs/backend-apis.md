@@ -1087,7 +1087,7 @@ curl -X DELETE http://localhost:3000/api/clinics/ID
 
 POST http://localhost:3000/users
 
-curl -X POST curl -X POST http://localhost:3000/users \
+curl -X POST http://localhost:3000/users \
 -H "Content-Type: application/json" \
 -d "{
   \"name\":\"Julia Costa\",
@@ -1110,7 +1110,7 @@ role: Cargo (ex: recepcionista, veterinário, etc.)
 
 PUT http://localhost:3000/api/users/{id}
 
-curl -X POST curl -X PUT http://localhost:3000/api/users/62e16d33-4900-4650-ad26-fb51710d4c37 \
+curl -X PUT http://localhost:3000/api/users/62e16d33-4900-4650-ad26-fb51710d4c37 \
 -H "Content-Type: application/json" \
 -d "{
   \"name\":\"Juliana Atualizada\"
