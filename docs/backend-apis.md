@@ -1083,23 +1083,73 @@ curl -X DELETE http://localhost:3000/api/vaccines/ID
 
 ## Registro e Login de Funcionários
 
-### 1. Registro
+Testes do módulo de autenticação realizados via Swagger/cURL, validando o funcionamento correto das rotas, geração de token JWT e retorno das requisições.
 
-POST http://localhost:3000/api/v1/auth/register
+### 1. Registro de Funcionário
 
-curl -X POST http://localhost:3000/api/v1/auth/register -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
+`POST http://localhost:3000/api/v1/auth/register`
 
-Parâmetros
-email: Email do funcionário
-password: Senha
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"clinicId":"ID_CLINICA","name":"Nome do Funcionário","email":"email@exemplo.com","password":"senha-segura","role":"cargo-usuario","phone":"31999999999"}'
+```
 
-### 2. Login
+Parâmetros:
+- `clinicId`: ID da clínica (String)
+- `name`: Nome do funcionário (String)
+- `email`: Email do funcionário (String)
+- `password`: Senha (String)
+- `role`: Cargo do usuário (String)
+- `phone`: Telefone (String)
 
-POST http://localhost:3000/api/v1/auth/login
+**Resposta esperada (201 Created):**
+```json
+{
+  "user_id": "uuid-do-usuario",
+  "token": "token-de-autenticacao"
+}
+```
 
-curl -X POST http://localhost:3000/api/v1/auth/login -H "Content-Type: application/json" -d "{\"email\":\"email@exemplo.com\",\"password\":\"senha\"}"
+**Resposta de erro (400 Bad Request):**
+```json
+{
+  "error": "Dados inválidos ou usuário não cadastrado"
+}
+```
 
-## Evidências
+### 2. Login de Funcionário
+
+`POST http://localhost:3000/api/v1/auth/login`
+
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"email@petflow.com","password":"senha-segura"}'
+```
+
+Parâmetros:
+- `email`: Email do funcionário (String)
+- `password`: Senha (String)
+
+**Resposta esperada (200 OK):**
+```json
+{
+  "user_id": "uuid-do-usuario",
+  "token": "token-de-autenticacao"
+}
+```
+
+**Resposta de erro (401 Unauthorized):**
+```json
+{
+  "error": "Invalid credentials"
+}
+```
+
+> Após o login, o token JWT retornado deve ser utilizado no header `Authorization: Bearer TOKEN` em todas as requisições autenticadas da API.
+
+## Evidências — Autenticação
 
 ### 1. Registro
 ![Evidência de registro - request](../docs/img/register_request.png)
