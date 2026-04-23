@@ -1378,6 +1378,150 @@ Parâmetros (obrigatórios):
 
 ---
 
+## Cadastro, listagem, atualização e exclusão de Produtos
+
+Testes do módulo de produto realizados via Postman/cURL, validando o funcionamento correto das rotas, autenticação JWT e retorno das requisições.
+
+> **Pré-requisito:** Todas as rotas de produto requerem autenticação. Obtenha o token via `POST /api/v1/auth/login` e inclua no header `Authorization: Bearer TOKEN`.
+
+### 1. Listar todos os produtos
+
+`GET http://localhost:3000/api/v1/product/`
+
+```bash
+curl -X GET http://localhost:3000/api/v1/product/ \
+  -H "Authorization: Bearer TOKEN"
+```
+
+**Resposta esperada (200 OK):**
+```json
+[
+  {
+    "id": "uuid-do-produto",
+    "name": "Ração Premium",
+    "description": "Ração para cães adultos",
+    "price": 89.90,
+    "stock": 50,
+    "category": "Alimentação",
+    "createdAt": "2026-04-10T10:00:00.000Z",
+    "updatedAt": "2026-04-10T10:00:00.000Z"
+  }
+]
+```
+
+### 2. Buscar produto por ID
+
+`GET http://localhost:3000/api/v1/product/{id}`
+
+```bash
+curl -X GET http://localhost:3000/api/v1/product/ID_DO_PRODUTO \
+  -H "Authorization: Bearer TOKEN"
+```
+
+**Resposta esperada (200 OK):**
+```json
+{
+  "id": "uuid-do-produto",
+  "name": "Ração Premium",
+  "description": "Ração para cães adultos",
+  "price": 89.90,
+  "stock": 50,
+  "category": "Alimentação",
+  "createdAt": "2026-04-10T10:00:00.000Z",
+  "updatedAt": "2026-04-10T10:00:00.000Z"
+}
+```
+
+### 3. Criar produto
+
+`POST http://localhost:3000/api/v1/product/`
+
+```bash
+curl -X POST http://localhost:3000/api/v1/product/ \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -d '{"name":"Ração Premium","description":"Ração para cães adultos","price":89.90,"stock":50,"category":"Alimentação"}'
+```
+
+Parâmetros:
+- `name`: Nome do produto
+- `description`: Descrição do produto
+- `price`: Preço (numérico)
+- `stock`: Quantidade em estoque (numérico)
+- `category`: Categoria do produto
+
+**Resposta esperada (201 Created):**
+```json
+{
+  "id": "uuid-do-produto",
+  "name": "Ração Premium",
+  "description": "Ração para cães adultos",
+  "price": 89.90,
+  "stock": 50,
+  "category": "Alimentação",
+  "createdAt": "2026-04-10T10:00:00.000Z",
+  "updatedAt": "2026-04-10T10:00:00.000Z"
+}
+```
+
+### 4. Atualizar produto
+
+`PUT http://localhost:3000/api/v1/product/{id}`
+
+```bash
+curl -X PUT http://localhost:3000/api/v1/product/ID_DO_PRODUTO \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TOKEN" \
+  -d '{"price":99.90,"stock":40}'
+```
+
+Parâmetros (todos opcionais):
+- `name`, `description`, `price`, `stock`, `category`
+
+**Resposta esperada (200 OK):**
+```json
+{
+  "id": "uuid-do-produto",
+  "name": "Ração Premium",
+  "description": "Ração para cães adultos",
+  "price": 99.90,
+  "stock": 40,
+  "category": "Alimentação",
+  "createdAt": "2026-04-10T10:00:00.000Z",
+  "updatedAt": "2026-04-22T15:00:00.000Z"
+}
+```
+
+### 5. Excluir produto
+
+`DELETE http://localhost:3000/api/v1/product/{id}`
+
+```bash
+curl -X DELETE http://localhost:3000/api/v1/product/ID_DO_PRODUTO \
+  -H "Authorization: Bearer TOKEN"
+```
+
+**Resposta esperada (204 No Content):** sem corpo de resposta
+
+## Evidências — Produtos
+
+### 1. Listagem de produtos
+![Evidência de listagem](../docs/img/product_list.png)
+
+### 2. Busca por ID
+![Evidência de busca por ID](../docs/img/product_getbyid.png)
+
+### 3. Criação de produto
+![Evidência de criação](../docs/img/product_create.png)
+
+### 4. Atualização de produto
+![Evidência de atualização](../docs/img/product_update.png)
+
+### 5. Exclusão de produto
+![Evidência de exclusão](../docs/img/product_delete.png)
+
+---
+
 ### Listagem, cadastro, exclusão e atualização de serviços
 
 Demonstração do teste do módulo de Serviço realizada no Postman, validando o funcionamento das rotas e o retorno correto das requisições.
