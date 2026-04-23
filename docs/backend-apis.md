@@ -135,7 +135,7 @@ Abaixo, uma visão de alguns dos principais endpoints. Todos os endpoints (excet
 O módulo financeiro permite o controle completo das transações financeiras do pet shop, incluindo receitas e despesas. Todas as rotas requerem autenticação via token JWT no header `Authorization: Bearer TOKEN`.
 
 #### 1. Listar todas as transações
-- **Método:** `POST`
+- **Método:** `GET`
 - **URL:** `/api/v1/financial/all`
 - **Descrição:** Retorna todas as transações financeiras. Aceita filtros opcionais por clínica e/ou funcionário.
 - **Parâmetros (Body JSON):**
@@ -169,7 +169,7 @@ O módulo financeiro permite o controle completo das transações financeiras do
     ```
 
 #### 2. Obter detalhes de uma transação
-- **Método:** `POST`
+- **Método:** `GET`
 - **URL:** `/api/v1/financial/detail`
 - **Descrição:** Retorna os detalhes de uma transação específica. Requer `id` e `clinicId` para garantir isolamento por clínica.
 - **Parâmetros (Body JSON):**
@@ -1080,7 +1080,6 @@ curl -X DELETE http://localhost:3000/api/clinics/ID
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%202.png)
 ![Evidência de atualização](../docs/img/evi%20att%20vacina%201.png)
 
-
 ## Cadastro, exclusão e atualização de Funcionários
 
 ### 1. Cadastro
@@ -1135,18 +1134,95 @@ curl -X DELETE http://localhost:3000/users/ID_DO_USUARIO
 <img width="669" height="892" alt="evidencia_usuario_put" src="https://github.com/user-attachments/assets/bbdc68ae-591f-4b97-9bfd-d7005347c95b" />
 
 
+## Registro e Login de Funcionários
+Testes do módulo de autenticação realizados via Swagger/cURL, validando o funcionamento correto das rotas, geração de token JWT e retorno das requisições.
+
+### 1. Registro de Funcionário
+
+`POST http://localhost:3000/api/v1/auth/register`
+
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"clinicId":"ID_CLINICA","name":"Nome do Funcionário","email":"email@exemplo.com","password":"senha-segura","role":"cargo-usuario","phone":"31999999999"}'
+```
+
+Parâmetros:
+- `clinicId`: ID da clínica (String)
+- `name`: Nome do funcionário (String)
+- `email`: Email do funcionário (String)
+- `password`: Senha (String)
+- `role`: Cargo do usuário (String)
+- `phone`: Telefone (String)
+
+**Resposta esperada (201 Created):**
+```json
+{
+  "user_id": "uuid-do-usuario",
+  "token": "token-de-autenticacao"
+}
+```
+
+**Resposta de erro (400 Bad Request):**
+```json
+{
+  "error": "Dados inválidos ou usuário não cadastrado"
+}
+```
+
+### 2. Login de Funcionário
+
+`POST http://localhost:3000/api/v1/auth/login`
+
+```bash
+curl -X POST http://localhost:3000/api/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"email@petflow.com","password":"senha-segura"}'
+```
+
+Parâmetros:
+- `email`: Email do funcionário (String)
+- `password`: Senha (String)
+
+**Resposta esperada (200 OK):**
+```json
+{
+  "user_id": "uuid-do-usuario",
+  "token": "token-de-autenticacao"
+}
+```
+
+**Resposta de erro (401 Unauthorized):**
+```json
+{
+  "error": "Invalid credentials"
+}
+```
+
+> Após o login, o token JWT retornado deve ser utilizado no header `Authorization: Bearer TOKEN` em todas as requisições autenticadas da API.
+
+## Evidências - Autenticação
+
+### 1. Registro
+![Evidência de registro - request](../docs/img/register_request.png)
+![Evidência de registro - response](../docs/img/register_response.png)
+
+### 2. Login
+![Evidência de login - request](../docs/img/login_request.png)
+![Evidência de login - response](../docs/img/login_response.png)
+
+
 ## Cadastro, exclusão e atualização de Transações Financeiras
 
-Testes do módulo financeiro realizados via Postman/cURL, validando o funcionamento correto das rotas, autenticação JWT e retorno das requisições.
+Testes do módulo financeiro realizados via Swagger/cURL, validando o funcionamento correto das rotas, autenticação JWT e retorno das requisições.
 
-> **Pré-requisito:** Todas as rotas financeiras requerem autenticação. Obtenha o token via `POST /api/v1/auth/login` e inclua no header `Authorization: Bearer TOKEN`.
 
 ### 1. Listar todas as transações
 
-`POST http://localhost:3000/api/v1/financial/all`
+`GET http://localhost:3000/api/v1/financial/all`
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/financial/all \
+curl -X GET http://localhost:3000/api/v1/financial/all \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer TOKEN" \
   -d '{"clinicId":"ID_CLINICA"}'
@@ -1174,10 +1250,10 @@ Parâmetros (opcionais):
 
 ### 2. Obter detalhes de uma transação
 
-`POST http://localhost:3000/api/v1/financial/detail`
+`GET http://localhost:3000/api/v1/financial/detail`
 
 ```bash
-curl -X POST http://localhost:3000/api/v1/financial/detail \
+curl -X GET http://localhost:3000/api/v1/financial/detail \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer TOKEN" \
   -d '{"id":"ID_TRANSACAO","clinicId":"ID_CLINICA"}'
@@ -1286,24 +1362,19 @@ Parâmetros (obrigatórios):
 ## Evidências — Transações Financeiras
 
 ### 1. Listar transações
-![Evidência de listagem - request](../docs/img/financial_all_request.png)
-![Evidência de listagem - response](../docs/img/financial_all_response.png)
+![Evidência de listagem](../docs/img/financial_all_request.png)
 
 ### 2. Detalhes
-![Evidência de detalhes - request](../docs/img/financial_detail_request.png)
-![Evidência de detalhes - response](../docs/img/financial_detail_response.png)
+![Evidência de detalhes](../docs/img/financial_detail_request.png)
 
 ### 3. Criação
-![Evidência de criação - request](../docs/img/financial_create_request.png)
-![Evidência de criação - response](../docs/img/financial_create_response.png)
+![Evidência de criação](../docs/img/financial_create_request.png)
 
 ### 4. Atualização
-![Evidência de atualização - request](../docs/img/financial_update_request.png)
-![Evidência de atualização - response](../docs/img/financial_update_response.png)
+![Evidência de atualização](../docs/img/financial_update_request.png)
 
 ### 5. Exclusão
-![Evidência de exclusão - request](../docs/img/financial_delete_request.png)
-![Evidência de exclusão - response](../docs/img/financial_delete_response.png)
+![Evidência de exclusão](../docs/img/financial_delete_request.png)
 
 ---
 
