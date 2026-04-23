@@ -49,7 +49,7 @@ router.post("/auth/register", () => {
    FINANCEIRO (FINANCIAL)
    ========================================================================== */
 
-router.post("/financial/all", () => {
+router.get("/financial/all", () => {
   /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Lista todas as transações financeiras filtradas por clínica e opcionalmente por funcionário.'
        #swagger.parameters['body'] = {
@@ -82,7 +82,7 @@ router.get("/financial/detail", () => {
     */
 });
 
-router.get("/financial/", () => {
+router.post("/financial/", () => {
   /* #swagger.tags = ['Financeiro']
        #swagger.description = 'Cria um novo registro de transação financeira.'
        #swagger.parameters['body'] = {

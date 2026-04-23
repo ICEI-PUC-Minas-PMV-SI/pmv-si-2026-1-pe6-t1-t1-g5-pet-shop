@@ -1362,12 +1362,10 @@ Parâmetros (obrigatórios):
 ## Evidências — Transações Financeiras
 
 ### 1. Listar transações
-![Evidência de listagem - request](../docs/img/financial_all_request.png)
-![Evidência de listagem - response](../docs/img/financial_all_response.png)
+![Evidência de listagem](../docs/img/financial_all_request.png)
 
 ### 2. Detalhes
-![Evidência de detalhes - request](../docs/img/financial_detail_request.png)
-![Evidência de detalhes - response](../docs/img/financial_detail_response.png)
+![Evidência de detalhes](../docs/img/financial_detail_request.png)
 
 ### 3. Criação
 ![Evidência de criação](../docs/img/financial_create_request.png)
@@ -1376,8 +1374,7 @@ Parâmetros (obrigatórios):
 ![Evidência de atualização](../docs/img/financial_update_request.png)
 
 ### 5. Exclusão
-![Evidência de exclusão - request](../docs/img/financial_delete_request.png)
-![Evidência de exclusão - response](../docs/img/financial_delete_response.png)
+![Evidência de exclusão](../docs/img/financial_delete_request.png)
 
 ---
 
