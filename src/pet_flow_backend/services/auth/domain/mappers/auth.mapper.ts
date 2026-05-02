@@ -4,7 +4,11 @@ import { Auth } from "../models/auth";
 
 export class AuthMapper implements Mapper<AuthEntity, Auth> {
   toObject(fromObject: AuthEntity): Auth {
-    return new Auth(fromObject.userId, fromObject.token);
+    return new Auth(
+      fromObject.userId,
+      fromObject.token,
+      fromObject.refreshToken,
+    );
   }
 
   toObjects(fromObjects: AuthEntity[]): Auth[] {

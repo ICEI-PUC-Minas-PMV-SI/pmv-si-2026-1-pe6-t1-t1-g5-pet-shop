@@ -1,0 +1,15 @@
+.page {
+  padding: 0;
+}
+
+.greeting {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.placeholder {
+  font-size: var(--font-size-md);
+  color: var(--color-text-placeholder);
+}

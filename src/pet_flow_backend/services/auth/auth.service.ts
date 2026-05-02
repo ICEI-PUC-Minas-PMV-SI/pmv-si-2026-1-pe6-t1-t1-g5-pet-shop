@@ -12,4 +12,8 @@ export class AuthService {
   async register(email: string, password: string): Promise<DbResult<Auth>> {
     return this.repository.register(email, password);
   }
+
+  async refresh(refreshToken: string): Promise<DbResult<Auth>> {
+    return this.repository.refresh(refreshToken);
+  }
 }
