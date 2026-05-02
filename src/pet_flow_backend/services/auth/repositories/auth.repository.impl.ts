@@ -29,4 +29,13 @@ export class AuthRepositoryImpl implements AuthRepository {
       error: null,
     };
   }
+
+  async refresh(refreshToken: string): Promise<DbResult<Auth>> {
+    const result = await this.datasource.refresh(refreshToken);
+    if (result.error) return { data: null, error: result.error };
+    return {
+      data: result.data ? this.mapper.toObject(result.data) : null,
+      error: null,
+    };
+  }
 }

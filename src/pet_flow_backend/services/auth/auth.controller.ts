@@ -61,4 +61,31 @@ export class AuthController {
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
+
+  async refresh(req: Request, res: Response): Promise<void> {
+    try {
+      const { refresh_token } = req.body;
+      if (!refresh_token) {
+        res.status(400).json({ error: "Refresh token is required" });
+        return;
+      }
+
+      const { data, error } = await this.service.refresh(refresh_token);
+
+      if (error) {
+        res.status(401).json({ error: error.message });
+        return;
+      }
+
+      if (!data) {
+        res.status(401).json({ error: "Could not refresh session" });
+        return;
+      }
+
+      res.status(200).json(this.mapper.toObject(data));
+    } catch (err: unknown) {
+      Logger.error("[AuthController] refresh error:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
 }

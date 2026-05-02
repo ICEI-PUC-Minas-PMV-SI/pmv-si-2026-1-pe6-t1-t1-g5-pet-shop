@@ -15,6 +15,7 @@ export class AuthDatasourceImpl implements AuthDatasource {
       data: new AuthEntity(
         data.user?.id || "",
         data.session?.access_token || "",
+        data.session?.refresh_token || "",
       ),
       error: null,
     };
@@ -34,6 +35,23 @@ export class AuthDatasourceImpl implements AuthDatasource {
       data: new AuthEntity(
         data.user?.id || "",
         data.session?.access_token || "",
+        data.session?.refresh_token || "",
+      ),
+      error: null,
+    };
+  }
+
+  async refresh(refreshToken: string): Promise<DbResult<AuthEntity>> {
+    const { data, error } = await supabase.auth.refreshSession({
+      refresh_token: refreshToken,
+    });
+    if (error) return { data: null, error };
+
+    return {
+      data: new AuthEntity(
+        data.user?.id || "",
+        data.session?.access_token || "",
+        data.session?.refresh_token || "",
       ),
       error: null,
     };
