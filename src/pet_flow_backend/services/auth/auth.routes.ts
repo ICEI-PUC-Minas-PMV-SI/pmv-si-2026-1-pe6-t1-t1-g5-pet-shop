@@ -13,5 +13,8 @@ export class AuthRoutes {
     this.router.post("/register", (req, res) =>
       this.controller.register(req, res),
     );
+    this.router.post("/refresh", (req, res) =>
+      this.controller.refresh(req, res),
+    );
   }
 }

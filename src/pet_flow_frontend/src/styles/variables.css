@@ -1,0 +1,75 @@
+:root {
+  /* ===== CORES PRIMÁRIAS ===== */
+  --color-primary: #197BE9;
+  --color-primary-dark: #1D2845;
+  --color-primary-light: #4799EB;
+  --color-primary-bg: #DBEBF9;
+
+  /* ===== CORES DE FUNDO ===== */
+  --color-bg-main: #E4E7E9;
+  --color-bg-sidebar: #F6F8FA;
+  --color-bg-card: #F6F8FA;
+  --color-bg-white: #FFFFFF;
+  --color-bg-table-header: rgba(240, 240, 240, 0.71);
+  --color-bg-button-icon: #F5F5F5;
+
+  /* ===== CORES DE TEXTO ===== */
+  --color-text-primary: #141313;
+  --color-text-secondary: #151515;
+  --color-text-placeholder: rgba(20, 19, 19, 0.57);
+  --color-text-white: #FFFFFF;
+  --color-text-muted: rgba(21, 21, 21, 0.75);
+
+  /* ===== CORES DE STATUS ===== */
+  --color-success: #7DC767;
+  --color-danger: #DE6767;
+  --color-danger-bg: #F5E0E0;
+
+  /* ===== CORES DE BORDA ===== */
+  --color-border: #D9D9D9;
+  --color-border-active: #4799EB;
+
+  /* ===== SOMBRAS ===== */
+  --shadow-card: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  --shadow-sidebar-item: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+  --shadow-input: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  /* ===== TIPOGRAFIA ===== */
+  --font-family: 'Poppins', sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 17px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 22px;
+  --font-size-3xl: 32px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ===== ESPAÇAMENTO ===== */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 32px;
+
+  /* ===== BORDER RADIUS ===== */
+  --radius-sm: 5px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 11px;
+  --radius-round: 50%;
+
+  /* ===== SIDEBAR ===== */
+  --sidebar-width: 180px;
+
+  /* ===== TRANSIÇÕES ===== */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}

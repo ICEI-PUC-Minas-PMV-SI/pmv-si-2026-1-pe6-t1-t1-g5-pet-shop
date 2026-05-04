@@ -1,0 +1,28 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: var(--color-bg-white);
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xs) var(--spacing-md);
+  height: 36px;
+  min-width: 280px;
+}
+
+.icon {
+  color: var(--color-text-placeholder);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+}
+
+.input::placeholder {
+  color: var(--color-text-placeholder);
+}
