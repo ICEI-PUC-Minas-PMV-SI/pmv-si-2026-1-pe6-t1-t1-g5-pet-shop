@@ -1,0 +1,244 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-width: 0;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  line-height: 1;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.newButton {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  height: 38px;
+  border-radius: var(--radius-md);
+  padding: 0 18px;
+  box-shadow: var(--shadow-card);
+  transition: background-color var(--transition-fast);
+}
+
+.newButton:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  flex-wrap: nowrap;
+}
+
+.filters {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-md);
+  flex-wrap: nowrap;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field span {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.field input,
+.field select {
+  width: 140px;
+  height: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #f6f6f6;
+  padding: 0 10px;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+}
+
+.tableWrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tableWrap > * {
+  min-width: 760px;
+}
+
+.search {
+  min-width: 220px;
+  max-width: 220px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: #f6f6f6;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.searchIcon {
+  font-size: 18px;
+  color: var(--color-text-placeholder);
+}
+
+.search input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.search input::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  min-width: 92px;
+  border-radius: 999px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: 0 var(--spacing-sm);
+}
+
+.statusDone {
+  color: #42ab57;
+  background-color: #c7eecf;
+}
+
+.statusScheduled,
+.statusConfirmado,
+.statusAndamento {
+  color: #1e7edf;
+  background-color: #d2e8fb;
+}
+
+.statusCancelado {
+  color: #bf4d4d;
+  background-color: #f3d4d4;
+}
+
+.error {
+  background: #fde9e9;
+  color: #a94444;
+  border: 1px solid #efc2c2;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.loading {
+  color: var(--color-text-placeholder);
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 1200px) {
+  .toolbar {
+    flex-wrap: wrap;
+    align-items: stretch;
+  }
+
+  .filters {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .search {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: var(--font-size-xl);
+  }
+
+  .newButton {
+    height: 36px;
+    font-size: var(--font-size-sm);
+    padding: 0 14px;
+  }
+
+  .field input,
+  .field select {
+    width: 150px;
+    height: 36px;
+    font-size: var(--font-size-sm);
+  }
+
+  .field span {
+    font-size: var(--font-size-sm);
+  }
+
+  .search input {
+    font-size: var(--font-size-sm);
+  }
+
+  .tableWrap > * {
+    min-width: 700px;
+  }
+}
+
+@media (max-width: 640px) {
+  .headerRow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .title {
+    font-size: var(--font-size-xl);
+  }
+
+  .newButton {
+    width: 100%;
+  }
+
+  .filters {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .field {
+    width: 100%;
+  }
+
+  .field input,
+  .field select {
+    width: 100%;
+  }
+
+  .search {
+    height: 40px;
+  }
+
+  .tableWrap > * {
+    min-width: 640px;
+  }
+}

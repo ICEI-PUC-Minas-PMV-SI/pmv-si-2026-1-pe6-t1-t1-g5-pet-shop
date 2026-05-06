@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import AppLayout from './layouts/AppLayout';
 import Dashboard from './pages/Dashboard/Dashboard';
+import Scheduling from './pages/Scheduling/Scheduling';
 
 function AuthRedirect() {
   return authStorage.isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Login />;
@@ -50,7 +51,7 @@ export default function App() {
 
       <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/agendamentos" element={<Placeholder title="Agendamentos" />} />
+        <Route path="/agendamentos" element={<Scheduling />} />
         <Route path="/pets" element={<Placeholder title="Pets" />} />
         <Route path="/tutores" element={<Placeholder title="Tutores" />} />
         <Route path="/servicos" element={<Placeholder title="Serviços" />} />
