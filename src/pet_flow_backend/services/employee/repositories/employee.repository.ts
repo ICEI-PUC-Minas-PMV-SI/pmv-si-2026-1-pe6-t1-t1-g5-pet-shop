@@ -1,9 +1,24 @@
 import { Employee } from "../domain/models/employee";
 
 export interface EmployeeRepository {
-  list(): Promise<Employee[]>;
-  getById(id: string): Promise<Employee>;
-  create(employee: Employee): Promise<Employee>;
-  update(id: string, employee: Partial<Employee>): Promise<Employee>;
+  getAll(): Promise<Employee[]>;
+
+  getById(
+    id: string,
+  ): Promise<Employee>;
+
+  getByClinic(
+    clinicId: string,
+  ): Promise<Employee[]>;
+
+  create(
+    employee: Partial<Employee>,
+  ): Promise<Employee>;
+
+  update(
+    id: string,
+    employee: Partial<Employee>,
+  ): Promise<Employee>;
+
   delete(id: string): Promise<void>;
 }

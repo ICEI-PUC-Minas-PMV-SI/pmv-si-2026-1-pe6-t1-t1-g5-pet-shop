@@ -1,5 +1,7 @@
 import { Mapper, ReversedMapper } from "../../../../shared/utils/mapper";
+
 import { EmployeeEntity } from "../../datasources/entities/employee.entity";
+
 import { Employee } from "../models/employee";
 
 export class EmployeeMapper
@@ -18,12 +20,15 @@ export class EmployeeMapper
       fromObject.phone,
       fromObject.email,
       fromObject.role,
+      fromObject.clinic_id,
       fromObject.created_at,
       fromObject.updated_at,
     );
   }
 
-  toReversedObject(toObject: Employee): EmployeeEntity {
+  toReversedObject(
+    toObject: Employee,
+  ): EmployeeEntity {
     return new EmployeeEntity(
       toObject.id,
       toObject.name,
@@ -32,16 +37,25 @@ export class EmployeeMapper
       toObject.phone,
       toObject.email,
       toObject.role,
+      toObject.clinicId,
       toObject.createdAt,
       toObject.updatedAt,
     );
   }
 
-  toObjects(fromObjects: EmployeeEntity[]): Employee[] {
-    return fromObjects.map((fromObject) => this.toObject(fromObject));
+  toObjects(
+    fromObjects: EmployeeEntity[],
+  ): Employee[] {
+    return fromObjects.map((fromObject) =>
+      this.toObject(fromObject),
+    );
   }
 
-  toReversedObjects(toObjects: Employee[]): EmployeeEntity[] {
-    return toObjects.map((toObject) => this.toReversedObject(toObject));
+  toReversedObjects(
+    toObjects: Employee[],
+  ): EmployeeEntity[] {
+    return toObjects.map((toObject) =>
+      this.toReversedObject(toObject),
+    );
   }
 }

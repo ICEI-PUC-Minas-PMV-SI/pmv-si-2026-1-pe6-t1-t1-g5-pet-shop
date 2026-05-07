@@ -7,6 +7,7 @@ export class EmployeeEntity {
     public phone?: string,
     public email?: string,
     public role?: string,
+    public clinic_id?: string,
     public created_at?: Date,
     public updated_at?: Date,
   ) {}
