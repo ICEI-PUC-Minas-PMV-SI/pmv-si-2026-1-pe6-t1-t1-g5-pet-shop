@@ -5,7 +5,7 @@
     "description": "Documentação oficial da API do sistema Pet Flow para gestão de pet shops. Inclui módulos de Autenticação, Clientes (Tutores), Pets, Vacinas, Produtos, Gestão Financeira e Agendamentos.",
     "version": "1.2.0"
   },
-  "host": "pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/api/v1",
   "tags": [
     {
@@ -50,7 +50,7 @@
     }
   ],
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "bearerAuth": {
@@ -121,6 +121,16 @@
           "400": {
             "description": "Dados inválidos ou e-mail já em uso"
           },
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "description": "",
+        "responses": {
           "default": {
             "description": ""
           }
@@ -352,6 +362,32 @@
         }
       }
     },
+    "/employee/clinic/{clinicId}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "clinicId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/employee/{id}": {
       "get": {
         "tags": [
@@ -448,7 +484,7 @@
       }
     },
     "/financial/all": {
-      "post": {
+      "get": {
         "tags": [
           "Financeiro"
         ],
@@ -493,7 +529,7 @@
       }
     },
     "/financial/detail": {
-      "post": {
+      "get": {
         "tags": [
           "Financeiro"
         ],
@@ -773,6 +809,166 @@
         "responses": {
           "204": {
             "description": "Pet excluído com sucesso"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/": {
+      "get": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Lista todos os produtos cadastrados.",
+        "responses": {
+          "200": {
+            "description": "Lista de produtos recuperada com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "$ref": "#/definitions/ProductResponse"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Cria um novo produto.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do novo produto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Produto criado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ProductResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Busca um produto pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto encontrado",
+            "schema": {
+              "$ref": "#/definitions/ProductResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Produto não encontrado"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Atualiza os dados de um produto existente.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados atualizados do produto",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductCreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Produto atualizado com sucesso",
+            "schema": {
+              "$ref": "#/definitions/ProductResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Produto"
+        ],
+        "description": "Remove permanentemente um produto.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Produto excluído com sucesso"
           },
           "401": {
             "description": "Unauthorized"
@@ -1452,136 +1648,6 @@
           }
         }
       }
-    },
-    "/product/": {
-      "get": {
-        "tags": [
-          "Produto"
-        ],
-        "description": "Lista todos os produtos cadastrados.",
-        "responses": {
-          "200": {
-            "description": "Lista de produtos recuperada com sucesso",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "array"
-                },
-                "items": {
-                  "$ref": "#/definitions/ProductResponse"
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Produto"
-        ],
-        "description": "Cria um novo produto.",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Dados do novo produto",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProductCreateRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Produto criado com sucesso",
-            "schema": {
-              "$ref": "#/definitions/ProductResponse"
-            }
-          }
-        }
-      }
-    },
-    "/product/{id}": {
-      "get": {
-        "tags": [
-          "Produto"
-        ],
-        "description": "Busca um produto pelo ID.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Produto encontrado",
-            "schema": {
-              "$ref": "#/definitions/ProductResponse"
-            }
-          },
-          "404": {
-            "description": "Produto não encontrado"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Produto"
-        ],
-        "description": "Atualiza os dados de um produto existente.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Dados atualizados do produto",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/ProductCreateRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Produto atualizado com sucesso",
-            "schema": {
-              "$ref": "#/definitions/ProductResponse"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Produto"
-        ],
-        "description": "Remove permanentemente um produto.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Produto excluído com sucesso"
-          }
-        }
-      }
     }
   },
   "definitions": {
@@ -1653,9 +1719,9 @@
     "FinancialCreateRequest": {
       "type": "object",
       "properties": {
-        "idx": {
-          "type": "number",
-          "example": 0
+        "id": {
+          "type": "string",
+          "example": "uuid-da-transacao"
         },
         "scheduling_id": {
           "type": "string",
@@ -1673,6 +1739,10 @@
           "type": "string",
           "example": "Cartão de Crédito"
         },
+        "employee_id": {
+          "type": "string",
+          "example": "uuid-do-funcionario"
+        },
         "clinic_id": {
           "type": "string",
           "example": "uuid-da-clinica"
@@ -1686,13 +1756,9 @@
           "type": "string",
           "example": "uuid-da-transacao"
         },
-        "clinic_id": {
+        "scheduling_id": {
           "type": "string",
-          "example": "uuid-da-clinica"
-        },
-        "idx": {
-          "type": "number",
-          "example": 0
+          "example": "uuid-do-agendamento"
         },
         "description": {
           "type": "string",
@@ -1705,16 +1771,20 @@
         "payment_method": {
           "type": "string",
           "example": "Pix"
+        },
+        "employee_id": {
+          "type": "string",
+          "example": "uuid-do-funcionario"
+        },
+        "clinic_id": {
+          "type": "string",
+          "example": "uuid-da-clinica"
         }
       }
     },
     "FinancialResponse": {
       "type": "object",
       "properties": {
-        "idx": {
-          "type": "number",
-          "example": 0
-        },
         "id": {
           "type": "string",
           "example": "uuid-da-transacao"

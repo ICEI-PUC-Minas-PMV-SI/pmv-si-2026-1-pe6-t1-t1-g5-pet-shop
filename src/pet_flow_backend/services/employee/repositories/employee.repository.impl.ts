@@ -1,66 +1,147 @@
 import { EmployeeDatasource } from "../datasources/employee.datasource";
+
 import { EmployeeMapper } from "../domain/mappers/employee.mapper";
+
 import { Employee } from "../domain/models/employee";
+
 import { EmployeeRepository } from "./employee.repository";
 
-export class EmployeeRepositoryImpl implements EmployeeRepository {
+export class EmployeeRepositoryImpl
+  implements EmployeeRepository
+{
   constructor(
     private readonly datasource: EmployeeDatasource,
     private readonly mapper: EmployeeMapper,
   ) {}
 
-  async list(): Promise<Employee[]> {
+  async getAll(): Promise<Employee[]> {
     try {
-      const { data, error } = await this.datasource.getAll();
-      if (error) return [];
-      return this.mapper.toObjects(data || []);
+      const { data, error } =
+        await this.datasource.getAll();
+
+      if (error) {
+        return [];
+      }
+
+      return this.mapper.toObjects(
+        data || [],
+      );
     } catch (error) {
       console.error(error);
+
       return [];
     }
   }
 
-  async getById(id: string): Promise<Employee> {
+  async getById(
+    id: string,
+  ): Promise<Employee> {
     try {
-      const { data, error } = await this.datasource.getById(id);
-      if (error) throw new Error(error.message);
+      const { data, error } =
+        await this.datasource.getById(id);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
       return this.mapper.toObject(data!);
     } catch (error) {
       console.error(error);
+
+      throw error;
+    }
+  }
+async getByClinic(
+  clinicId: string,
+): Promise<Employee[]> {
+  try {
+    const { data, error } =
+      await this.datasource.getAll();
+
+    if (error) {
+      return [];
+    }
+
+    const filtered =
+      (data || []).filter(
+        (employee) =>
+          employee.clinic_id === clinicId,
+      );
+
+    return this.mapper.toObjects(filtered);
+  } catch (error) {
+    console.error(error);
+
+    return [];
+  }
+}
+  async create(
+    employee: Partial<Employee>,
+  ): Promise<Employee> {
+    try {
+      const entity =
+        this.mapper.toReversedObject(
+          employee as Employee,
+        );
+
+      const { data, error } =
+        await this.datasource.create(
+          entity,
+        );
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return this.mapper.toObject(data!);
+    } catch (error) {
+      console.error(error);
+
       throw error;
     }
   }
 
-  async create(employee: Employee): Promise<Employee> {
+  async update(
+    id: string,
+    employee: Partial<Employee>,
+  ): Promise<Employee> {
     try {
-      const entity = this.mapper.toReversedObject(employee);
-      const { data, error } = await this.datasource.create(entity);
-      if (error) throw new Error(error.message);
+      const entity =
+        this.mapper.toReversedObject(
+          employee as Employee,
+        );
+
+      const { data, error } =
+        await this.datasource.update(
+          id,
+          entity,
+        );
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
       return this.mapper.toObject(data!);
     } catch (error) {
       console.error(error);
+
       throw error;
     }
   }
 
-  async update(id: string, employee: Partial<Employee>): Promise<Employee> {
+  async delete(
+    id: string,
+  ): Promise<void> {
     try {
-      const entity = this.mapper.toReversedObject(employee as Employee);
-      const { data, error } = await this.datasource.update(id, entity);
-      if (error) throw new Error(error.message);
-      return this.mapper.toObject(data!);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
+      const { error } =
+        await this.datasource.delete(id);
 
-  async delete(id: string): Promise<void> {
-    try {
-      const { error } = await this.datasource.delete(id);
-      if (error) throw new Error(error.message);
+      if (error) {
+        throw new Error(error.message);
+      }
     } catch (error) {
       console.error(error);
+
       throw error;
     }
   }

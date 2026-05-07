@@ -6,6 +6,7 @@ export interface EmployeeResponseDto {
   phone: string;
   email: string;
   role: string;
+  clinicId: string;
   createdAt: Date;
   updatedAt: Date;
 }

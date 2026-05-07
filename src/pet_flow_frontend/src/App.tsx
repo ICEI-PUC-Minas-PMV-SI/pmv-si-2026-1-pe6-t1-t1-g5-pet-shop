@@ -6,6 +6,7 @@ import Register from './pages/Register/Register';
 import AppLayout from './layouts/AppLayout';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Scheduling from './pages/Scheduling/Scheduling';
+import Employees from './pages/Employees/Employees';
 
 function AuthRedirect() {
   return authStorage.isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Login />;
@@ -57,7 +58,7 @@ export default function App() {
         <Route path="/servicos" element={<Placeholder title="Serviços" />} />
         <Route path="/produtos" element={<Placeholder title="Produtos" />} />
         <Route path="/financeiro" element={<Placeholder title="Financeiro" />} />
-        <Route path="/funcionarios" element={<Placeholder title="Funcionários" />} />
+        <Route path="/funcionarios" element={<Employees />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
