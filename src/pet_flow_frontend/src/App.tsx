@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { authStorage } from './services/auth';
+import { SessionProvider } from './contexts/SessionContext';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import AppLayout from './layouts/AppLayout';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Financial from './pages/Financial/Financial';
+import Scheduling from './pages/Scheduling/Scheduling';
+import Employees from './pages/Employees/Employees';
 
 function AuthRedirect() {
   return authStorage.isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Login />;
@@ -49,15 +52,21 @@ export default function App() {
       <Route path="/" element={<AuthRedirect />} />
       <Route path="/register" element={<Register />} />
 
-      <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
+      <Route element={
+        <RequireAuth>
+          <SessionProvider>
+            <AppLayout />
+          </SessionProvider>
+        </RequireAuth>
+      }>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/agendamentos" element={<Placeholder title="Agendamentos" />} />
+        <Route path="/agendamentos" element={<Scheduling />} />
         <Route path="/pets" element={<Placeholder title="Pets" />} />
         <Route path="/tutores" element={<Placeholder title="Tutores" />} />
         <Route path="/servicos" element={<Placeholder title="Serviços" />} />
         <Route path="/produtos" element={<Placeholder title="Produtos" />} />
         <Route path="/financeiro" element={<Financial />} />
-        <Route path="/funcionarios" element={<Placeholder title="Funcionários" />} />
+        <Route path="/funcionarios" element={<Employees />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

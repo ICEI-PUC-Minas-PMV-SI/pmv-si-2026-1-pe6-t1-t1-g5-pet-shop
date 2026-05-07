@@ -13,10 +13,10 @@
 | 23/03 - 29/03 | APIs e Web Services - Unidade 2 | ✅ | Validações, mapeadores e testes da API de scheduling | Implementados mapeadores de DTO, validações de campos obrigatórios, status permitidos e tratamento de erros com SchedulingError |
 | 30/03 - 05/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 1 | ✅ | Validações, mapeadores e testes da API de scheduling | Revisão e refinamento das validações da API de scheduling; ajustes nos mapeadores de domínio e DTO |
 | 06/04 - 12/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 2 | ✅ | Documentação Swagger da API de scheduling | Gerada e publicada a documentação Swagger da API de scheduling com descrição dos endpoints, parâmetros e respostas |
-| 13/04 - 19/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 1 | ✅ |  |  |
-| 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ✅ |  |  |
-| 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ✅ |  |  |
-| 04/05 - 10/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ |  |  |
+| 13/04 - 19/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 1 | ✅ | Planejamento e estruturação da tela de agendamentos no frontend com base no Figma | Estruturada a página de agendamentos com definição dos componentes principais (quadro semanal, filtros, tabela e modal) seguindo o padrão visual do projeto |
+| 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ✅ | Implementação inicial da funcionalidade de agendamentos no frontend | Implementada a tela de agendamentos com visualização em quadro semanal, listagem em tabela e ações de criação, edição e exclusão |
+| 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ✅ | Refinamento visual e responsividade da tela de agendamentos | Ajustados layout e responsividade, com melhorias no posicionamento dos cards, legibilidade dos horários e alinhamento ao layout de referência |
+| 04/05 - 10/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ | Validação funcional e ajustes finais da funcionalidade de agendamentos | Aplicadas validações de horário comercial (09h às 17h), organização dos horários de teste no banco e ajustes no quadro para exibir corretamente os dados de funcionário |
 | 11/05 - 17/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ |  |  |
 | 18/05 - 24/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 1 | ✅ |  |  |
 | 25/05 - 31/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 2 | ✅ |  |  |
