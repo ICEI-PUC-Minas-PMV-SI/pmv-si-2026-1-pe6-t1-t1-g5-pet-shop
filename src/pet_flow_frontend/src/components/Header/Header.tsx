@@ -1,16 +1,17 @@
-import { MdNotifications } from 'react-icons/md';
+import { MdMenu } from 'react-icons/md';
 import styles from './Header.module.css';
 
-export default function Header() {
+interface HeaderProps {
+  onMenuToggle: () => void;
+}
+
+export default function Header({ onMenuToggle }: HeaderProps) {
   return (
     <header className={styles.header}>
-      <div />
-      <div className={styles.actions}>
-        <button className={styles.notificationBtn} aria-label="Notificações">
-          <MdNotifications size={20} />
-        </button>
-        <div className={styles.headerAvatar}>MS</div>
-      </div>
+      <button className={styles.menuBtn} onClick={onMenuToggle} aria-label="Abrir menu">
+        <MdMenu size={24} />
+      </button>
+      <div className={styles.actions} />
     </header>
   );
 }

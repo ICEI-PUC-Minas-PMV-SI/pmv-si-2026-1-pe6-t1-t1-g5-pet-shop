@@ -15,3 +15,13 @@
   padding: var(--spacing-2xl);
   overflow-y: auto;
 }
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+  }
+
+  .content {
+    padding: var(--spacing-md);
+  }
+}

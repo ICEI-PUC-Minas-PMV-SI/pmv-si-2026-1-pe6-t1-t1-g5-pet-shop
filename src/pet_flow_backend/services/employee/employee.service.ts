@@ -3,17 +3,13 @@ import { EmployeeRepository } from "./repositories/employee.repository";
 import { Employee } from "./domain/models/employee";
 
 export class EmployeeService {
-  constructor(
-    private readonly repository: EmployeeRepository,
-  ) {}
+  constructor(private readonly repository: EmployeeRepository) {}
 
   async listAllEmployees(): Promise<Employee[]> {
     return this.repository.getAll();
   }
 
-  async getEmployeeById(
-    id: string,
-  ): Promise<Employee> {
+  async getEmployeeById(id: string): Promise<Employee> {
     if (!id) {
       throw new Error("ID é obrigatório");
     }
@@ -21,23 +17,15 @@ export class EmployeeService {
     return this.repository.getById(id);
   }
 
-  async getEmployeesByClinic(
-    clinicId: string,
-  ): Promise<Employee[]> {
+  async getEmployeesByClinic(clinicId: string): Promise<Employee[]> {
     if (!clinicId) {
-      throw new Error(
-        "Clinic ID é obrigatório",
-      );
+      throw new Error("Clinic ID é obrigatório");
     }
 
-    return this.repository.getByClinic(
-      clinicId,
-    );
+    return this.repository.getByClinic(clinicId);
   }
 
-  async createEmployee(
-    employee: Partial<Employee>,
-  ): Promise<Employee> {
+  async createEmployee(employee: Partial<Employee>): Promise<Employee> {
     return this.repository.create(employee);
   }
 
@@ -49,15 +37,10 @@ export class EmployeeService {
       throw new Error("ID é obrigatório");
     }
 
-    return this.repository.update(
-      id,
-      employee,
-    );
+    return this.repository.update(id, employee);
   }
 
-  async deleteEmployee(
-    id: string,
-  ): Promise<void> {
+  async deleteEmployee(id: string): Promise<void> {
     if (!id) {
       throw new Error("ID é obrigatório");
     }

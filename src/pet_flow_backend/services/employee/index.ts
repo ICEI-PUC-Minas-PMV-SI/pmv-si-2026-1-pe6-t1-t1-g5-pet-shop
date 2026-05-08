@@ -16,19 +16,12 @@ const datasource = new EmployeeDatasourceImpl();
 
 const mapper = new EmployeeMapper();
 
-const repository = new EmployeeRepositoryImpl(
-  datasource,
-  mapper,
-);
+const repository = new EmployeeRepositoryImpl(datasource, mapper);
 
 const service = new EmployeeService(repository);
 
 const dtoMapper = new EmployeeDtoMapper();
 
-const controller = new EmployeeController(
-  service,
-  dtoMapper,
-);
+const controller = new EmployeeController(service, dtoMapper);
 
-export const employeeRoutes =
-  new EmployeeRoutes(controller).router;
+export const employeeRoutes = new EmployeeRoutes(controller).router;

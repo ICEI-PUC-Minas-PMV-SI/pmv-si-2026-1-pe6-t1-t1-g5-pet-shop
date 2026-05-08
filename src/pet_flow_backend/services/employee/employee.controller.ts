@@ -10,39 +10,27 @@ export class EmployeeController {
     private readonly mapper: EmployeeDtoMapper,
   ) {}
 
-  async list(
-    _req: Request,
-    res: Response,
-  ): Promise<void> {
+  async list(_req: Request, res: Response): Promise<void> {
     try {
-      const employees =
-        await this.service.listAllEmployees();
+      const employees = await this.service.listAllEmployees();
 
-      const response =
-        this.mapper.toObjects(employees);
+      const response = this.mapper.toObjects(employees);
 
       res.status(200).json(response);
     } catch (error) {
       console.error(error);
 
-      res
-        .status(500)
-        .json({ error: "Internal Server Error" });
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 
-  async getById(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
+  async getById(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;
 
-      const employee =
-        await this.service.getEmployeeById(id);
+      const employee = await this.service.getEmployeeById(id);
 
-      const response =
-        this.mapper.toObject(employee);
+      const response = this.mapper.toObject(employee);
 
       res.status(200).json(response);
     } catch (error) {
@@ -54,21 +42,13 @@ export class EmployeeController {
     }
   }
 
-  async getByClinic(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
+  async getByClinic(req: Request, res: Response): Promise<void> {
     try {
-      const clinicId =
-        req.params.clinicId as string;
+      const clinicId = req.params.clinicId as string;
 
-      const employees =
-        await this.service.getEmployeesByClinic(
-          clinicId,
-        );
+      const employees = await this.service.getEmployeesByClinic(clinicId);
 
-      const response =
-        this.mapper.toObjects(employees);
+      const response = this.mapper.toObjects(employees);
 
       res.status(200).json(response);
     } catch (error) {
@@ -80,18 +60,11 @@ export class EmployeeController {
     }
   }
 
-  async create(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
+  async create(req: Request, res: Response): Promise<void> {
     try {
-      const employee =
-        await this.service.createEmployee(
-          req.body,
-        );
+      const employee = await this.service.createEmployee(req.body);
 
-      const response =
-        this.mapper.toObject(employee);
+      const response = this.mapper.toObject(employee);
 
       res.status(201).json(response);
     } catch (error) {
@@ -103,21 +76,13 @@ export class EmployeeController {
     }
   }
 
-  async update(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
+  async update(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;
 
-      const employee =
-        await this.service.updateEmployee(
-          id,
-          req.body,
-        );
+      const employee = await this.service.updateEmployee(id, req.body);
 
-      const response =
-        this.mapper.toObject(employee);
+      const response = this.mapper.toObject(employee);
 
       res.status(200).json(response);
     } catch (error) {
@@ -129,10 +94,7 @@ export class EmployeeController {
     }
   }
 
-  async delete(
-    req: Request,
-    res: Response,
-  ): Promise<void> {
+  async delete(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;
 

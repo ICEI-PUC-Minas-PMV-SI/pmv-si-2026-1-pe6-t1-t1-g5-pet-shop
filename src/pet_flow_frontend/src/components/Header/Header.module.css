@@ -3,8 +3,23 @@
   background-color: var(--color-bg-sidebar);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 0 var(--spacing-2xl);
+}
+
+.menuBtn {
+  display: none;
+  background: none;
+  color: var(--color-text-primary);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-md);
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+}
+
+.menuBtn:hover {
+  background-color: var(--color-bg-main);
 }
 
 .actions {
@@ -13,30 +28,8 @@
   gap: var(--spacing-md);
 }
 
-.notificationBtn {
-  background: none;
-  color: var(--color-text-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-xs);
-  border-radius: var(--radius-md);
-  transition: background var(--transition-fast);
-}
-
-.notificationBtn:hover {
-  background-color: var(--color-bg-main);
-}
-
-.headerAvatar {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-round);
-  background-color: var(--color-primary-light);
-  color: var(--color-text-white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
+@media (max-width: 768px) {
+  .menuBtn {
+    display: flex;
+  }
 }

@@ -5,10 +5,11 @@ const REFRESH_TOKEN_KEY = 'petflow_refresh_token';
 const USER_ID_KEY = 'petflow_user_id';
 const REMEMBER_KEY = 'petflow_remember';
 const LOGIN_TIME_KEY = 'petflow_login_time';
+const SESSION_DATA_KEY = 'petflow_session_data';
 
 const SESSION_DURATION_MS = 60 * 60 * 1000; // 1 hora
 
-const ALL_KEYS = [TOKEN_KEY, REFRESH_TOKEN_KEY, USER_ID_KEY, LOGIN_TIME_KEY];
+const ALL_KEYS = [TOKEN_KEY, REFRESH_TOKEN_KEY, USER_ID_KEY, LOGIN_TIME_KEY, SESSION_DATA_KEY];
 
 function getStorage(): Storage {
   return localStorage.getItem(REMEMBER_KEY) === 'true'
