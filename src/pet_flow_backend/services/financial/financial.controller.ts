@@ -12,7 +12,8 @@ export class FinancialController {
   async getAllFinancials(req: Request, res: Response): Promise<void> {
     try {
       const clinicId = (req.query.clinic_id as string) || req.body?.clinic_id;
-      const employeeId = (req.query.employee_id as string) || req.body?.employee_id;
+      const employeeId =
+        (req.query.employee_id as string) || req.body?.employee_id;
 
       const transactions = await this.service.getAllFinancials({
         clinicId,

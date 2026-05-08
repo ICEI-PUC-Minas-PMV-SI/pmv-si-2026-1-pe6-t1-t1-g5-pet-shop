@@ -6,9 +6,7 @@ import { Employee } from "../domain/models/employee";
 
 import { EmployeeRepository } from "./employee.repository";
 
-export class EmployeeRepositoryImpl
-  implements EmployeeRepository
-{
+export class EmployeeRepositoryImpl implements EmployeeRepository {
   constructor(
     private readonly datasource: EmployeeDatasource,
     private readonly mapper: EmployeeMapper,
@@ -16,16 +14,13 @@ export class EmployeeRepositoryImpl
 
   async getAll(): Promise<Employee[]> {
     try {
-      const { data, error } =
-        await this.datasource.getAll();
+      const { data, error } = await this.datasource.getAll();
 
       if (error) {
         return [];
       }
 
-      return this.mapper.toObjects(
-        data || [],
-      );
+      return this.mapper.toObjects(data || []);
     } catch (error) {
       console.error(error);
 
@@ -33,12 +28,9 @@ export class EmployeeRepositoryImpl
     }
   }
 
-  async getById(
-    id: string,
-  ): Promise<Employee> {
+  async getById(id: string): Promise<Employee> {
     try {
-      const { data, error } =
-        await this.datasource.getById(id);
+      const { data, error } = await this.datasource.getById(id);
 
       if (error) {
         throw new Error(error.message);
@@ -51,43 +43,30 @@ export class EmployeeRepositoryImpl
       throw error;
     }
   }
-async getByClinic(
-  clinicId: string,
-): Promise<Employee[]> {
-  try {
-    const { data, error } =
-      await this.datasource.getAll();
+  async getByClinic(clinicId: string): Promise<Employee[]> {
+    try {
+      const { data, error } = await this.datasource.getAll();
 
-    if (error) {
-      return [];
-    }
+      if (error) {
+        return [];
+      }
 
-    const filtered =
-      (data || []).filter(
-        (employee) =>
-          employee.clinic_id === clinicId,
+      const filtered = (data || []).filter(
+        (employee) => employee.clinic_id === clinicId,
       );
 
-    return this.mapper.toObjects(filtered);
-  } catch (error) {
-    console.error(error);
+      return this.mapper.toObjects(filtered);
+    } catch (error) {
+      console.error(error);
 
-    return [];
+      return [];
+    }
   }
-}
-  async create(
-    employee: Partial<Employee>,
-  ): Promise<Employee> {
+  async create(employee: Partial<Employee>): Promise<Employee> {
     try {
-      const entity =
-        this.mapper.toReversedObject(
-          employee as Employee,
-        );
+      const entity = this.mapper.toReversedObject(employee as Employee);
 
-      const { data, error } =
-        await this.datasource.create(
-          entity,
-        );
+      const { data, error } = await this.datasource.create(entity);
 
       if (error) {
         throw new Error(error.message);
@@ -101,21 +80,11 @@ async getByClinic(
     }
   }
 
-  async update(
-    id: string,
-    employee: Partial<Employee>,
-  ): Promise<Employee> {
+  async update(id: string, employee: Partial<Employee>): Promise<Employee> {
     try {
-      const entity =
-        this.mapper.toReversedObject(
-          employee as Employee,
-        );
+      const entity = this.mapper.toReversedObject(employee as Employee);
 
-      const { data, error } =
-        await this.datasource.update(
-          id,
-          entity,
-        );
+      const { data, error } = await this.datasource.update(id, entity);
 
       if (error) {
         throw new Error(error.message);
@@ -129,12 +98,9 @@ async getByClinic(
     }
   }
 
-  async delete(
-    id: string,
-  ): Promise<void> {
+  async delete(id: string): Promise<void> {
     try {
-      const { error } =
-        await this.datasource.delete(id);
+      const { error } = await this.datasource.delete(id);
 
       if (error) {
         throw new Error(error.message);

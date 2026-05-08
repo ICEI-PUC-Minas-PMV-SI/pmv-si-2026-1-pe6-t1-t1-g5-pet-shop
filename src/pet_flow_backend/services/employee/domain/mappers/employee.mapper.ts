@@ -26,9 +26,7 @@ export class EmployeeMapper
     );
   }
 
-  toReversedObject(
-    toObject: Employee,
-  ): EmployeeEntity {
+  toReversedObject(toObject: Employee): EmployeeEntity {
     return new EmployeeEntity(
       toObject.id,
       toObject.name,
@@ -43,19 +41,11 @@ export class EmployeeMapper
     );
   }
 
-  toObjects(
-    fromObjects: EmployeeEntity[],
-  ): Employee[] {
-    return fromObjects.map((fromObject) =>
-      this.toObject(fromObject),
-    );
+  toObjects(fromObjects: EmployeeEntity[]): Employee[] {
+    return fromObjects.map((fromObject) => this.toObject(fromObject));
   }
 
-  toReversedObjects(
-    toObjects: Employee[],
-  ): EmployeeEntity[] {
-    return toObjects.map((toObject) =>
-      this.toReversedObject(toObject),
-    );
+  toReversedObjects(toObjects: Employee[]): EmployeeEntity[] {
+    return toObjects.map((toObject) => this.toReversedObject(toObject));
   }
 }

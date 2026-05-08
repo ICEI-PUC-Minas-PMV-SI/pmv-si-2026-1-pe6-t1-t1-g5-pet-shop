@@ -11,9 +11,7 @@ export class EmployeeDtoMapper
 {
   constructor() {}
 
-  toObject(
-    fromObject: Employee,
-  ): EmployeeResponseDto {
+  toObject(fromObject: Employee): EmployeeResponseDto {
     return {
       id: fromObject.id || "",
       name: fromObject.name || "",
@@ -23,16 +21,12 @@ export class EmployeeDtoMapper
       email: fromObject.email || "",
       role: fromObject.role || "",
       clinicId: fromObject.clinicId || "",
-      createdAt:
-        fromObject.createdAt || new Date(),
-      updatedAt:
-        fromObject.updatedAt || new Date(),
+      createdAt: fromObject.createdAt || new Date(),
+      updatedAt: fromObject.updatedAt || new Date(),
     };
   }
 
-  toReversedObject(
-    toObject: EmployeeResponseDto,
-  ): Employee {
+  toReversedObject(toObject: EmployeeResponseDto): Employee {
     return new Employee(
       toObject.id,
       toObject.name,
@@ -47,19 +41,11 @@ export class EmployeeDtoMapper
     );
   }
 
-  toObjects(
-    fromObjects: Employee[],
-  ): EmployeeResponseDto[] {
-    return fromObjects.map((fromObject) =>
-      this.toObject(fromObject),
-    );
+  toObjects(fromObjects: Employee[]): EmployeeResponseDto[] {
+    return fromObjects.map((fromObject) => this.toObject(fromObject));
   }
 
-  toReversedObjects(
-    toObjects: EmployeeResponseDto[],
-  ): Employee[] {
-    return toObjects.map((toObject) =>
-      this.toReversedObject(toObject),
-    );
+  toReversedObjects(toObjects: EmployeeResponseDto[]): Employee[] {
+    return toObjects.map((toObject) => this.toReversedObject(toObject));
   }
 }
