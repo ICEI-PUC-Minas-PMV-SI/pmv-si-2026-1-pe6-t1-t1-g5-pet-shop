@@ -21,18 +21,20 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background-color: var(--color-primary);
-  color: var(--color-text-white);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
+  background-color: #4B91F1;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(75, 145, 241, 0.25);
+  border: none;
+  cursor: pointer;
   transition: background var(--transition-fast);
 }
 
 .newBtn:hover {
-  background-color: var(--color-primary-dark);
+  background-color: #3a7de0;
 }
 
 /* ===== CARDS ===== */

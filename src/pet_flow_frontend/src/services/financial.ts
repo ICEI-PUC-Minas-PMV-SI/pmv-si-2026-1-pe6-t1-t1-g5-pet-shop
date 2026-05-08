@@ -47,9 +47,8 @@ async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T
 
 export const financialService = {
   getAll(clinicId: string): Promise<Transaction[]> {
-    return authRequest<Transaction[]>('/financial/all', {
+    return authRequest<Transaction[]>(`/financial/all?clinic_id=${encodeURIComponent(clinicId)}`, {
       method: 'GET',
-      body: JSON.stringify({ clinic_id: clinicId }),
     });
   },
 

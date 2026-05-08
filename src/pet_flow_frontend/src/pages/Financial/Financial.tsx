@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import { MdEdit, MdAdd } from 'react-icons/md';
 import { financialService, type Transaction, type CreateTransactionPayload } from '../../services/financial';
+import { useSession } from '../../contexts/SessionContext';
 import styles from './Financial.module.css';
-
-// Temporary clinic_id — in production this would come from user context
-const CLINIC_ID = 'default-clinic';
 
 function formatCurrency(value: number): string {
   return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -16,6 +14,9 @@ function formatDate(dateStr: string): string {
 }
 
 export default function Financial() {
+  const { session } = useSession();
+  const clinicId = session?.clinicId || '';
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -23,10 +24,11 @@ export default function Financial() {
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
 
   const fetchTransactions = async () => {
+    if (!clinicId) return;
     setLoading(true);
     setError('');
     try {
-      const data = await financialService.getAll(CLINIC_ID);
+      const data = await financialService.getAll(clinicId);
       setTransactions(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao carregar transações');
@@ -37,7 +39,7 @@ export default function Financial() {
 
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [clinicId]);
 
   const revenue = transactions
     .filter((t) => t.amount > 0)
@@ -73,7 +75,7 @@ export default function Financial() {
           ...payload,
         });
       } else {
-        await financialService.create(payload);
+        await financialService.create({ ...payload, clinic_id: clinicId });
       }
       handleModalClose();
       fetchTransactions();
@@ -88,7 +90,7 @@ export default function Financial() {
         <h1 className={styles.title}>Financeiro</h1>
         <button className={styles.newBtn} onClick={handleNew}>
           <MdAdd size={16} />
-          + Nova transação
+          Nova transação
         </button>
       </div>
 
@@ -204,7 +206,7 @@ function TransactionModal({ transaction, onClose, onSave }: ModalProps) {
       description: form.description,
       amount: form.type === 'expense' ? -Math.abs(amount) : Math.abs(amount),
       payment_method: form.payment_method,
-      clinic_id: transaction?.clinic_id || CLINIC_ID,
+      clinic_id: transaction?.clinic_id || '',
     });
   };
 

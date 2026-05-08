@@ -1,10 +1,8 @@
 import { authStorage } from './auth';
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  'https://pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com/api/v1';
 
-export interface Employee {
+export interface EmployeeData {
   id: string;
   name: string;
   cpf: string;
@@ -13,18 +11,12 @@ export interface Employee {
   email: string;
   role: string;
   clinicId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
-interface ApiError {
-  error: string;
-}
-
-async function request<T>(
-  endpoint: string,
-  options: RequestInit = {},
-): Promise<T> {
+async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
   const token = authStorage.getToken();
-
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
@@ -37,34 +29,16 @@ async function request<T>(
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error((data as ApiError).error || 'Erro inesperado');
+    throw new Error(data.error || 'Erro inesperado');
   }
 
   return data as T;
 }
 
 export const employeeService = {
-  async getAll(): Promise<Employee[]> {
-    return request<Employee[]>('/employee');
-  },
-
-  async create(employee: Partial<Employee>): Promise<Employee> {
-    return request<Employee>('/employee', {
-      method: 'POST',
-      body: JSON.stringify(employee),
-    });
-  },
-
-  async update(id: string, employee: Partial<Employee>): Promise<Employee> {
-    return request<Employee>(`/employee/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(employee),
-    });
-  },
-
-  async delete(id: string): Promise<void> {
-    return request<void>(`/employee/${id}`, {
-      method: 'DELETE',
+  getById(id: string): Promise<EmployeeData> {
+    return authRequest<EmployeeData>(`/employee/${id}`, {
+      method: 'GET',
     });
   },
 };
