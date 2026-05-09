@@ -8,6 +8,7 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import Financial from '../pages/Financial/Financial';
 import Scheduling from '../pages/Scheduling/Scheduling';
 import Employees from '../pages/Employees/Employees';
+import Products from '../pages/Products/Products';
 import Placeholder from '../pages/Placeholder/Placeholder';
 import Pets from '../pages/Pets/Pets';
 import Clinica from '../pages/Clinica/clinica'; 
@@ -37,7 +38,7 @@ export default function AppRoutes() {
         <Route path="/pets" element={<Pets />} />
         <Route path="/tutores" element={<Placeholder title="Tutores" />} />
         <Route path="/servicos" element={<Placeholder title="Serviços" />} />
-        <Route path="/produtos" element={<Placeholder title="Produtos" />} />
+        <Route path="/produtos" element={<Products />} />
         <Route path="/financeiro" element={<Financial />} />
         <Route path="/funcionarios" element={<Employees />} />
         <Route path="/clinica" element={<Clinica />} />
