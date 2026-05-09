@@ -44,6 +44,15 @@ function normalizeStatus(value: string): string {
   return value.normalize('NFD').replace(/\p{Diacritic}/gu, '').replace(/\s+/g, '');
 }
 
+function normalizeText(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+function readStoredTutorName(petId: string): string {
+  const storedTutorName = localStorage.getItem(`tutor_pet_${petId}`);
+  return storedTutorName || '';
+}
+
 function toIsoFromLocalDateTime(localDateTime: string): string {
   return new Date(localDateTime).toISOString();
 }
@@ -166,6 +175,36 @@ export default function Scheduling() {
             schedulingService.listClinics(),
           ]);
 
+        const tutorIdByName = new Map(
+          tutorsList
+            .filter((tutor) => tutor.name && tutor.id)
+            .map((tutor) => [normalizeText(tutor.name), tutor.id]),
+        );
+
+        const tutorByPetId = new Map(
+          scheduling
+            .filter((item) => item.petId && item.tutorId)
+            .map((item) => [normalizeText(item.petId), item.tutorId]),
+        );
+
+        const normalizedPets = petsList.map((pet) => {
+          if (pet.tutorId && pet.tutorId.trim() !== '') return pet;
+
+          const inferredTutorIdFromName =
+            (pet.tutorName ? tutorIdByName.get(normalizeText(pet.tutorName)) : undefined) || '';
+          const storedTutorName = readStoredTutorName(pet.id);
+          const inferredTutorIdFromStorage =
+            (storedTutorName ? tutorIdByName.get(normalizeText(storedTutorName)) : undefined) ||
+            '';
+          const inferredTutorIdFromScheduling = tutorByPetId.get(normalizeText(pet.id)) || '';
+          const inferredTutorId =
+            inferredTutorIdFromName || inferredTutorIdFromStorage || inferredTutorIdFromScheduling;
+
+          const resolvedTutorName = pet.tutorName || storedTutorName;
+
+          return { ...pet, tutorId: inferredTutorId, tutorName: resolvedTutorName };
+        });
+
         let resolvedEmployees = employeesList;
         const employeeIdsFromScheduling = Array.from(
           new Set(
@@ -201,7 +240,7 @@ export default function Scheduling() {
 
         setItems(scheduling);
         setTutors(tutorsList);
-        setPets(petsList);
+        setPets(normalizedPets);
         setEmployees(resolvedEmployees);
         setServices(servicesList);
         setClinics(clinicsList);
@@ -366,7 +405,7 @@ export default function Scheduling() {
 
   const initialModalData: SchedulingFormData | undefined = editing
     ? {
-        tutorId: editing.tutorId,
+        tutorId: pets.find((pet) => pet.id === editing.petId)?.tutorId || editing.tutorId,
         petId: editing.petId,
         serviceId:
           services.find(
