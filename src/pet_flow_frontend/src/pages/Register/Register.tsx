@@ -8,13 +8,14 @@ import styles from './Register.module.css';
 
 export default function Register() {
   const navigate = useNavigate();
+  
   const [form, setForm] = useState({
-    clinicName: '',
-    cnpj: '',
+    cpf: '',
     fullName: '',
     email: '',
     password: '',
   });
+  
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -26,19 +27,20 @@ export default function Register() {
     e.preventDefault();
     setError('');
 
-    if (!form.email || !form.password) {
-      setError('Preencha e-mail e senha.');
-      return;
-    }
-
-    if (!form.clinicName || !form.cnpj || !form.fullName) {
-      setError('Preencha todos os campos.');
+    if (!form.email || !form.password || !form.cpf || !form.fullName) {
+      setError('Por favor, preencha todos os campos.');
       return;
     }
 
     setLoading(true);
     try {
-      const data = await authService.register(form.email, form.password);
+      const data = await authService.register({
+        email: form.email,
+        password: form.password,
+        name: form.fullName,
+        full_name: form.fullName,
+        cpf: form.cpf,
+      });
       authStorage.save(data, true);
       navigate('/dashboard');
     } catch (err) {
@@ -67,38 +69,10 @@ export default function Register() {
         <div className={styles.formWrapper}>
           <h1 className={styles.title}>Crie sua conta.</h1>
           <p className={styles.subtitle}>
-            Use as informações da sua clínica para preencher o cadastro.
+            Preencha seus dados abaixo para realizar o cadastro.
           </p>
 
           <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.field}>
-              <label className={styles.label} htmlFor="clinicName">
-                Nome da clínica:
-              </label>
-              <input
-                id="clinicName"
-                type="text"
-                className={styles.input}
-                placeholder="Digite o nome da clínica..."
-                value={form.clinicName}
-                onChange={handleChange('clinicName')}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <label className={styles.label} htmlFor="cnpj">
-                CNPJ:
-              </label>
-              <input
-                id="cnpj"
-                type="text"
-                className={styles.input}
-                placeholder="Digite o CNPJ da clínica..."
-                value={form.cnpj}
-                onChange={handleChange('cnpj')}
-              />
-            </div>
-
             <div className={styles.field}>
               <label className={styles.label} htmlFor="fullName">
                 Seu nome completo:
@@ -110,6 +84,20 @@ export default function Register() {
                 placeholder="Digite o seu nome completo..."
                 value={form.fullName}
                 onChange={handleChange('fullName')}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="cpf">
+                CPF:
+              </label>
+              <input
+                id="cpf"
+                type="text"
+                className={styles.input}
+                placeholder="000.000.000-00"
+                value={form.cpf}
+                onChange={handleChange('cpf')}
               />
             </div>
 

@@ -5,7 +5,7 @@ const REFRESH_TOKEN_KEY = 'petflow_refresh_token';
 const USER_ID_KEY = 'petflow_user_id';
 const REMEMBER_KEY = 'petflow_remember';
 const LOGIN_TIME_KEY = 'petflow_login_time';
-const SESSION_DATA_KEY = 'petflow_session_data';
+const SESSION_DATA_KEY = 'petflow_session_data'; // Chave para os dados do usuário/clínica
 
 const SESSION_DURATION_MS = 60 * 60 * 1000; // 1 hora
 
@@ -42,6 +42,22 @@ export const authStorage = {
     storage.setItem(REFRESH_TOKEN_KEY, data.refresh_token);
     storage.setItem(USER_ID_KEY, data.user_id);
     storage.setItem(LOGIN_TIME_KEY, Date.now().toString());
+
+    // --- NOVA LÓGICA: Salva os dados completos da clínica e usuário ---
+    // Tentamos extrair o clinic_id de onde quer que ele esteja na resposta do servidor
+    const sessionData = {
+      id: data.user_id,
+      clinic_id: data.clinic_id || (data as any).user?.clinic_id || '',
+      email: (data as any).email || ''
+    };
+    
+    storage.setItem(SESSION_DATA_KEY, JSON.stringify(sessionData));
+  },
+
+  // NOVA FUNÇÃO: Necessária para o PetModal encontrar o clinic_id
+  getUser(): any {
+    const data = readKey(SESSION_DATA_KEY);
+    return data ? JSON.parse(data) : null;
   },
 
   getToken(): string | null {
@@ -64,11 +80,8 @@ export const authStorage = {
 
   isAuthenticated(): boolean {
     if (!this.getToken()) return false;
-    // Token existe mas não expirou — ok
     if (!this.isExpired()) return true;
-    // Expirou mas tem refresh token — tentará refresh
     if (this.getRefreshToken()) return true;
-    // Sem nada, limpa
     this.clear();
     return false;
   },
