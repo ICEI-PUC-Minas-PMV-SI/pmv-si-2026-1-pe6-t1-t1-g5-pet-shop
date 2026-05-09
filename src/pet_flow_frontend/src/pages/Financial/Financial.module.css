@@ -342,9 +342,29 @@
   width: 28px;
   height: 28px;
   border-radius: var(--radius-md);
-  background-color: var(--color-bg-button-icon);
-  color: var(--color-text-primary);
-  display: flex;
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-right: 4px;
+}
+
+.editBtn:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.deleteBtn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-danger-bg);
+  color: var(--color-danger);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   border: none;
@@ -352,9 +372,9 @@
   transition: all var(--transition-fast);
 }
 
-.editBtn:hover {
-  background-color: var(--color-primary-bg);
-  color: var(--color-primary);
+.deleteBtn:hover {
+  background-color: var(--color-danger);
+  color: #fff;
 }
 
 .viewAllBtn {
@@ -371,6 +391,46 @@
 
 .viewAllBtn:hover {
   color: var(--color-primary-dark);
+}
+
+/* ===== DELETE MODAL ===== */
+.deleteMessage {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xl);
+  line-height: 1.5;
+}
+
+.deleteActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+}
+
+.confirmDeleteBtn {
+  padding: 8px 20px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-danger);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.confirmDeleteBtn:hover {
+  background-color: #c45555;
+}
+
+/* ===== FORM ERROR ===== */
+.formError {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  background-color: var(--color-danger-bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 /* ===== MODAL ===== */
@@ -475,11 +535,16 @@
   color: var(--color-text-white);
   border: none;
   cursor: pointer;
-  transition: background var(--transition-fast);
+  transition: background var(--transition-fast), opacity var(--transition-fast);
 }
 
-.saveBtn:hover {
+.saveBtn:hover:not(:disabled) {
   background-color: var(--color-primary-dark);
+}
+
+.saveBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* ===== RESPONSIVE ===== */

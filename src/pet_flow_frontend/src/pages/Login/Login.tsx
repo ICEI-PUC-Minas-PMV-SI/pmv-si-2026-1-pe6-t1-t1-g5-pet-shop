@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { authService } from '../../services/api';
 import { authStorage } from '../../services/auth';
 import catImg from '../../assets/cat_login.png';
@@ -13,7 +14,18 @@ export default function Login() {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Auto-clear errors after 5 seconds
+  useEffect(() => {
+    if (!error && !emailError) return;
+    const timer = setTimeout(() => {
+      setError('');
+      setEmailError('');
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [error, emailError]);
 
   const validateEmail = (value: string): boolean => {
     if (value && !value.endsWith('@petflow.com.br')) {
@@ -61,12 +73,14 @@ export default function Login() {
       return;
     }
 
+    if (password.length < 6) {
+      setError('A senha deve ter no mínimo 6 caracteres.');
+      return;
+    }
+
     setLoading(true);
     try {
       const data = await authService.login(email, password);
-
-      // 👇 LOG TEMPORÁRIO — me manda o que aparecer no console
-      console.log('✅ Login response completo:', JSON.stringify(data, null, 2));
 
       authStorage.save(data, remember);
       navigate('/dashboard');
@@ -101,14 +115,24 @@ export default function Login() {
 
             <div className={styles.field}>
               <label className={styles.label} htmlFor="password">Senha</label>
-              <input
-                id="password"
-                type="password"
-                className={styles.input}
-                placeholder="Digite sua senha..."
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className={styles.passwordWrapper}>
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  className={styles.input}
+                  placeholder="Digite sua senha..."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className={styles.eyeBtn}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                >
+                  {showPassword ? <MdVisibilityOff size={18} /> : <MdVisibility size={18} />}
+                </button>
+              </div>
             </div>
 
             <div className={styles.options}>
@@ -121,14 +145,11 @@ export default function Login() {
                 />
                 <span>Lembrar de mim</span>
               </label>
-              <Link to="/esqueci-senha" className={styles.forgotLink}>
-                Esqueci minha senha
-              </Link>
             </div>
 
             {(error || emailError) && <p className={styles.error}>{emailError || error}</p>}
 
-            <button type="submit" className={styles.submitBtn} disabled={loading}>
+            <button type="submit" className={styles.submitBtn} disabled={loading || !email || !password}>
               {loading ? 'Entrando...' : 'Entrar'}
             </button>
           </form>

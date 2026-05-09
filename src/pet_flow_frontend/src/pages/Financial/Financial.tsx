@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MdEdit, MdAdd } from 'react-icons/md';
+import { MdEdit, MdAdd, MdDelete } from 'react-icons/md';
 import { financialService, type Transaction, type CreateTransactionPayload } from '../../services/financial';
 import { useSession } from '../../contexts/SessionContext';
 import styles from './Financial.module.css';
@@ -13,7 +13,13 @@ function formatDate(dateStr: string): string {
   return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
 }
 
-// Generate last 6 months labels
+function formatAmountDisplay(value: number): string {
+  return value.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
+
 function getLast6Months(): string[] {
   const months = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   const now = new Date();
@@ -25,7 +31,6 @@ function getLast6Months(): string[] {
   return result;
 }
 
-// Group transactions by month for the chart
 function getMonthlyData(transactions: Transaction[]): { revenue: number[]; expenses: number[] } {
   const now = new Date();
   const revenue = Array(6).fill(0);
@@ -61,6 +66,7 @@ export default function Financial() {
   const [showModal, setShowModal] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [deletingTransaction, setDeletingTransaction] = useState<Transaction | null>(null);
 
   const fetchTransactions = async () => {
     if (!clinicId) return;
@@ -89,13 +95,26 @@ export default function Financial() {
     .reduce((sum, t) => sum + Math.abs(t.amount), 0);
 
   const balance = revenue - expenses;
-
-  // Percentage change (simplified: compare to a baseline)
   const balancePercentage = revenue > 0 ? Math.round((balance / revenue) * 100) : 0;
 
   const handleEdit = (transaction: Transaction) => {
     setEditingTransaction(transaction);
     setShowModal(true);
+  };
+
+  const handleDelete = (transaction: Transaction) => {
+    setDeletingTransaction(transaction);
+  };
+
+  const confirmDelete = async () => {
+    if (!deletingTransaction) return;
+    try {
+      await financialService.delete(deletingTransaction.id, deletingTransaction.clinic_id);
+      setDeletingTransaction(null);
+      fetchTransactions();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Erro ao excluir');
+    }
   };
 
   const handleNew = () => {
@@ -129,7 +148,6 @@ export default function Financial() {
   const monthLabels = getLast6Months();
   const monthlyData = getMonthlyData(transactions);
   const maxChartValue = Math.max(...monthlyData.revenue, ...monthlyData.expenses, 1);
-
   const displayedTransactions = showAll ? transactions : transactions.slice(0, 5);
 
   return (
@@ -138,7 +156,6 @@ export default function Financial() {
         <h1 className={styles.title}>Financeiro</h1>
       </div>
 
-      {/* Summary Cards */}
       <div className={styles.cards}>
         <div className={styles.card}>
           <span className={styles.cardLabel}>Receita do mês</span>
@@ -155,12 +172,9 @@ export default function Financial() {
             {balancePercentage >= 0 ? '+' : ''}{balancePercentage}% esse mês
           </span>
         </div>
-
       </div>
 
-      {/* Chart + Transactions Row */}
       <div className={styles.bottomRow}>
-        {/* Chart Section */}
         <div className={styles.chartSection}>
           <div className={styles.chartHeader}>
             <h2 className={styles.sectionTitle}>Resumo (últimos 6 meses)</h2>
@@ -204,13 +218,12 @@ export default function Financial() {
           </div>
         </div>
 
-        {/* Transactions Table */}
         <div className={styles.tableSection}>
           <div className={styles.tableHeader}>
             <h2 className={styles.sectionTitle}>Transações recentes</h2>
             <button className={styles.newBtn} onClick={handleNew}>
               <MdAdd size={14} />
-              Nova transição
+              Nova transação
             </button>
           </div>
 
@@ -224,6 +237,7 @@ export default function Financial() {
                   <thead>
                     <tr>
                       <th>Data</th>
+                      <th>Descrição</th>
                       <th>Tipo</th>
                       <th>Valor</th>
                       <th>Ação</th>
@@ -232,7 +246,7 @@ export default function Financial() {
                   <tbody>
                     {displayedTransactions.length === 0 && (
                       <tr>
-                        <td colSpan={4} className={styles.emptyRow}>
+                        <td colSpan={5} className={styles.emptyRow}>
                           Nenhuma transação encontrada
                         </td>
                       </tr>
@@ -240,6 +254,7 @@ export default function Financial() {
                     {displayedTransactions.map((t) => (
                       <tr key={t.id}>
                         <td>{formatDate(t.created_at)}</td>
+                        <td>{t.description}</td>
                         <td>
                           <span className={t.amount >= 0 ? styles.tagRevenue : styles.tagExpense}>
                             {t.amount >= 0 ? 'Receita' : 'Despesa'}
@@ -251,6 +266,9 @@ export default function Financial() {
                         <td>
                           <button className={styles.editBtn} onClick={() => handleEdit(t)} aria-label="Editar">
                             <MdEdit size={14} />
+                          </button>
+                          <button className={styles.deleteBtn} onClick={() => handleDelete(t)} aria-label="Excluir">
+                            <MdDelete size={14} />
                           </button>
                         </td>
                       </tr>
@@ -268,7 +286,6 @@ export default function Financial() {
         </div>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <TransactionModal
           transaction={editingTransaction}
@@ -276,11 +293,29 @@ export default function Financial() {
           onSave={handleSave}
         />
       )}
+
+      {deletingTransaction && (
+        <div className={styles.overlay} onClick={() => setDeletingTransaction(null)}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <h2 className={styles.modalTitle}>Excluir Transação</h2>
+            <p className={styles.deleteMessage}>
+              Deseja mesmo deletar a transação <strong>"{deletingTransaction.description}"</strong>?
+            </p>
+            <div className={styles.deleteActions}>
+              <button className={styles.confirmDeleteBtn} onClick={confirmDelete}>
+                Sim, remover
+              </button>
+              <button className={styles.cancelBtn} onClick={() => setDeletingTransaction(null)}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
 
-/* ===== MODAL COMPONENT ===== */
 interface ModalProps {
   transaction: Transaction | null;
   onClose: () => void;
@@ -290,7 +325,7 @@ interface ModalProps {
 function TransactionModal({ transaction, onClose, onSave }: ModalProps) {
   const [form, setForm] = useState({
     description: transaction?.description || '',
-    amount: transaction ? String(Math.abs(transaction.amount)) : '',
+    amount: transaction ? formatAmountDisplay(Math.abs(transaction.amount)) : '',
     payment_method: transaction?.payment_method || '',
     type: transaction ? (transaction.amount >= 0 ? 'revenue' : 'expense') : 'revenue',
   });
@@ -299,13 +334,41 @@ function TransactionModal({ transaction, onClose, onSave }: ModalProps) {
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, '');
+    if (!raw) {
+      setForm((prev) => ({ ...prev, amount: '' }));
+      return;
+    }
+    const cents = parseInt(raw, 10);
+    const formatted = (cents / 100).toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    setForm((prev) => ({ ...prev, amount: formatted }));
+  };
+
+  const getAmountNumber = (): number => {
+    const cleaned = form.amount.replace(/\./g, '').replace(',', '.');
+    return parseFloat(cleaned) || 0;
+  };
+
+  const isFormValid = () => {
+    return (
+      form.description.trim().length > 0 &&
+      getAmountNumber() >= 1 &&
+      form.payment_method !== ''
+    );
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const amount = parseFloat(form.amount);
-    if (!form.description || isNaN(amount) || !form.payment_method) return;
+    if (!isFormValid()) return;
+
+    const amount = getAmountNumber();
 
     onSave({
-      description: form.description,
+      description: form.description.trim(),
       amount: form.type === 'expense' ? -Math.abs(amount) : Math.abs(amount),
       payment_method: form.payment_method,
       clinic_id: transaction?.clinic_id || '',
@@ -334,11 +397,11 @@ function TransactionModal({ transaction, onClose, onSave }: ModalProps) {
             <div className={styles.formField}>
               <label>Valor (R$)</label>
               <input
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="numeric"
                 value={form.amount}
-                onChange={handleChange('amount')}
-                placeholder="0.00"
+                onChange={handleAmountChange}
+                placeholder="0,00"
               />
             </div>
             <div className={styles.formField}>
@@ -352,19 +415,19 @@ function TransactionModal({ transaction, onClose, onSave }: ModalProps) {
 
           <div className={styles.formField}>
             <label>Método de pagamento</label>
-            <input
-              type="text"
-              value={form.payment_method}
-              onChange={handleChange('payment_method')}
-              placeholder="Ex: PIX, Cartão, Dinheiro"
-            />
+            <select value={form.payment_method} onChange={handleChange('payment_method')}>
+              <option value="">Selecione...</option>
+              <option value="Cartão">Cartão</option>
+              <option value="Pix">Pix</option>
+              <option value="Dinheiro">Dinheiro</option>
+            </select>
           </div>
 
           <div className={styles.modalActions}>
             <button type="button" className={styles.cancelBtn} onClick={onClose}>
               Cancelar
             </button>
-            <button type="submit" className={styles.saveBtn}>
+            <button type="submit" className={styles.saveBtn} disabled={!isFormValid()}>
               Salvar
             </button>
           </div>

@@ -12,7 +12,7 @@
 | 16/03 - 22/03 | APIs e Web Services - Unidade 2 | ✅ | Criação das rotas de login, registro e financeiro, e criação da documentação do backend | Criação das rotas de login, registro e financeiro, e criação da documentação do backend |
 | 23/03 - 29/03 | APIs e Web Services - Unidade 2 | ✅ | Criação da arquitetura do frontend (rotas, layouts, contextos) e tela de Login | Criação da arquitetura do frontend, tela de Login e Registro com autenticação JWT |
 | 30/03 - 05/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 1 | ✅ | Criação da tela de Financeiro com CRUD completo | Criação da tela de Financeiro (listagem, criação, edição de transações) e integração com API |
-| 06/04 - 12/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 2 | ✅ | Validação e revisão do frontend, responsividade e gerenciador de sessão | Implementação do gerenciador global de sessão (SessionContext), menu lateral responsivo e validação geral do frontend |
+| 06/04 - 12/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 2 | ✅ | Validação e revisão do frontend, responsividade e gerenciador de sessão | Implementação do gerenciador global de sessão (SessionContext), menu lateral responsivo, validação geral do frontend e documentação do frontend web (docs/frontend-web.md) |
 | 13/04 - 19/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 1 | ⬜ |  |  |
 | 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ⬜ |  |  |
 | 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ⬜ |  |  |

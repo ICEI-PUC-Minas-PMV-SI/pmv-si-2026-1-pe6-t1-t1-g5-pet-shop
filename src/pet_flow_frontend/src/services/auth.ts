@@ -5,17 +5,15 @@ const REFRESH_TOKEN_KEY = 'petflow_refresh_token';
 const USER_ID_KEY = 'petflow_user_id';
 const REMEMBER_KEY = 'petflow_remember';
 const LOGIN_TIME_KEY = 'petflow_login_time';
-const SESSION_DATA_KEY = 'petflow_session_data'; // Chave para os dados do usuário/clínica
+const SESSION_DATA_KEY = 'petflow_session_data';
 
 const SESSION_DURATION_MS = 60 * 60 * 1000; // 1 hora
 
 const ALL_KEYS = [TOKEN_KEY, REFRESH_TOKEN_KEY, USER_ID_KEY, LOGIN_TIME_KEY, SESSION_DATA_KEY];
 
-function getStorage(): Storage {
-  return localStorage.getItem(REMEMBER_KEY) === 'true'
-    ? localStorage
-    : sessionStorage;
-}
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  'https://pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com/api/v1';
 
 function readKey(key: string): string | null {
   return localStorage.getItem(key) || sessionStorage.getItem(key);
@@ -26,6 +24,33 @@ function clearAll(): void {
     localStorage.removeItem(key);
     sessionStorage.removeItem(key);
   }
+}
+
+/**
+ * Requisição autenticada genérica.
+ * Adiciona o token JWT no header Authorization.
+ * Pode ser importada por qualquer service que precise de autenticação.
+ */
+export async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
+  const token = readKey(TOKEN_KEY);
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    },
+  });
+
+  if (response.status === 204) return null as T;
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error || data.message || 'Erro inesperado');
+  }
+
+  return data as T;
 }
 
 export const authStorage = {
@@ -43,8 +68,7 @@ export const authStorage = {
     storage.setItem(USER_ID_KEY, data.user_id);
     storage.setItem(LOGIN_TIME_KEY, Date.now().toString());
 
-    // --- NOVA LÓGICA: Salva os dados completos da clínica e usuário ---
-    // Tentamos extrair o clinic_id de onde quer que ele esteja na resposta do servidor
+
     const sessionData = {
       id: data.user_id,
       clinic_id: data.clinic_id || (data as any).user?.clinic_id || '',
@@ -54,7 +78,6 @@ export const authStorage = {
     storage.setItem(SESSION_DATA_KEY, JSON.stringify(sessionData));
   },
 
-  // NOVA FUNÇÃO: Necessária para o PetModal encontrar o clinic_id
   getUser(): any {
     const data = readKey(SESSION_DATA_KEY);
     return data ? JSON.parse(data) : null;
