@@ -17,7 +17,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Auto-clear errors after 5 seconds
   useEffect(() => {
     if (!error && !emailError) return;
     const timer = setTimeout(() => {

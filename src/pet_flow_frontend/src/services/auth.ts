@@ -7,7 +7,7 @@ const REMEMBER_KEY = 'petflow_remember';
 const LOGIN_TIME_KEY = 'petflow_login_time';
 const SESSION_DATA_KEY = 'petflow_session_data';
 
-const SESSION_DURATION_MS = 60 * 60 * 1000; // 1 hora
+const SESSION_DURATION_MS = 60 * 60 * 1000;
 
 const ALL_KEYS = [TOKEN_KEY, REFRESH_TOKEN_KEY, USER_ID_KEY, LOGIN_TIME_KEY, SESSION_DATA_KEY];
 
@@ -26,11 +26,6 @@ function clearAll(): void {
   }
 }
 
-/**
- * Requisição autenticada genérica.
- * Adiciona o token JWT no header Authorization.
- * Pode ser importada por qualquer service que precise de autenticação.
- */
 export async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
   const token = readKey(TOKEN_KEY);
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
