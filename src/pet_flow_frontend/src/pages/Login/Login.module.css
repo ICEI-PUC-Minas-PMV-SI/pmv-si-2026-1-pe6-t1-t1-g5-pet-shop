@@ -127,10 +127,25 @@
 }
 
 /* ===== ERRO ===== */
+.fieldError {
+  font-size: 12px;
+  color: #fff;
+  background-color: rgba(255, 60, 60, 0.85);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: var(--font-weight-medium);
+  margin-top: 4px;
+}
+
+.inputError {
+  border: 2px solid #ff6b6b;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.25);
+}
+
 .error {
   font-size: var(--font-size-sm);
-  color: #ff4d4d;
-  background-color: rgba(255, 77, 77, 0.12);
+  color: #fff;
+  background-color: rgba(255, 60, 60, 0.85);
   padding: 8px 12px;
   border-radius: var(--radius-sm);
   font-weight: var(--font-weight-medium);

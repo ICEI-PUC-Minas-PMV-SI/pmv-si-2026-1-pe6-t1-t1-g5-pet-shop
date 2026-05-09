@@ -12,14 +12,52 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const validateEmail = (value: string): boolean => {
+    if (value && !value.endsWith('@petflow.com.br')) {
+      setEmailError('O e-mail deve ter o formato @petflow.com.br');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (emailError) {
+      validateEmail(value);
+    }
+  };
+
+  const handleEmailBlur = () => {
+    if (email) {
+      validateEmail(email);
+    }
+  };
+
+  function translateError(msg: string): string {
+    const translations: Record<string, string> = {
+      'Invalid login credentials': 'E-mail ou senha inválidos.',
+      'User not found': 'Usuário não encontrado.',
+      'Incorrect password': 'Senha incorreta.',
+    };
+    return translations[msg] || msg;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setEmailError('');
 
     if (!email || !password) {
       setError('Preencha e-mail e senha.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
       return;
     }
 
@@ -29,7 +67,8 @@ export default function Login() {
       authStorage.save(data, remember);
       navigate('/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao fazer login.');
+      const msg = err instanceof Error ? err.message : 'Erro ao fazer login.';
+      setError(translateError(msg));
     } finally {
       setLoading(false);
     }
@@ -48,10 +87,11 @@ export default function Login() {
               <input
                 id="email"
                 type="email"
-                className={styles.input}
-                placeholder="nome@email.com"
+                className={`${styles.input} ${emailError ? styles.inputError : ''}`}
+                placeholder="nome@petflow.com.br"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
+                onBlur={handleEmailBlur}
               />
             </div>
 
@@ -82,7 +122,7 @@ export default function Login() {
               </Link>
             </div>
 
-            {error && <p className={styles.error}>{error}</p>}
+            {(error || emailError) && <p className={styles.error}>{emailError || error}</p>}
 
             <button type="submit" className={styles.submitBtn} disabled={loading}>
               {loading ? 'Entrando...' : 'Entrar'}
