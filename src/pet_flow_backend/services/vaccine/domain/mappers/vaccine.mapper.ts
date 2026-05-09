@@ -18,6 +18,8 @@ export class VaccineMapper
       fromObject.expirationDate,
       fromObject.created_at,
       fromObject.updated_at,
+      fromObject.pet_id,
+      fromObject.date,
     );
   }
 
@@ -30,6 +32,8 @@ export class VaccineMapper
       toObject.expirationDate,
       toObject.createdAt,
       toObject.updatedAt,
+      toObject.petId,
+      toObject.date,
     );
   }
 

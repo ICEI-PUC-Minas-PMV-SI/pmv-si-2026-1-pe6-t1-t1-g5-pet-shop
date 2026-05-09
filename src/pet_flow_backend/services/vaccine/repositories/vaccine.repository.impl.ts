@@ -20,6 +20,17 @@ export class VaccineRepositoryImpl implements VaccineRepository {
     }
   }
 
+  async listByPet(petId: string): Promise<Vaccine[]> {
+    try {
+      const { data, error } = await this.datasource.getByPetId(petId);
+      if (error) return [];
+      return this.mapper.toObjects(data || []);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }
+
   async getById(id: string): Promise<Vaccine> {
     try {
       const { data, error } = await this.datasource.getById(id);

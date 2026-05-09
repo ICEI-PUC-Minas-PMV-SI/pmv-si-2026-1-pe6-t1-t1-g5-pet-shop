@@ -6,4 +6,6 @@ export interface VaccineResponseDto {
   expirationDate: Date;
   createdAt: Date;
   updatedAt: Date;
+  petId: string;
+  date: string;
 }

@@ -8,6 +8,10 @@ export class VaccineService {
     return this.repository.list();
   }
 
+  async listVaccinesByPet(petId: string): Promise<Vaccine[]> {
+    return this.repository.listByPet(petId);
+  }
+
   async getVaccineById(id: string): Promise<Vaccine> {
     if (!id) throw new Error("ID é obrigatório");
     return this.repository.getById(id);
