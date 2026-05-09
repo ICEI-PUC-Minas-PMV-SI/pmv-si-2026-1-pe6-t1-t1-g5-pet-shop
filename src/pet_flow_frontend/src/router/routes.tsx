@@ -39,8 +39,6 @@ export default function AppRoutes() {
         <Route path="/pets" element={<Pets />} />
         <Route path="/tutores" element={<Placeholder title="Tutores" />} />
         <Route path="/servicos" element={<Services />} />
-        <Route path="/produtos" element={<Placeholder title="Produtos" />} />
-        <Route path="/servicos" element={<Placeholder title="Serviços" />} />
         <Route path="/produtos" element={<Products />} />
         <Route path="/financeiro" element={<Financial />} />
         <Route path="/funcionarios" element={<Employees />} />
