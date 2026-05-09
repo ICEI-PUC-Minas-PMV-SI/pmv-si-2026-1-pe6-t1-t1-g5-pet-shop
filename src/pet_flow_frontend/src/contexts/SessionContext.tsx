@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 import { authStorage } from '../services/auth';
-import { employeeService, type EmployeeData } from '../services/employee';
+import { employeeService, type Employee } from '../services/employee';
 
 export interface SessionData {
   token: string;
@@ -32,7 +32,9 @@ function saveSessionData(data: SessionData): void {
 }
 
 function loadSessionData(): SessionData | null {
-  const raw = localStorage.getItem(SESSION_DATA_KEY) || sessionStorage.getItem(SESSION_DATA_KEY);
+  const raw =
+    localStorage.getItem(SESSION_DATA_KEY) ||
+    sessionStorage.getItem(SESSION_DATA_KEY);
   if (!raw) return null;
   try {
     return JSON.parse(raw) as SessionData;
@@ -55,50 +57,51 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     const token = authStorage.getToken();
     const userId = authStorage.getUserId();
 
-    console.log('[SessionContext] Init - token:', !!token, 'userId:', userId);
+    if (!token || !userId) return;
 
-    if (!token || !userId) {
-      return;
-    }
-
-    // If we already have cached data for this user, skip fetch
+    // ── 1. Usa cache se já tiver clinicId válido ──────────────────────────────
     const cached = loadSessionData();
     if (cached && cached.userId === userId && cached.clinicId) {
-      console.log('[SessionContext] Using cached session:', cached.name, cached.clinicId);
       setSession(cached);
       return;
     }
 
-    // Fetch employee data
+    // ── 2. Busca todos os employees e filtra pelo userId ──────────────────────
     setLoading(true);
-    employeeService.getById(userId)
-      .then((employee: EmployeeData) => {
-        console.log('[SessionContext] Employee loaded:', employee.name, employee.clinicId);
+    employeeService.getAll()
+      .then((employees: Employee[]) => {
+        // tenta achar o employee cujo id bate com o userId do token
+        const found = employees.find(
+          (e) => e.id === userId
+        );
+
         const sessionData: SessionData = {
           token,
           userId,
-          clinicId: employee.clinicId,
-          name: employee.name,
-          role: employee.role,
+          clinicId: found?.clinicId || '',
+          name:     found?.name     || 'Usuário',
+          role:     found?.role     || '',
         };
+
+        console.log('[SessionContext] Session resolved:', sessionData.name, '| clinicId:', sessionData.clinicId);
         saveSessionData(sessionData);
         setSession(sessionData);
       })
       .catch((err) => {
-        console.error('[SessionContext] Failed to fetch employee:', err);
-        setError(err instanceof Error ? err.message : 'Erro ao carregar sessão');
-        // Fallback session
-        setSession({
+        console.warn('[SessionContext] Failed to load employees, using fallback');
+        const fallback: SessionData = {
           token,
           userId,
           clinicId: '',
           name: 'Usuário',
           role: '',
-        });
+        };
+        saveSessionData(fallback);
+        setSession(fallback);
+        setError(err instanceof Error ? err.message : 'Erro ao carregar sessão');
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
+
   }, []);
 
   return (
