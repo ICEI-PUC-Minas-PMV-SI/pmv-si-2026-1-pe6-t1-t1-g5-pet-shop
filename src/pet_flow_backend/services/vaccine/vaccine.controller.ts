@@ -19,6 +19,18 @@ export class VaccineController {
     }
   }
 
+  async listByPet(req: Request, res: Response): Promise<void> {
+    try {
+      const petId = req.params.petId as string;
+      const vaccines = await this.service.listVaccinesByPet(petId);
+      const response = this.mapper.toObjects(vaccines);
+      res.status(200).json(response);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+
   async getById(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;

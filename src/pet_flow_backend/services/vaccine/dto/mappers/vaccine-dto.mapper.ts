@@ -18,6 +18,8 @@ export class VaccineDtoMapper
       expirationDate: fromObject.expirationDate || new Date(),
       createdAt: fromObject.createdAt || new Date(),
       updatedAt: fromObject.updatedAt || new Date(),
+      petId: fromObject.petId || "",
+      date: fromObject.date || "",
     };
   }
 
@@ -30,6 +32,8 @@ export class VaccineDtoMapper
       toObject.expirationDate,
       toObject.createdAt,
       toObject.updatedAt,
+      toObject.petId,
+      toObject.date,
     );
   }
 

@@ -7,5 +7,7 @@ export class VaccineEntity {
     public expirationDate?: Date,
     public created_at?: Date,
     public updated_at?: Date,
+    public pet_id?: string,
+    public date?: string,
   ) {}
 }
