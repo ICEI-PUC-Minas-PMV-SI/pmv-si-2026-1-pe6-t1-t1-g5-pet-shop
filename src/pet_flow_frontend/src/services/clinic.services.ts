@@ -4,7 +4,6 @@ const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
   'https://pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com/api/v1';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 export interface Clinic {
   id: string;
   name: string;
@@ -30,7 +29,6 @@ export interface CreateClinicPayload {
   zip_code: string;
 }
 
-// ─── Auth request helper ──────────────────────────────────────────────────────
 async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
   const token = authStorage.getToken();
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -53,16 +51,13 @@ async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T
   return data as T;
 }
 
-// ─── Clinic Service ───────────────────────────────────────────────────────────
 export const clinicsService = {
-  // GET /clinics — lista todas as clínicas
   getAll(): Promise<Clinic[]> {
     return authRequest<Clinic[]>('/clinic', {
       method: 'GET',
     });
   },
 
-  // GET /clinics/:id — busca clínica por ID
   getById(id: string): Promise<Clinic> {
     if (!id) throw new Error("ID é obrigatório");
     return authRequest<Clinic>(`/clinic/${id}`, {
@@ -70,7 +65,6 @@ export const clinicsService = {
     });
   },
 
-  // POST /clinics — cria nova clínica
   create(payload: CreateClinicPayload): Promise<Clinic> {
     return authRequest<Clinic>('/clinic', {
       method: 'POST',
@@ -78,7 +72,6 @@ export const clinicsService = {
     });
   },
 
-  // PUT /clinics/:id — atualiza clínica existente
   update(id: string, payload: Partial<CreateClinicPayload>): Promise<Clinic> {
     if (!id) throw new Error("ID é obrigatório");
     return authRequest<Clinic>(`/clinic/${id}`, {
@@ -87,7 +80,6 @@ export const clinicsService = {
     });
   },
 
-  // DELETE /clinics/:id — remove clínica
   delete(id: string): Promise<null> {
     if (!id) throw new Error("ID é obrigatório");
     return authRequest<null>(`/clinic/${id}`, {

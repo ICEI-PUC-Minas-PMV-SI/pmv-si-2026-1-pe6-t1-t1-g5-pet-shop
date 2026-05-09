@@ -17,7 +17,11 @@ export class VaccineDatasourceImpl implements VaccineDatasource {
   }
 
   async getByPetId(petId: string): Promise<DbResult<VaccineEntity[]>> {
-    return supabaseExtensions.findByColumn<VaccineEntity>(this.table, "pet_id", petId);
+    return supabaseExtensions.findByColumn<VaccineEntity>(
+      this.table,
+      "pet_id",
+      petId,
+    );
   }
 
   async create(

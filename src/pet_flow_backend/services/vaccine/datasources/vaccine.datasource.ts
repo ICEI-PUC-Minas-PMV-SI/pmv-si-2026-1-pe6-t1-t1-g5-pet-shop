@@ -6,6 +6,9 @@ export interface VaccineDatasource {
   getById(id: string): Promise<DbResult<VaccineEntity>>;
   getByPetId(petId: string): Promise<DbResult<VaccineEntity[]>>;
   create(vaccine: Partial<VaccineEntity>): Promise<DbResult<VaccineEntity>>;
-  update(id: string, vaccine: Partial<VaccineEntity>): Promise<DbResult<VaccineEntity>>;
+  update(
+    id: string,
+    vaccine: Partial<VaccineEntity>,
+  ): Promise<DbResult<VaccineEntity>>;
   delete(id: string): Promise<DbResult<null>>;
 }

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { authService } from '../../services/api';
 import { authStorage } from '../../services/auth';
 import catImg from '../../assets/cat_login.png';
@@ -12,14 +13,67 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!error && !emailError) return;
+    const timer = setTimeout(() => {
+      setError('');
+      setEmailError('');
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [error, emailError]);
+
+  const validateEmail = (value: string): boolean => {
+    if (value && !value.endsWith('@petflow.com.br')) {
+      setEmailError('O e-mail deve ter o formato @petflow.com.br');
+      return false;
+    }
+    setEmailError('');
+    return true;
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (emailError) {
+      validateEmail(value);
+    }
+  };
+
+  const handleEmailBlur = () => {
+    if (email) {
+      validateEmail(email);
+    }
+  };
+
+  function translateError(msg: string): string {
+    const translations: Record<string, string> = {
+      'Invalid login credentials': 'E-mail ou senha inválidos.',
+      'User not found': 'Usuário não encontrado.',
+      'Incorrect password': 'Senha incorreta.',
+    };
+    return translations[msg] || msg;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setEmailError('');
 
     if (!email || !password) {
       setError('Preencha e-mail e senha.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      return;
+    }
+
+    if (password.length < 6) {
+      setError('A senha deve ter no mínimo 6 caracteres.');
       return;
     }
 
@@ -27,13 +81,11 @@ export default function Login() {
     try {
       const data = await authService.login(email, password);
 
-      // 👇 LOG TEMPORÁRIO — me manda o que aparecer no console
-      console.log('✅ Login response completo:', JSON.stringify(data, null, 2));
-
       authStorage.save(data, remember);
       navigate('/dashboard');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao fazer login.');
+      const msg = err instanceof Error ? err.message : 'Erro ao fazer login.';
+      setError(translateError(msg));
     } finally {
       setLoading(false);
     }
@@ -52,23 +104,34 @@ export default function Login() {
               <input
                 id="email"
                 type="email"
-                className={styles.input}
-                placeholder="nome@email.com"
+                className={`${styles.input} ${emailError ? styles.inputError : ''}`}
+                placeholder="nome@petflow.com.br"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
+                onBlur={handleEmailBlur}
               />
             </div>
 
             <div className={styles.field}>
               <label className={styles.label} htmlFor="password">Senha</label>
-              <input
-                id="password"
-                type="password"
-                className={styles.input}
-                placeholder="Digite sua senha..."
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className={styles.passwordWrapper}>
+                <input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  className={styles.input}
+                  placeholder="Digite sua senha..."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button
+                  type="button"
+                  className={styles.eyeBtn}
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                >
+                  {showPassword ? <MdVisibilityOff size={18} /> : <MdVisibility size={18} />}
+                </button>
+              </div>
             </div>
 
             <div className={styles.options}>
@@ -81,14 +144,11 @@ export default function Login() {
                 />
                 <span>Lembrar de mim</span>
               </label>
-              <Link to="/esqueci-senha" className={styles.forgotLink}>
-                Esqueci minha senha
-              </Link>
             </div>
 
-            {error && <p className={styles.error}>{error}</p>}
+            {(error || emailError) && <p className={styles.error}>{emailError || error}</p>}
 
-            <button type="submit" className={styles.submitBtn} disabled={loading}>
+            <button type="submit" className={styles.submitBtn} disabled={loading || !email || !password}>
               {loading ? 'Entrando...' : 'Entrar'}
             </button>
           </form>
