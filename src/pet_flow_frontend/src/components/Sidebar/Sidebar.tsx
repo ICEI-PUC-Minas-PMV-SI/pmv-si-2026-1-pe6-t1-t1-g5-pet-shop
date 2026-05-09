@@ -10,6 +10,7 @@ import {
   MdGroup,
   MdLogout,
   MdClose,
+  MdStore
 } from 'react-icons/md';
 import { authStorage } from '../../services/auth';
 import { useSession, clearSessionData } from '../../contexts/SessionContext';
@@ -25,6 +26,8 @@ const menuItems = [
   { path: '/produtos', label: 'Produtos', icon: MdInventory },
   { path: '/financeiro', label: 'Financeiro', icon: MdAttachMoney },
   { path: '/funcionarios', label: 'Funcionários', icon: MdGroup },
+  { path: '/Clinica', label: 'Clínica', icon: MdStore },
+
 ];
 
 function getInitials(name: string): string {

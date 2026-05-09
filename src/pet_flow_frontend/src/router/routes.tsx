@@ -9,15 +9,20 @@ import Financial from '../pages/Financial/Financial';
 import Scheduling from '../pages/Scheduling/Scheduling';
 import Employees from '../pages/Employees/Employees';
 import Placeholder from '../pages/Placeholder/Placeholder';
+import Pets from '../pages/Pets/Pets';
+import Clinica from '../pages/Clinica/clinica'; 
 
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Public */}
+      {/* ─── ROTAS PÚBLICAS (TELA CHEIA) ────────────────────────────── */}
       <Route path="/" element={<AuthRedirect />} />
       <Route path="/register" element={<Register />} />
+      
 
-      {/* Authenticated */}
+
+
+      {/* ─── ROTAS PRIVADAS (COM MENU LATERAL E TOPBAR) ─────────────── */}
       <Route
         element={
           <RequireAuth>
@@ -29,15 +34,16 @@ export default function AppRoutes() {
       >
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/agendamentos" element={<Scheduling />} />
-        <Route path="/pets" element={<Placeholder title="Pets" />} />
+        <Route path="/pets" element={<Pets />} />
         <Route path="/tutores" element={<Placeholder title="Tutores" />} />
         <Route path="/servicos" element={<Placeholder title="Serviços" />} />
         <Route path="/produtos" element={<Placeholder title="Produtos" />} />
         <Route path="/financeiro" element={<Financial />} />
         <Route path="/funcionarios" element={<Employees />} />
+        <Route path="/clinica" element={<Clinica />} />
       </Route>
 
-      {/* Fallback */}
+      {/* ─── FALLBACK (REDIRECIONAMENTO) ───────────────────────────── */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

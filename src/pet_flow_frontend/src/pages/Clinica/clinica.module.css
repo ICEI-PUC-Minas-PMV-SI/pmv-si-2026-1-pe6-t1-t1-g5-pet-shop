@@ -1,0 +1,198 @@
+/* ─── Page ────────────────────────────────────────────────────────────────── */
+.page {
+  padding: 40px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+}
+
+/* ─── Toolbar ─────────────────────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.newBtn {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+  transition: all 0.2s ease;
+}
+
+.newBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+}
+
+/* ─── Loading ─────────────────────────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 60px 0;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* ─── Grid ────────────────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* ─── Card ────────────────────────────────────────────────────────────────── */
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.07);
+  border-color: #cbd5e1;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* ─── Card content ────────────────────────────────────────────────────────── */
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nameHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clinicIcon {
+  color: #2563eb;
+  flex-shrink: 0;
+}
+
+.clinicName {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clinicLocation {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #64748b;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+/* ─── Meta ────────────────────────────────────────────────────────────────── */
+.metaData {
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.details {
+  font-size: 0.813rem;
+  color: #475569;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.details strong {
+  color: #1e293b;
+}
+
+/* ─── Pagination ──────────────────────────────────────────────────────────── */
+.pagination {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.pageBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
+  background: white;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  border-color: #2563eb;
+  color: #2563eb;
+  background: #eff6ff;
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageInfo {
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}

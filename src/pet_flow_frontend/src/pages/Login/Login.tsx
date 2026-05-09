@@ -26,6 +26,10 @@ export default function Login() {
     setLoading(true);
     try {
       const data = await authService.login(email, password);
+
+      // 👇 LOG TEMPORÁRIO — me manda o que aparecer no console
+      console.log('✅ Login response completo:', JSON.stringify(data, null, 2));
+
       authStorage.save(data, remember);
       navigate('/dashboard');
     } catch (err) {
