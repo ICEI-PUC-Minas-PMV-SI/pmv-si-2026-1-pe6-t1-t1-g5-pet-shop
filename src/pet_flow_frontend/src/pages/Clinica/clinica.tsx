@@ -41,7 +41,7 @@ export default function Clinics() {
         <button 
           className={styles.newBtn} 
           onClick={() => {
-            setEditingClinic(null); // Garante que o modal abra vazio
+            setEditingClinic(null);
             setShowModal(true);
           }}
         >
@@ -59,7 +59,7 @@ export default function Clinics() {
                 key={clinic.id} 
                 className={styles.card} 
                 onClick={() => {
-                  setEditingClinic(clinic); // Passa os dados da clínica clicada
+                  setEditingClinic(clinic);
                   setShowModal(true);
                 }}
               >

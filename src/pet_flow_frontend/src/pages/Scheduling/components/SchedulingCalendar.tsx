@@ -22,7 +22,6 @@ function getStartOfDay(dateTime: string): number {
 }
 
 function getEndOfDay(dateTime: string): number {
-  // Keep one-hour visual blocks to improve time separation in the grid.
   return getStartOfDay(dateTime) + 1;
 }
 

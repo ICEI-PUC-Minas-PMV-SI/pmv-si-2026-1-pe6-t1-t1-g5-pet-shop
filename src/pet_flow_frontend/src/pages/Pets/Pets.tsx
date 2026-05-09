@@ -6,12 +6,10 @@ import styles from './Pets.module.css';
 
 const ITEMS_PER_PAGE = 6;
 
-// ─── Helper — lê tutor do localStorage pelo ID do pet ─────────────────────────
 function getTutorName(petId: string): string {
   return localStorage.getItem(`tutor_pet_${petId}`) || '—';
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
 export default function Pets() {
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState(true);
@@ -21,7 +19,6 @@ export default function Pets() {
   const [showModal, setShowModal] = useState(false);
   const [editingPet, setEditingPet] = useState<Pet | null>(null);
 
-  // ── Fetch ───────────────────────────────────────────────────────────────────
   const fetchPets = async () => {
     setLoading(true);
     setError('');
@@ -39,7 +36,6 @@ export default function Pets() {
     fetchPets();
   }, []);
 
-  // ── Filter + paginate ───────────────────────────────────────────────────────
   const filteredPets = pets.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase()) ||
     p.species?.toLowerCase().includes(search.toLowerCase())
@@ -51,7 +47,6 @@ export default function Pets() {
     currentPage * ITEMS_PER_PAGE
   );
 
-  // ── Handlers ────────────────────────────────────────────────────────────────
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
     setCurrentPage(1);
@@ -61,11 +56,9 @@ export default function Pets() {
     try {
       if (editingPet) {
         await petsService.update(editingPet.id, payload);
-        // ← atualiza tutor no localStorage com o ID do pet editado
         localStorage.setItem(`tutor_pet_${editingPet.id}`, payload.tutor_name);
       } else {
         const created = await petsService.create(payload);
-        // ← vincula o tutor ao ID real do pet recém-criado
         if (created?.id) {
           localStorage.setItem(`tutor_pet_${created.id}`, payload.tutor_name);
           localStorage.removeItem('tutor_pet_new');
@@ -79,16 +72,13 @@ export default function Pets() {
     }
   };
 
-  // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className={styles.page}>
 
-      {/* Header */}
       <div className={styles.header}>
         <h1 className={styles.title}>Pets</h1>
       </div>
 
-      {/* Toolbar */}
       <div className={styles.toolbar}>
         <div className={styles.searchWrapper}>
           <MdSearch size={18} className={styles.searchIcon} />
@@ -108,11 +98,9 @@ export default function Pets() {
         </button>
       </div>
 
-      {/* States */}
       {loading && <p className={styles.loadingText}>Carregando...</p>}
       {error   && <p className={styles.errorText}>{error}</p>}
 
-      {/* Grid de cards */}
       {!loading && !error && (
         <>
           <div className={styles.grid}>
@@ -126,7 +114,6 @@ export default function Pets() {
                 className={styles.card}
                 onClick={() => { setEditingPet(pet); setShowModal(true); }}
               >
-                {/* Foto */}
                 <div className={styles.cardPhoto}>
                   {pet.photo_url ? (
                     <img src={pet.photo_url} alt={pet.name} className={styles.photo} />
@@ -135,7 +122,6 @@ export default function Pets() {
                   )}
                 </div>
 
-                {/* Info */}
                 <div className={styles.cardInfo}>
                   <h3 className={styles.petName}>{pet.name}</h3>
                   <p className={styles.petBreed}>
@@ -156,7 +142,6 @@ export default function Pets() {
             ))}
           </div>
 
-          {/* Paginação */}
           <div className={styles.pagination}>
             <button
               className={styles.pageBtn}
@@ -181,7 +166,6 @@ export default function Pets() {
         </>
       )}
 
-      {/* Modal */}
       {showModal && (
         <PetModal
           pet={editingPet}

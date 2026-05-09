@@ -8,6 +8,10 @@ export interface Pet {
   age: number;
   weight: number;
   tutorId: string;
+  tutor_name?: string;
+  photo_url?: string;
+  notes?: string;
+  clinic_id?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -15,10 +19,14 @@ export interface Pet {
 export interface CreatePetPayload {
   name: string;
   species: string;
-  breed: string;
-  age: number;
-  weight: number;
-  tutorId: string;
+  breed?: string;
+  tutor_name: string;
+  tutor_id?: string;
+  age?: number;
+  weight?: number;
+  notes?: string;
+  photo_url?: string;
+  clinic_id: string;
 }
 
 export const petsService = {

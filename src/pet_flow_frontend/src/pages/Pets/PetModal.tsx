@@ -3,15 +3,14 @@ import { MdClose } from 'react-icons/md';
 import type { Pet } from '../../services/pets.service';
 import styles from './PetModal.module.css';
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 export interface CreatePetPayload {
   name: string;
   species: string;
   breed?: string;
   tutor_name: string;
   tutor_id?: string;
-  age?: number; // Mudado de birth_date para age
-  weight?: number; // Ajustado para number para ser consistente com o banco
+  age?: number;
+  weight?: number;
   notes?: string;
   photo_url?: string;
   clinic_id: string;
@@ -33,7 +32,7 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
     name:       pet?.name       || '',
     species:    pet?.species    || '',
     breed:      pet?.breed      || '',
-    age:        pet?.age        || '', // Mudado para age
+    age:        pet?.age        || '',
     weight:     pet?.weight     || '',
     tutor_name: localStorage.getItem(tutorKey(pet?.id)) || pet?.tutor_name || '',
     notes:      pet?.notes      || '',
@@ -78,7 +77,7 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
         name:       form.name,
         species:    form.species,
         breed:      form.breed      || undefined,
-        age:        Number(form.age) || undefined, // Garantindo que vai como número
+        age:        Number(form.age) || undefined,
         weight:     Number(form.weight) || undefined,
         tutor_name: form.tutor_name,
         notes:      form.notes      || undefined,
@@ -145,7 +144,6 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
           </div>
 
           <div className={styles.formRow3}>
-            {/* CAMPO ALTERADO: De Data para Idade (Número) */}
             <div className={styles.formField}>
               <label>Idade (anos)</label>
               <input
