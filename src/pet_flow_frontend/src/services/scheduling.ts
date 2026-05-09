@@ -1,39 +1,4 @@
-import { authStorage } from './auth';
-
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL ||
-  'https://pmv-si-2026-1-pe6-t1-t1-g5-pet-shop.onrender.com/api/v1';
-
-interface ApiError {
-  error?: string;
-  message?: string;
-}
-
-async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const token = authStorage.getToken();
-
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
-
-  if (response.status === 204) {
-    return undefined as T;
-  }
-
-  const data = (await response.json()) as unknown;
-
-  if (!response.ok) {
-    const apiError = data as ApiError;
-    throw new Error(apiError.error || apiError.message || 'Erro inesperado');
-  }
-
-  return data as T;
-}
+import { authRequest } from './auth';
 
 export interface Scheduling {
   id: string;
@@ -87,25 +52,25 @@ export interface SaveSchedulingPayload {
 }
 
 export const schedulingService = {
-  list: (): Promise<Scheduling[]> => request<Scheduling[]>('/scheduling'),
+  list: (): Promise<Scheduling[]> => authRequest<Scheduling[]>('/scheduling', { method: 'GET' }),
   create: (payload: SaveSchedulingPayload): Promise<Scheduling> =>
-    request<Scheduling>('/scheduling', {
+    authRequest<Scheduling>('/scheduling', {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
   update: (id: string, payload: SaveSchedulingPayload): Promise<Scheduling> =>
-    request<Scheduling>(`/scheduling/${id}`, {
+    authRequest<Scheduling>(`/scheduling/${id}`, {
       method: 'PUT',
       body: JSON.stringify(payload),
     }),
   remove: (id: string): Promise<void> =>
-    request<void>(`/scheduling/${id}`, {
+    authRequest<void>(`/scheduling/${id}`, {
       method: 'DELETE',
     }),
-  listTutors: (): Promise<Tutor[]> => request<Tutor[]>('/tutor'),
-  listPets: (): Promise<Pet[]> => request<Pet[]>('/pet'),
-  listEmployees: (): Promise<Employee[]> => request<Employee[]>('/employee'),
-  getEmployeeById: (id: string): Promise<Employee> => request<Employee>(`/employee/${id}`),
-  listPetServices: (): Promise<PetService[]> => request<PetService[]>('/service'),
-  listClinics: (): Promise<Clinic[]> => request<Clinic[]>('/clinic'),
+  listTutors: (): Promise<Tutor[]> => authRequest<Tutor[]>('/tutor', { method: 'GET' }),
+  listPets: (): Promise<Pet[]> => authRequest<Pet[]>('/pet', { method: 'GET' }),
+  listEmployees: (): Promise<Employee[]> => authRequest<Employee[]>('/employee', { method: 'GET' }),
+  getEmployeeById: (id: string): Promise<Employee> => authRequest<Employee>(`/employee/${id}`, { method: 'GET' }),
+  listPetServices: (): Promise<PetService[]> => authRequest<PetService[]>('/service', { method: 'GET' }),
+  listClinics: (): Promise<Clinic[]> => authRequest<Clinic[]>('/clinic', { method: 'GET' }),
 };

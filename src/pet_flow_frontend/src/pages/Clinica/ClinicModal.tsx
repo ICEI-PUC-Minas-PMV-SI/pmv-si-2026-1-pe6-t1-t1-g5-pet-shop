@@ -17,7 +17,6 @@ interface Props {
 }
 
 export default function ClinicModal({ clinic, onClose, onSave }: Props) {
-  // Estado inicial do formulário
   const [formData, setFormData] = useState({
     name: '',
     cnpj: '',
@@ -26,7 +25,6 @@ export default function ClinicModal({ clinic, onClose, onSave }: Props) {
     phone: ''
   });
 
-  // Sincroniza os dados quando o modal abre (Edição vs Cadastro)
   useEffect(() => {
     if (clinic) {
       setFormData(clinic);
@@ -35,7 +33,6 @@ export default function ClinicModal({ clinic, onClose, onSave }: Props) {
     }
   }, [clinic]);
 
-  // Função para atualizar os campos conforme o usuário digita
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -43,7 +40,6 @@ export default function ClinicModal({ clinic, onClose, onSave }: Props) {
 
  const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
-  // Envia apenas os campos editáveis, sem id nem campos gerados pela API
   onSave({
     name: formData.name,
     cnpj: formData.cnpj,

@@ -21,7 +21,6 @@ export class AppRouter {
   private initRoutes(): void {
     this.router.use("/auth", authRoutes);
 
-    // every route below this line requires a valid Bearer token
     this.router.use(authMiddleware);
 
     this.router.use("/clinic", clinicRoutes);

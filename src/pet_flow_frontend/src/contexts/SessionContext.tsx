@@ -59,18 +59,15 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
     if (!token || !userId) return;
 
-    // ── 1. Usa cache se já tiver clinicId válido ──────────────────────────────
     const cached = loadSessionData();
     if (cached && cached.userId === userId && cached.clinicId) {
       setSession(cached);
       return;
     }
 
-    // ── 2. Busca todos os employees e filtra pelo userId ──────────────────────
     setLoading(true);
     employeeService.getAll()
       .then((employees: Employee[]) => {
-        // tenta achar o employee cujo id bate com o userId do token
         const found = employees.find(
           (e) => e.id === userId
         );

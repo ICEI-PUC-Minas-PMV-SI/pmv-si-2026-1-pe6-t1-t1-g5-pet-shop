@@ -30,7 +30,6 @@ export default function Employees() {
 
   const [form, setForm] = useState(emptyForm);
 
-  // ─── Carrega clínica + funcionários ────────────────────────────────────────
   useEffect(() => {
     async function init() {
       try {
@@ -49,7 +48,6 @@ export default function Employees() {
     init();
   }, []);
 
-  // ─── CRUD ───────────────────────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const payload = { ...form };
@@ -110,7 +108,6 @@ export default function Employees() {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // ─── Filter + Pagination ────────────────────────────────────────────────────
   const roles = useMemo(() => {
     const unique = employees.map((e) => e.role);
     return ['Todos', ...new Set(unique)];
@@ -132,14 +129,12 @@ export default function Employees() {
     currentPage * ITEMS_PER_PAGE
   );
 
-  // ─── Render ─────────────────────────────────────────────────────────────────
   if (loading) {
     return <div className={styles.loading}>Carregando funcionários...</div>;
   }
 
   return (
     <div className={styles.page}>
-      {/* Header */}
       <div className={styles.header}>
         <h1 className={styles.title}>Funcionários</h1>
         <button className={styles.newBtn} onClick={handleOpenNew}>
@@ -147,7 +142,6 @@ export default function Employees() {
         </button>
       </div>
 
-      {/* Toolbar */}
       <div className={styles.toolbar}>
         <input
           className={styles.searchInput}
@@ -164,7 +158,6 @@ export default function Employees() {
         </select>
       </div>
 
-      {/* Tabela */}
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
           <thead>
@@ -202,7 +195,6 @@ export default function Employees() {
         </table>
       </div>
 
-      {/* Paginação */}
       {totalPages > 1 && (
         <div className={styles.pagination}>
           <button
@@ -231,7 +223,6 @@ export default function Employees() {
         </div>
       )}
 
-      {/* Modal */}
       {showModal && (
         <div className={styles.overlay} onClick={handleCloseModal}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
