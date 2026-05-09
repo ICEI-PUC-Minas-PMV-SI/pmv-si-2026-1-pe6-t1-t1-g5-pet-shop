@@ -26,6 +26,28 @@ const emptyForm: SchedulingFormData = {
   notes: '',
 };
 
+function getPetTutorId(pet: Pet): string {
+  const rawPet = pet as unknown as Record<string, unknown>;
+
+  if (typeof rawPet.tutorId === 'string') return rawPet.tutorId;
+  if (typeof rawPet.tutor_id === 'string') return rawPet.tutor_id;
+
+  return '';
+}
+
+function getPetTutorName(pet: Pet): string {
+  const rawPet = pet as unknown as Record<string, unknown>;
+
+  if (typeof rawPet.tutorName === 'string') return rawPet.tutorName;
+  if (typeof rawPet.tutor_name === 'string') return rawPet.tutor_name;
+
+  return '';
+}
+
+function normalizeId(value: string): string {
+  return value.trim().toLowerCase();
+}
+
 function toLocalDatetimeValue(isoDate: string): string {
   const date = new Date(isoDate);
   if (Number.isNaN(date.getTime())) return '';
@@ -62,10 +84,24 @@ export default function SchedulingFormModal({
     setForm(emptyForm);
   }, [open, initialData]);
 
-  const filteredPets = useMemo(
-    () => pets.filter((pet) => (form.tutorId ? pet.tutorId === form.tutorId : true)),
-    [pets, form.tutorId],
-  );
+  const filteredPets = useMemo(() => {
+    const selectedTutorName =
+      tutors.find((tutor) => normalizeId(tutor.id) === normalizeId(form.tutorId))?.name || '';
+    const normalizedSelectedTutorName = normalizeId(selectedTutorName);
+
+    const petsByTutor = pets.filter((pet) =>
+      form.tutorId
+        ? normalizeId(getPetTutorId(pet)) === normalizeId(form.tutorId) ||
+          (normalizedSelectedTutorName !== '' &&
+            normalizeId(getPetTutorName(pet)) === normalizedSelectedTutorName)
+        : true,
+    );
+
+    if (petsByTutor.length > 0 || !form.petId) return petsByTutor;
+
+    const selectedPet = pets.find((pet) => normalizeId(pet.id) === normalizeId(form.petId));
+    return selectedPet ? [selectedPet] : petsByTutor;
+  }, [pets, tutors, form.tutorId, form.petId]);
 
   if (!open) return null;
 
