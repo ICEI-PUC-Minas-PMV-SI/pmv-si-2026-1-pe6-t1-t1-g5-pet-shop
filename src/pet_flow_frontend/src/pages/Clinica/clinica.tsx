@@ -82,22 +82,6 @@ export default function Clinics() {
         <h1 className={styles.title}>Unidades</h1>
       </div>
 
-<<<<<<< HEAD
-=======
-      <div className={styles.toolbar}>
-        <div />
-        <button 
-          className={styles.newBtn} 
-          onClick={() => {
-            setEditingClinic(null);
-            setShowModal(true);
-          }}
-        >
-          + Nova Clínica
-        </button>
-      </div>
-
->>>>>>> main
       {loading ? (
         <p className={styles.loadingText}>Carregando...</p>
       ) : (
@@ -107,21 +91,10 @@ export default function Clinics() {
               <p className={styles.emptyText}>Nenhuma clínica encontrada.</p>
             )}
             {paginated.map((clinic) => (
-<<<<<<< HEAD
               <div key={clinic.id} className={styles.card} onClick={() => openEdit(clinic)}>
                 <div className={styles.cardIconWrap}>
                   <MdBusiness size={28} />
                 </div>
-=======
-              <div 
-                key={clinic.id} 
-                className={styles.card} 
-                onClick={() => {
-                  setEditingClinic(clinic);
-                  setShowModal(true);
-                }}
-              >
->>>>>>> main
                 <div className={styles.cardInfo}>
                   <h3 className={styles.clinicName}>{clinic.name}</h3>
                   {clinic.address && (
