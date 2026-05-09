@@ -1,6 +1,6 @@
 # 📊 Relatório de Contribuições do Projeto
 
-**Última atualização:** 13/04/2026 16:17
+**Última atualização:** 09/05/2026 14:38
 
 ---
 
@@ -8,35 +8,42 @@
 
 | Aluno                   |   Commits |   Linhas+ |   Linhas- |   Arquivos |   Docs Commits |   Docs Arquivos |
 |-------------------------|-----------|-----------|-----------|------------|----------------|-----------------|
-| Anna Carolina Lima      |         6 |       218 |        13 |         19 |              6 |               2 |
-| Cristiano Amorim        |        10 |       250 |        23 |          9 |              1 |               2 |
+| Anna Carolina Lima      |        17 |      1602 |       374 |         41 |             11 |               3 |
+| Cristiano Amorim        |        13 |       610 |        36 |         23 |              3 |               3 |
 | Júlia Mascari           |        32 |       431 |       171 |          8 |             23 |               4 |
-| Lucas Reis              |        37 |      2637 |        41 |         33 |             25 |               3 |
-| Natália Kiefer          |         4 |       853 |       255 |         18 |              1 |               1 |
-| Natália Kiefer Ferreira |         4 |        19 |        19 |          1 |              1 |               1 |
-| Rafael Silva            |        13 |      1011 |        60 |         48 |             12 |               4 |
-| Vinicius Neves          |        98 |   1302745 |   1291537 |       5732 |             31 |               6 |
+| Lucas Reis              |        38 |      5337 |       633 |         59 |             26 |               3 |
+| Natália Kiefer          |         6 |      2805 |       260 |         35 |              3 |               2 |
+| Natália Kiefer Ferreira |         6 |        19 |        19 |          1 |              1 |               1 |
+| Rafael Silva            |        14 |      1011 |        60 |         48 |             12 |               4 |
+| Vinicius Neves          |       120 |   1308882 |   1292108 |       5801 |             41 |               6 |
 | Vinicius-O-Neves        |         4 |        31 |        19 |          4 |              2 |               1 |
 | chamorim21              |         2 |        28 |        20 |          3 |              2 |               1 |
 | github-actions[bot]     |         1 |        28 |        31 |          3 |              1 |               1 |
 | github-classroom[bot]   |         1 |      2152 |         0 |         45 |              1 |              13 |
 | juliamascari            |         3 |       284 |        92 |         12 |              0 |               0 |
 | nkf-kiefer              |         1 |        16 |        15 |          3 |              1 |               1 |
+| rafasilva99             |         1 |        21 |        15 |          3 |              1 |               1 |
 
 
 ## 📅 Contribuições Semanais (Todo o Semestre)
 
-**2026-04-06**: Anna Carolina Lima: 4, Cristiano Amorim: 8, Júlia Mascari: 18, Lucas Reis: 11, Natália Kiefer: 2, Natália Kiefer Ferreira: 3, Rafael Silva: 7, Vinicius Neves: 38, Vinicius-O-Neves: 2, chamorim21: 2, juliamascari: 1
+**2026-05-02**: Anna Carolina Lima: 4, Lucas Reis: 1, Natália Kiefer: 1, Natália Kiefer Ferreira: 1, Rafael Silva: 1, Vinicius Neves: 10, rafasilva99: 1
 
-**2026-03-30**: Júlia Mascari: 1, Natália Kiefer: 2, Vinicius Neves: 21, juliamascari: 2
+**2026-04-18**: Anna Carolina Lima: 7, Cristiano Amorim: 3, Natália Kiefer Ferreira: 1, Vinicius Neves: 11
 
-**2026-03-16**: Natália Kiefer Ferreira: 1, Vinicius Neves: 8, Vinicius-O-Neves: 2, github-actions[bot]: 1, nkf-kiefer: 1
+**2026-04-11**: Anna Carolina Lima: 4, Júlia Mascari: 17, Lucas Reis: 11, Natália Kiefer: 1, Rafael Silva: 7, Vinicius Neves: 32, Vinicius-O-Neves: 2
 
-**2026-03-09**: Anna Carolina Lima: 1, Lucas Reis: 7, Rafael Silva: 3, Vinicius Neves: 11
+**2026-04-04**: Cristiano Amorim: 8, Júlia Mascari: 2, Natália Kiefer: 3, Natália Kiefer Ferreira: 3, Vinicius Neves: 17, chamorim21: 2, juliamascari: 3
 
-**2026-03-02**: Anna Carolina Lima: 1, Cristiano Amorim: 2, Júlia Mascari: 13, Lucas Reis: 19, Rafael Silva: 3, Vinicius Neves: 20
+**2026-03-28**: Natália Kiefer: 1, Vinicius Neves: 11
 
-**2026-02-16**: github-classroom[bot]: 1
+**2026-03-14**: Natália Kiefer Ferreira: 1, Vinicius Neves: 19, Vinicius-O-Neves: 2, github-actions[bot]: 1, nkf-kiefer: 1
+
+**2026-03-07**: Anna Carolina Lima: 1, Júlia Mascari: 4, Lucas Reis: 19, Rafael Silva: 5, Vinicius Neves: 12
+
+**2026-02-28**: Anna Carolina Lima: 1, Cristiano Amorim: 2, Júlia Mascari: 9, Lucas Reis: 7, Rafael Silva: 1, Vinicius Neves: 8
+
+**2026-02-14**: github-classroom[bot]: 1
 
 
 
