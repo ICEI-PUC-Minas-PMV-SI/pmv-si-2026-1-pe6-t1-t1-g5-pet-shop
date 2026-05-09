@@ -8,20 +8,20 @@ export class PetDtoMapper
   constructor() {}
 
   toObject(fromObject: Pet): PetResponseDto {
-    // Usamos uma conversão temporária para 'any' para acessar o birth_date 
+    // Usamos uma conversão temporária para 'any' para acessar o birth_date
     // que existe no banco (image_f08918.png) mas talvez não no modelo de domínio
-    const petData = fromObject as any;
+    const petData = fromObject as unknown as Record<string, unknown>;
 
     return {
       id: fromObject.id || "",
       name: fromObject.name || "",
       species: fromObject.species || "",
       breed: fromObject.breed || "",
-      // PRIORIDADE: Se houver birth_date (banco), calcula a idade. 
+      // PRIORIDADE: Se houver birth_date (banco), calcula a idade.
       // Caso contrário, usa o age (memória/DTO).
-      age: petData.birth_date 
-        ? this.calculateAge(petData.birth_date) 
-        : (fromObject.age || 0),
+      age: petData.birth_date
+        ? this.calculateAge(petData.birth_date as Date | string)
+        : fromObject.age || 0,
       weight: fromObject.weight || 0,
       tutorId: fromObject.tutorId || "",
       createdAt: fromObject.createdAt || new Date(),
@@ -42,12 +42,16 @@ export class PetDtoMapper
       toObject.updatedAt,
     );
 
-    // Mapeia o 'age' do DTO de volta para 'birth_date' para que o 
+    // Mapeia o 'age' do DTO de volta para 'birth_date' para que o
     // repositório/banco encontre a coluna correta (image_f08918.png)
     if (toObject.age !== undefined) {
       const birthYear = new Date().getFullYear() - toObject.age;
       // Define a data como 1º de janeiro do ano calculado
-      (pet as any).birth_date = new Date(birthYear, 0, 1);
+      (pet as unknown as Record<string, unknown>).birth_date = new Date(
+        birthYear,
+        0,
+        1,
+      );
     }
 
     return pet;
