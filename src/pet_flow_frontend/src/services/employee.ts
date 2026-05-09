@@ -27,4 +27,26 @@ export const employeeService = {
       method: 'GET',
     });
   },
+
+  create(payload: Omit<EmployeeData, 'id' | 'createdAt' | 'updatedAt'>): Promise<EmployeeData> {
+    return authRequest<EmployeeData>('/employee', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  },
+
+  update(id: string, payload: Partial<Omit<EmployeeData, 'id' | 'createdAt' | 'updatedAt'>>): Promise<EmployeeData> {
+    return authRequest<EmployeeData>(`/employee/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  },
+
+  delete(id: string): Promise<void> {
+    return authRequest<void>(`/employee/${id}`, {
+      method: 'DELETE',
+    });
+  },
 };
