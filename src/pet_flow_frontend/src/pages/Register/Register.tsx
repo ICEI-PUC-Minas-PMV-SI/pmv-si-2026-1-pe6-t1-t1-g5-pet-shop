@@ -109,7 +109,7 @@ export default function Register() {
 
       <div className={styles.rightPanel}>
         <div className={styles.formWrapper}>
-          <h1 className={styles.title}>Crie sua conta.</h1>
+          <h1 className={styles.title}>Registre sua clínica!</h1>
           <p className={styles.subtitle}>
             Use as informações da sua clínica para preencher o cadastro.
           </p>
