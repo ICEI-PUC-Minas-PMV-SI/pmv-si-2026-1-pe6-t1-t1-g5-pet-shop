@@ -11,7 +11,8 @@ import Employees from '../pages/Employees/Employees';
 import Products from '../pages/Products/Products';
 import Placeholder from '../pages/Placeholder/Placeholder';
 import Pets from '../pages/Pets/Pets';
-import Clinica from '../pages/Clinica/clinica'; 
+import Clinica from '../pages/Clinica/clinica';
+import Tutores from '../pages/Tutors/Tutors';
 
 export default function AppRoutes() {
   return (
@@ -36,7 +37,7 @@ export default function AppRoutes() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/agendamentos" element={<Scheduling />} />
         <Route path="/pets" element={<Pets />} />
-        <Route path="/tutores" element={<Placeholder title="Tutores" />} />
+        <Route path="/tutores" element={<Tutores />} />
         <Route path="/servicos" element={<Placeholder title="Serviços" />} />
         <Route path="/produtos" element={<Products />} />
         <Route path="/financeiro" element={<Financial />} />

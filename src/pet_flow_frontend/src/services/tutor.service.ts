@@ -12,8 +12,18 @@ export interface Tutor {
   address: string;
   phone: string;
   email: string;
+  petName?: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface CreateTutorPayload {
+  name: string;
+  cpf: string;
+  email: string;
+  phone: string;
+  address: string;
+  clinic_id: string;
 }
 
 // ─── Auth request helper ──────────────────────────────────────────────────────
@@ -43,5 +53,23 @@ async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T
 export const tutorService = {
   getAll(): Promise<Tutor[]> {
     return authRequest<Tutor[]>('/tutor', { method: 'GET' });
+  },
+
+  create(payload: CreateTutorPayload): Promise<Tutor> {
+    return authRequest<Tutor>('/tutor', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  update(id: string, payload: CreateTutorPayload): Promise<Tutor> {
+    return authRequest<Tutor>(`/tutor/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  delete(id: string): Promise<void> {
+    return authRequest<void>(`/tutor/${id}`, { method: 'DELETE' });
   },
 };

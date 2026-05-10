@@ -111,4 +111,18 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
       throw error;
     }
   }
+
+  async getByEmail(email: string): Promise<Employee> {
+    try {
+      const { data, error } = await this.datasource.getByEmail(email);
+
+      if (error) throw new Error(error.message);
+      if (!data) throw new Error('Employee not found');
+
+      return this.mapper.toObject(data);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }

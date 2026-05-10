@@ -1,12 +1,13 @@
 export class Tutor {
   constructor(
-    public id?: string,
-    public name?: string,
-    public cpf?: string,
-    public address?: string,
-    public phone?: string,
-    public email?: string,
+    public id: string,
+    public name: string,
+    public cpf: string,
+    public address: string,
+    public phone: string,
+    public email: string,
+    public clinicId: string, 
     public createdAt?: Date,
-    public updatedAt?: Date,
+    public updatedAt?: Date
   ) {}
 }
