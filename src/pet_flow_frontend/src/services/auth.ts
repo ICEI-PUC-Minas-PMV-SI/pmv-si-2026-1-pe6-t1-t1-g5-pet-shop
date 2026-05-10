@@ -62,20 +62,6 @@ export const authStorage = {
     storage.setItem(REFRESH_TOKEN_KEY, data.refresh_token);
     storage.setItem(USER_ID_KEY, data.user_id);
     storage.setItem(LOGIN_TIME_KEY, Date.now().toString());
-
-
-    const sessionData = {
-      id: data.user_id,
-      clinic_id: data.clinic_id || (data as any).user?.clinic_id || '',
-      email: (data as any).email || ''
-    };
-    
-    storage.setItem(SESSION_DATA_KEY, JSON.stringify(sessionData));
-  },
-
-  getUser(): any {
-    const data = readKey(SESSION_DATA_KEY);
-    return data ? JSON.parse(data) : null;
   },
 
   getToken(): string | null {

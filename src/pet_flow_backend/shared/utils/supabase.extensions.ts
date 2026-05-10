@@ -88,6 +88,21 @@ export class SupabaseExtensions {
       .eq(column, value);
     return { data: data as T[], error };
   }
+
+  /**
+   * Case-insensitive exact match
+   */
+  async findByColumnIlike<T>(
+    table: string,
+    column: string,
+    value: string,
+  ): Promise<DbResult<T[]>> {
+    const { data, error } = await this.client
+      .from(table)
+      .select("*")
+      .ilike(column, value);
+    return { data: data as T[], error };
+  }
 }
 
 export const supabaseExtensions = new SupabaseExtensions();

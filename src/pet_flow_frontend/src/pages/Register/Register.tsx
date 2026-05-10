@@ -4,12 +4,14 @@ import { authService } from '../../services/api';
 import { authStorage } from '../../services/auth';
 import { clinicsService } from '../../services/clinic.services';
 import { employeeService } from '../../services/employee';
+import { useSession } from '../../contexts/SessionContext';
 import dogImg from '../../assets/dog_register.png';
 import logoImg from '../../assets/logo-petflow.png';
 import styles from './Register.module.css';
 
 export default function Register() {
   const navigate = useNavigate();
+  const { refreshSession } = useSession();
 
   const [form, setForm] = useState({
     clinicName: '',
@@ -81,6 +83,7 @@ export default function Register() {
         clinicId: clinic.id,
       });
 
+      await refreshSession();
       navigate('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao cadastrar.');

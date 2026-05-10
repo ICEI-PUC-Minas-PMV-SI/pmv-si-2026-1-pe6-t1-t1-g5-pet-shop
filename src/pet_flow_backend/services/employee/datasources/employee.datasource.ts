@@ -15,4 +15,6 @@ export interface EmployeeDatasource {
   ): Promise<DbResult<EmployeeEntity>>;
 
   delete(id: string): Promise<DbResult<null>>;
+
+  getByEmail(email: string): Promise<DbResult<EmployeeEntity>>;
 }

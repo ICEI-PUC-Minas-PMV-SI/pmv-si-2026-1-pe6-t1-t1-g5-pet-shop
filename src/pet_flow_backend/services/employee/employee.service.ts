@@ -47,4 +47,9 @@ export class EmployeeService {
 
     return this.repository.delete(id);
   }
+
+  async getEmployeeByEmail(email: string): Promise<Employee> {
+    if (!email) throw new Error("Email é obrigatório");
+    return this.repository.getByEmail(email);
+  }
 }

@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { authService } from '../../services/api';
 import { authStorage } from '../../services/auth';
+import { useSession } from '../../contexts/SessionContext';
 import catImg from '../../assets/cat_login.png';
 import logoImg from '../../assets/logo-petflow.png';
 import styles from './Login.module.css';
 
 export default function Login() {
   const navigate = useNavigate();
+  const { refreshSession } = useSession();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
@@ -82,6 +84,7 @@ export default function Login() {
       const data = await authService.login(email, password);
 
       authStorage.save(data, remember);
+      await refreshSession();
       navigate('/dashboard');
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Erro ao fazer login.';

@@ -13,7 +13,7 @@ export class TutorRepositoryImpl implements TutorRepository {
     try {
       const { data, error } = await this.datasource.getAll();
       if (error) return [];
-      return this.mapper.toObjects(data || []);
+      return (data || []).map((item) => this.mapper.toObject(item));
     } catch (error) {
       console.error(error);
       return [];

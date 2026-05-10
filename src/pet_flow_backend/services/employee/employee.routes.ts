@@ -12,6 +12,8 @@ export class EmployeeRoutes {
   private initRoutes(): void {
     this.router.get("/", (req, res) => this.controller.list(req, res));
 
+    this.router.get("/me", (req, res) => this.controller.getMe(req, res));
+
     this.router.get("/clinic/:clinicId", (req, res) =>
       this.controller.getByClinic(req, res),
     );
