@@ -50,13 +50,13 @@ export default function Employees() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const payload = { ...form };
     try {
       if (editingId) {
-        const updated = await employeeService.update(editingId, payload);
+        const updated = await employeeService.update(editingId, { ...form });
         setEmployees((prev) => prev.map((emp) => (emp.id === editingId ? updated : emp)));
       } else {
-        const created = await employeeService.create(payload);
+        const { name, cpf, address, phone, email, role, clinicId } = form;
+        const created = await employeeService.create({ name, cpf, address, phone, email, role, clinicId });
         setEmployees((prev) => [...prev, created]);
       }
       handleCloseModal();
