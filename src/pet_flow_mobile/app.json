@@ -4,10 +4,10 @@
     "slug": "pet-flow-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo-petflow.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo-petflow.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
@@ -16,7 +16,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo-petflow.png",
         "backgroundColor": "#197BE9"
       }
     },
