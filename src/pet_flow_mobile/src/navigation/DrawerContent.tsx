@@ -4,17 +4,18 @@ import { DrawerContentScrollView, type DrawerContentComponentProps } from '@reac
 import { colors, spacing, fontSize, fontWeight, radius } from '../theme';
 import { useSession } from '../contexts/SessionContext';
 import { authStorage } from '../services';
+import { MaterialIcons } from '@expo/vector-icons';
 import { AppRoutes } from './routes';
 
 const menuItems = [
-  { label: 'Dashboard', route: AppRoutes.DASHBOARD, icon: '📊' },
-  { label: 'Agendamentos', route: AppRoutes.SCHEDULING, icon: '📅' },
-  { label: 'Pets', route: AppRoutes.PETS, icon: '🐾' },
-  { label: 'Tutores', route: AppRoutes.TUTORS, icon: '👤' },
-  { label: 'Serviços', route: AppRoutes.SERVICES, icon: '✂️' },
-  { label: 'Produtos', route: AppRoutes.PRODUCTS, icon: '📦' },
-  { label: 'Financeiro', route: AppRoutes.FINANCIAL, icon: '💰' },
-  { label: 'Funcionários', route: AppRoutes.EMPLOYEES, icon: '👥' },
+  { label: 'Dashboard', route: AppRoutes.DASHBOARD, icon: 'dashboard' },
+  { label: 'Agendamentos', route: AppRoutes.SCHEDULING, icon: 'calendar-today' },
+  { label: 'Pets', route: AppRoutes.PETS, icon: 'pets' },
+  { label: 'Tutores', route: AppRoutes.TUTORS, icon: 'person' },
+  { label: 'Serviços', route: AppRoutes.SERVICES, icon: 'content-cut' },
+  { label: 'Produtos', route: AppRoutes.PRODUCTS, icon: 'inventory-2' },
+  { label: 'Financeiro', route: AppRoutes.FINANCIAL, icon: 'attach-money' },
+  { label: 'Funcionários', route: AppRoutes.EMPLOYEES, icon: 'groups' },
 ];
 
 export default function DrawerContent(props: DrawerContentComponentProps) {
@@ -29,7 +30,10 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.logo}>🐾 PetFlow</Text>
+        <View style={styles.logoRow}>
+          <MaterialIcons name="pets" size={24} color={colors.primary} />
+          <Text style={styles.logo}> PetFlow</Text>
+        </View>
         <Text style={styles.userName}>{session?.name || 'Usuário'}</Text>
         <Text style={styles.userRole}>{session?.role || 'Administrador'}</Text>
       </View>
@@ -43,7 +47,12 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
               style={[styles.menuItem, isActive && styles.menuItemActive]}
               onPress={() => props.navigation.navigate(item.route)}
             >
-              <Text style={styles.menuIcon}>{item.icon}</Text>
+              <MaterialIcons
+                name={item.icon as any}
+                size={20}
+                color={isActive ? colors.primary : colors.textPrimary}
+                style={styles.menuIcon}
+              />
               <Text style={[styles.menuLabel, isActive && styles.menuLabelActive]}>
                 {item.label}
               </Text>
@@ -53,7 +62,8 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
       </DrawerContentScrollView>
 
       <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-        <Text style={styles.logoutText}>🚪 Sair</Text>
+        <MaterialIcons name="logout" size={20} color={colors.danger} style={styles.logoutIcon} />
+        <Text style={styles.logoutText}>Sair</Text>
       </TouchableOpacity>
     </View>
   );
@@ -71,11 +81,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+  },
   logo: {
     fontSize: fontSize.xl,
     fontWeight: fontWeight.bold,
     color: colors.primary,
-    marginBottom: spacing.md,
   },
   userName: {
     fontSize: fontSize.md,
@@ -102,7 +116,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryBg,
   },
   menuIcon: {
-    fontSize: 18,
     marginRight: spacing.md,
   },
   menuLabel: {
@@ -115,11 +128,16 @@ const styles = StyleSheet.create({
     fontWeight: fontWeight.semibold,
   },
   logoutBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: spacing.lg,
     paddingHorizontal: spacing.xl,
     borderTopWidth: 1,
     borderTopColor: colors.border,
     marginBottom: 30,
+  },
+  logoutIcon: {
+    marginRight: spacing.sm,
   },
   logoutText: {
     fontSize: fontSize.base,
