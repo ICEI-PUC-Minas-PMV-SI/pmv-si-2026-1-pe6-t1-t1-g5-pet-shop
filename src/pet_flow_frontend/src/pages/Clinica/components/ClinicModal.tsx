@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from '../registerclinic.module.css';
+import styles from '../clinica.module.css';
 
 export interface Clinic {
   id: string;
