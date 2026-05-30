@@ -1,54 +1,11 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { authService } from '../../services/api';
-import { authStorage } from '../../services/auth';
+import { Link } from 'react-router-dom';
+import { useRegister } from './useRegister';
 import dogImg from '../../assets/dog_register.png';
 import logoImg from '../../assets/logo-petflow.png';
 import styles from './Register.module.css';
 
 export default function Register() {
-  const navigate = useNavigate();
-  
-  const [form, setForm] = useState({
-    cpf: '',
-    fullName: '',
-    email: '',
-    password: '',
-  });
-  
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [field]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    if (!form.email || !form.password || !form.cpf || !form.fullName) {
-      setError('Por favor, preencha todos os campos.');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const data = await authService.register({
-        email: form.email,
-        password: form.password,
-        name: form.fullName,
-        full_name: form.fullName,
-        cpf: form.cpf,
-      });
-      authStorage.save(data, true);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao cadastrar.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { form, error, loading, handleChange, handleSubmit } = useRegister();
 
   return (
     <div className={styles.container}>
@@ -57,11 +14,7 @@ export default function Register() {
           <img src={logoImg} alt="PetFlow" className={styles.logoImage} />
         </div>
         <div className={styles.imageArea}>
-          <img
-            src={dogImg}
-            alt="Cachorro feliz"
-            className={styles.heroImage}
-          />
+          <img src={dogImg} alt="Cachorro feliz" className={styles.heroImage} />
         </div>
       </div>
 

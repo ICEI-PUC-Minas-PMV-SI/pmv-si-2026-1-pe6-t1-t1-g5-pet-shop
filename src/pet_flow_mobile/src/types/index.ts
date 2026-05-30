@@ -32,10 +32,10 @@ export interface Transaction {
 }
 
 export interface CreateTransactionPayload {
-  scheduling_id?: string | null;
+  scheduling_id?: string;
   description: string;
   amount: number;
   payment_method: string;
-  employee_id?: string | null;
+  employee_id?: string;
   clinic_id: string;
 }

@@ -5,8 +5,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSession } from '../contexts/SessionContext';
 import { colors, fontSize, fontWeight } from '../theme';
-import LoginScreen from '../screens/LoginScreen';
-import FinancialScreen from '../screens/FinancialScreen';
+import LoginScreen from '../screens/login';
+import FinancialScreen from '../screens/financial';
 import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
 

@@ -1,0 +1,126 @@
+import { StyleSheet } from 'react-native';
+import { colors, spacing, fontSize, fontWeight, radius, opacity } from '../../theme';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.primaryLight,
+  },
+  bgImage: {
+    position: 'absolute',
+    bottom: 0,
+    right: -20,
+    width: 280,
+    height: 350,
+    opacity: opacity.bgImage,
+    resizeMode: 'contain',
+  },
+  keyboardView: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.xxl,
+    paddingVertical: 60,
+  },
+  formContainer: {
+    width: '100%',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: fontWeight.bold,
+    color: colors.textWhite,
+    marginBottom: spacing.sm,
+  },
+  subtitle: {
+    fontSize: fontSize.md,
+    color: `rgba(255,255,255,${opacity.subtitleText})`,
+    marginBottom: 36,
+  },
+  label: {
+    fontSize: fontSize.md,
+    color: colors.textWhite,
+    marginBottom: spacing.sm,
+    fontWeight: fontWeight.regular,
+  },
+  input: {
+    backgroundColor: colors.bgWhite,
+    borderRadius: radius.sm,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: 14,
+    fontSize: fontSize.sm,
+    color: colors.textPrimary,
+    marginBottom: spacing.lg,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+  },
+  passwordWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.bgWhite,
+    borderRadius: radius.sm,
+    marginBottom: spacing.lg,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+  },
+  passwordInput: {
+    flex: 1,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: 14,
+    fontSize: fontSize.sm,
+    color: colors.textPrimary,
+  },
+  eyeBtn: {
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+  },
+  error: {
+    color: colors.textWhite,
+    backgroundColor: 'rgba(255,60,60,0.85)',
+    padding: spacing.md,
+    borderRadius: radius.sm,
+    fontSize: fontSize.sm,
+    marginBottom: spacing.lg,
+    fontWeight: fontWeight.medium,
+    overflow: 'hidden',
+  },
+  button: {
+    backgroundColor: colors.primaryDark,
+    borderRadius: 7,
+    paddingVertical: 14,
+    alignItems: 'center',
+    marginTop: spacing.md,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  buttonDisabled: {
+    opacity: opacity.disabled,
+  },
+  buttonText: {
+    color: colors.textWhite,
+    fontSize: fontSize.lg,
+    fontWeight: fontWeight.semibold,
+  },
+  registerLink: {
+    marginTop: spacing.xxl,
+    alignItems: 'center',
+  },
+  registerText: {
+    fontSize: fontSize.sm,
+    color: `rgba(255,255,255,${opacity.mutedText})`,
+  },
+  registerBold: {
+    color: colors.primaryDark,
+    fontWeight: fontWeight.semibold,
+  },
+});

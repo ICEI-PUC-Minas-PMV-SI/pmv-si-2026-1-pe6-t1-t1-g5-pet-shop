@@ -1,34 +1,22 @@
-import { useEffect, useState } from 'react';
 import { MdChevronLeft, MdChevronRight, MdLocationOn, MdBusiness } from 'react-icons/md';
-import ClinicModal, { type Clinic } from './ClinicModal'; 
-import { clinicsService } from "../../services/clinic.services";
+import { useClinica } from './useClinica';
+import ClinicModal from './components/ClinicModal';
 import styles from './clinica.module.css';
 
-const ITEMS_PER_PAGE = 6;
-
 export default function Clinics() {
-  const [clinics, setClinics] = useState<Clinic[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showModal, setShowModal] = useState(false);
-  const [editingClinic, setEditingClinic] = useState<Clinic | null>(null);
-
-  const fetchClinics = async () => {
-    setLoading(true);
-    try {
-      const data = await clinicsService.getAll();
-      setClinics(data);
-    } catch (err) {
-      console.error('Erro ao carregar clínicas:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => { fetchClinics(); }, []);
-
-  const totalPages = Math.ceil(clinics.length / ITEMS_PER_PAGE);
-  const paginated = clinics.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const {
+    loading,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    paginated,
+    showModal,
+    editingClinic,
+    handleOpenNew,
+    handleOpenEdit,
+    handleCloseModal,
+    handleSave,
+  } = useClinica();
 
   return (
     <div className={styles.page}>
@@ -38,13 +26,7 @@ export default function Clinics() {
 
       <div className={styles.toolbar}>
         <div />
-        <button 
-          className={styles.newBtn} 
-          onClick={() => {
-            setEditingClinic(null);
-            setShowModal(true);
-          }}
-        >
+        <button className={styles.newBtn} onClick={handleOpenNew}>
           + Nova Clínica
         </button>
       </div>
@@ -55,13 +37,10 @@ export default function Clinics() {
         <>
           <div className={styles.grid}>
             {paginated.map((clinic) => (
-              <div 
-                key={clinic.id} 
-                className={styles.card} 
-                onClick={() => {
-                  setEditingClinic(clinic);
-                  setShowModal(true);
-                }}
+              <div
+                key={clinic.id}
+                className={styles.card}
+                onClick={() => handleOpenEdit(clinic)}
               >
                 <div className={styles.cardInfo}>
                   <div className={styles.nameHeader}>
@@ -72,8 +51,12 @@ export default function Clinics() {
                     <MdLocationOn size={14} /> {clinic.city} - {clinic.state}
                   </p>
                   <div className={styles.metaData}>
-                    <p className={styles.details}><strong>CNPJ:</strong> {clinic.cnpj}</p>
-                    <p className={styles.details}><strong>Tel:</strong> {clinic.phone}</p>
+                    <p className={styles.details}>
+                      <strong>CNPJ:</strong> {clinic.cnpj}
+                    </p>
+                    <p className={styles.details}>
+                      <strong>Tel:</strong> {clinic.phone}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -82,17 +65,19 @@ export default function Clinics() {
 
           {totalPages > 1 && (
             <div className={styles.pagination}>
-              <button 
-                className={styles.pageBtn} 
-                onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} 
+              <button
+                className={styles.pageBtn}
+                onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                 disabled={currentPage === 1}
               >
                 <MdChevronLeft size={24} />
               </button>
-              <span className={styles.pageInfo}>Página {currentPage} de {totalPages}</span>
-              <button 
-                className={styles.pageBtn} 
-                onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} 
+              <span className={styles.pageInfo}>
+                Página {currentPage} de {totalPages}
+              </span>
+              <button
+                className={styles.pageBtn}
+                onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                 disabled={currentPage === totalPages}
               >
                 <MdChevronRight size={24} />
@@ -103,21 +88,10 @@ export default function Clinics() {
       )}
 
       {showModal && (
-        <ClinicModal 
-          clinic={editingClinic} 
-          onClose={() => {
-            setShowModal(false);
-            setEditingClinic(null);
-          }} 
-          onSave={async (payload) => {
-            if (editingClinic) {
-              await clinicsService.update(editingClinic.id, payload);
-            } else {
-              await clinicsService.create(payload);
-            }
-            setShowModal(false);
-            fetchClinics();
-          }} 
+        <ClinicModal
+          clinic={editingClinic}
+          onClose={handleCloseModal}
+          onSave={handleSave}
         />
       )}
     </div>

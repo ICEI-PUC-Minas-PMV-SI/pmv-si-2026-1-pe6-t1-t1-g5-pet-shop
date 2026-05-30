@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { MdClose } from 'react-icons/md';
-import type { Pet } from '../../services/pets.service';
-import styles from './PetModal.module.css';
+import type { Pet } from '../../../services/pets.service';
+import styles from '../PetModal.module.css';
 
 export interface CreatePetPayload {
   name: string;
@@ -27,20 +27,17 @@ function tutorKey(petId?: string) {
 }
 
 export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
-
   const [form, setForm] = useState({
-    name:       pet?.name       || '',
-    species:    pet?.species    || '',
-    breed:      pet?.breed      || '',
-    age:        pet?.age        || '',
-    weight:     pet?.weight     || '',
+    name: pet?.name || '',
+    species: pet?.species || '',
+    breed: pet?.breed || '',
+    age: pet?.age || '',
+    weight: pet?.weight || '',
     tutor_name: localStorage.getItem(tutorKey(pet?.id)) || pet?.tutor_name || '',
-    notes:      pet?.notes      || '',
+    notes: pet?.notes || '',
   });
 
-  const [photoPreview, setPhotoPreview] = useState<string | null>(
-    pet?.photo_url || null
-  );
+  const [photoPreview, setPhotoPreview] = useState<string | null>(pet?.photo_url || null);
   const [saving, setSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -74,15 +71,15 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
       }
 
       await onSave({
-        name:       form.name,
-        species:    form.species,
-        breed:      form.breed      || undefined,
-        age:        Number(form.age) || undefined,
-        weight:     Number(form.weight) || undefined,
+        name: form.name,
+        species: form.species,
+        breed: form.breed || undefined,
+        age: Number(form.age) || undefined,
+        weight: Number(form.weight) || undefined,
         tutor_name: form.tutor_name,
-        notes:      form.notes      || undefined,
-        photo_url:  photoPreview    || undefined,
-        clinic_id:  pet?.clinic_id  || '',
+        notes: form.notes || undefined,
+        photo_url: photoPreview || undefined,
+        clinic_id: pet?.clinic_id || '',
       });
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Erro ao salvar');
@@ -94,18 +91,14 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-
         <div className={styles.modalHeader}>
-          <h2 className={styles.modalTitle}>
-            {pet ? 'Editar Pet' : 'Cadastro Pet'}
-          </h2>
+          <h2 className={styles.modalTitle}>{pet ? 'Editar Pet' : 'Cadastro Pet'}</h2>
           <button className={styles.closeBtn} onClick={onClose} aria-label="Fechar" type="button">
             <MdClose size={20} />
           </button>
         </div>
 
         <form className={styles.modalForm} onSubmit={handleSubmit}>
-
           <div className={styles.formRow3}>
             <div className={styles.formField}>
               <label>Nome</label>
@@ -220,7 +213,6 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
               {saving ? 'Salvando...' : 'Salvar'}
             </button>
           </div>
-
         </form>
       </div>
     </div>
