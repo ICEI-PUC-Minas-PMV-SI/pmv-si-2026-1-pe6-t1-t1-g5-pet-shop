@@ -22,6 +22,24 @@ export interface Pet {
   id: string;
   name: string;
   tutorId: string;
+  tutorName?: string;
+}
+
+interface RawPetPayload {
+  id?: string;
+  name?: string;
+  tutorId?: string;
+  tutor_id?: string;
+  tutor_name?: string;
+}
+
+function normalizePet(rawPet: RawPetPayload): Pet {
+  return {
+    id: rawPet.id || '',
+    name: rawPet.name || '',
+    tutorId: rawPet.tutorId || rawPet.tutor_id || '',
+    tutorName: rawPet.tutor_name,
+  };
 }
 
 export interface Employee {
@@ -68,7 +86,10 @@ export const schedulingService = {
       method: 'DELETE',
     }),
   listTutors: (): Promise<Tutor[]> => authRequest<Tutor[]>('/tutor', { method: 'GET' }),
-  listPets: (): Promise<Pet[]> => authRequest<Pet[]>('/pet', { method: 'GET' }),
+  listPets: async (): Promise<Pet[]> => {
+    const response = await authRequest<RawPetPayload[]>('/pet', { method: 'GET' });
+    return response.map(normalizePet);
+  },
   listEmployees: (): Promise<Employee[]> => authRequest<Employee[]>('/employee', { method: 'GET' }),
   getEmployeeById: (id: string): Promise<Employee> => authRequest<Employee>(`/employee/${id}`, { method: 'GET' }),
   listPetServices: (): Promise<PetService[]> => authRequest<PetService[]>('/service', { method: 'GET' }),

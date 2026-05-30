@@ -41,13 +41,15 @@ export class SupabaseExtensions {
    * Create a new record
    */
   async create<T>(table: string, payload: object): Promise<DbResult<T>> {
-    const { data, error } = await this.client
-      .from(table)
-      .insert(payload)
-      .select()
-      .single();
-    return { data: data as T, error };
-  }
+  const { id, created_at, updated_at, ...cleanPayload } = payload as any;
+  
+  const { data, error } = await this.client
+    .from(table)
+    .insert(cleanPayload)
+    .select()
+    .single();
+  return { data: data as T, error };
+}
 
   /**
    * Update an existing record
@@ -86,6 +88,21 @@ export class SupabaseExtensions {
       .from(table)
       .select("*")
       .eq(column, value);
+    return { data: data as T[], error };
+  }
+
+  /**
+   * Case-insensitive exact match
+   */
+  async findByColumnIlike<T>(
+    table: string,
+    column: string,
+    value: string,
+  ): Promise<DbResult<T[]>> {
+    const { data, error } = await this.client
+      .from(table)
+      .select("*")
+      .ilike(column, value);
     return { data: data as T[], error };
   }
 }

@@ -34,4 +34,9 @@ export class EmployeeDatasourceImpl implements EmployeeDatasource {
   async delete(id: string): Promise<DbResult<null>> {
     return supabaseExtensions.delete(this.table, id);
   }
+
+  async getByEmail(email: string): Promise<DbResult<EmployeeEntity>> {
+    const { data, error } = await supabaseExtensions.findByColumnIlike<EmployeeEntity>(this.table, 'email', email);
+    return { data: data?.[0] ?? null, error };
+  }
 }

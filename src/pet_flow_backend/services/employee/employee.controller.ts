@@ -94,6 +94,22 @@ export class EmployeeController {
     }
   }
 
+  async getMe(req: Request, res: Response): Promise<void> {
+    try {
+      const user = (req as Request & { user?: { email?: string } }).user;
+      if (!user?.email) {
+        res.status(401).json({ error: 'Usuário não autenticado' });
+        return;
+      }
+      const employee = await this.service.getEmployeeByEmail(user.email);
+      const response = this.mapper.toObject(employee);
+      res.status(200).json(response);
+    } catch (error) {
+      console.error(error);
+      res.status(404).json({ error: 'Employee not found' });
+    }
+  }
+
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;

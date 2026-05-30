@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { authStorage } from '../services/auth';
 import { employeeService, type Employee } from '../services/employee';
 
@@ -14,12 +14,14 @@ interface SessionContextValue {
   session: SessionData | null;
   loading: boolean;
   error: string;
+  refreshSession: () => Promise<void>;
 }
 
 const SessionContext = createContext<SessionContextValue>({
   session: null,
   loading: false,
   error: '',
+  refreshSession: async () => {},
 });
 
 const SESSION_DATA_KEY = 'petflow_session_data';
@@ -53,7 +55,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
+  const resolveSession = useCallback(async () => {
     const token = authStorage.getToken();
     const userId = authStorage.getUserId();
 
@@ -66,43 +68,32 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
 
     setLoading(true);
-    employeeService.getAll()
-      .then((employees: Employee[]) => {
-        const found = employees.find(
-          (e) => e.id === userId
-        );
-
-        const sessionData: SessionData = {
-          token,
-          userId,
-          clinicId: found?.clinicId || '',
-          name:     found?.name     || 'Usuário',
-          role:     found?.role     || '',
-        };
-
-        console.log('[SessionContext] Session resolved:', sessionData.name, '| clinicId:', sessionData.clinicId);
-        saveSessionData(sessionData);
-        setSession(sessionData);
-      })
-      .catch((err) => {
-        console.warn('[SessionContext] Failed to load employees, using fallback');
-        const fallback: SessionData = {
-          token,
-          userId,
-          clinicId: '',
-          name: 'Usuário',
-          role: '',
-        };
-        saveSessionData(fallback);
-        setSession(fallback);
-        setError(err instanceof Error ? err.message : 'Erro ao carregar sessão');
-      })
-      .finally(() => setLoading(false));
-
+    setError('');
+    try {
+      const employee: Employee = await employeeService.getMe();
+      const sessionData: SessionData = {
+        token,
+        userId,
+        clinicId: employee.clinicId || '',
+        name:     employee.name     || 'Usuário',
+        role:     employee.role     || '',
+      };
+      saveSessionData(sessionData);
+      setSession(sessionData);
+    } catch (err) {
+      console.warn('[SessionContext] Failed to load employee/me');
+      setError(err instanceof Error ? err.message : 'Erro ao carregar sessão');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
+  useEffect(() => {
+    resolveSession();
+  }, [resolveSession]);
+
   return (
-    <SessionContext.Provider value={{ session, loading, error }}>
+    <SessionContext.Provider value={{ session, loading, error, refreshSession: resolveSession }}>
       {children}
     </SessionContext.Provider>
   );

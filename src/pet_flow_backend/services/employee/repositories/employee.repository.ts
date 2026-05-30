@@ -12,4 +12,6 @@ export interface EmployeeRepository {
   update(id: string, employee: Partial<Employee>): Promise<Employee>;
 
   delete(id: string): Promise<void>;
+
+  getByEmail(email: string): Promise<Employee>;
 }
