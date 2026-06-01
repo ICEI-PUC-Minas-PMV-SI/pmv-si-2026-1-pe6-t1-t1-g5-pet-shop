@@ -98,7 +98,7 @@ export class EmployeeController {
     try {
       const user = (req as Request & { user?: { email?: string } }).user;
       if (!user?.email) {
-        res.status(401).json({ error: 'Usuário não autenticado' });
+        res.status(401).json({ error: "Usuário não autenticado" });
         return;
       }
       const employee = await this.service.getEmployeeByEmail(user.email);
@@ -106,7 +106,7 @@ export class EmployeeController {
       res.status(200).json(response);
     } catch (error) {
       console.error(error);
-      res.status(404).json({ error: 'Employee not found' });
+      res.status(404).json({ error: "Employee not found" });
     }
   }
 

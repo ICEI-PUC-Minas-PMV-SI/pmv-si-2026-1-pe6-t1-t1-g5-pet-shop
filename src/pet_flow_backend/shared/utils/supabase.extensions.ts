@@ -41,15 +41,16 @@ export class SupabaseExtensions {
    * Create a new record
    */
   async create<T>(table: string, payload: object): Promise<DbResult<T>> {
-  const { id, created_at, updated_at, ...cleanPayload } = payload as any;
-  
-  const { data, error } = await this.client
-    .from(table)
-    .insert(cleanPayload)
-    .select()
-    .single();
-  return { data: data as T, error };
-}
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+    const { id, created_at, updated_at, ...cleanPayload } = payload as any;
+
+    const { data, error } = await this.client
+      .from(table)
+      .insert(cleanPayload)
+      .select()
+      .single();
+    return { data: data as T, error };
+  }
 
   /**
    * Update an existing record

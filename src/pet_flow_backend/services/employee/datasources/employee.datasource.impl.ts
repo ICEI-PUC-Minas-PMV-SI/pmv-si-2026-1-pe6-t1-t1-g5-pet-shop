@@ -36,7 +36,12 @@ export class EmployeeDatasourceImpl implements EmployeeDatasource {
   }
 
   async getByEmail(email: string): Promise<DbResult<EmployeeEntity>> {
-    const { data, error } = await supabaseExtensions.findByColumnIlike<EmployeeEntity>(this.table, 'email', email);
+    const { data, error } =
+      await supabaseExtensions.findByColumnIlike<EmployeeEntity>(
+        this.table,
+        "email",
+        email,
+      );
     return { data: data?.[0] ?? null, error };
   }
 }

@@ -18,7 +18,10 @@ const dtoMapper = new TutorDtoMapper();
 
 const employeeDatasource = new EmployeeDatasourceImpl();
 const employeeMapper = new EmployeeMapper();
-const employeeRepository = new EmployeeRepositoryImpl(employeeDatasource, employeeMapper);
+const employeeRepository = new EmployeeRepositoryImpl(
+  employeeDatasource,
+  employeeMapper,
+);
 const employeeService = new EmployeeService(employeeRepository);
 
 const controller = new TutorController(service, dtoMapper, employeeService);

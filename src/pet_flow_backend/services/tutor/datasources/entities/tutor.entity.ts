@@ -8,6 +8,6 @@ export class TutorEntity {
     public email: string,
     public clinic_id: string, // <-- Formato exato da DB
     public created_at?: Date,
-    public updated_at?: Date
+    public updated_at?: Date,
   ) {}
 }

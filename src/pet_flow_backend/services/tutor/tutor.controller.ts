@@ -29,11 +29,9 @@ export class TutorController {
 
     // Fallback: find clinic registered with same email
     try {
-      const { data } = await supabaseExtensions.findByColumnIlike<{ id: string }>(
-        "clinic",
-        "email",
-        email,
-      );
+      const { data } = await supabaseExtensions.findByColumnIlike<{
+        id: string;
+      }>("clinic", "email", email);
       if (data && data.length > 0) return data[0]?.id ?? null;
     } catch {
       // no clinic found
@@ -69,10 +67,15 @@ export class TutorController {
     try {
       const clinicId = await this.resolveClinicId(req);
       if (!clinicId) {
-        res.status(400).json({ error: "Clínica não encontrada para este usuário" });
+        res
+          .status(400)
+          .json({ error: "Clínica não encontrada para este usuário" });
         return;
       }
-      const tutor = await this.service.createTutor({ ...req.body, clinic_id: clinicId });
+      const tutor = await this.service.createTutor({
+        ...req.body,
+        clinic_id: clinicId,
+      });
       const response = this.mapper.toObject(tutor);
       res.status(201).json(response);
     } catch (error) {
