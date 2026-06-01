@@ -62,7 +62,7 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
     try {
       const entity = this.mapper.toReversedObject(employee as Employee);
 
-      // Remove id, created_at e updated_at para o banco gerar automaticamente
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
       const { id, created_at, updated_at, ...entityWithoutId } = entity as any;
 
       const { data, error } = await this.datasource.create(entityWithoutId);
@@ -82,8 +82,14 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
     try {
       const entity = this.mapper.toReversedObject(employee as Employee);
 
-      // Remove id, created_at e updated_at para não sobrescrever no update
-      const { id: _, created_at, updated_at, ...entityWithoutId } = entity as any;
+      /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any */
+      const {
+        id: _,
+        created_at,
+        updated_at,
+        ...entityWithoutId
+      } = entity as any;
+      /* eslint-enable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any */
 
       const { data, error } = await this.datasource.update(id, entityWithoutId);
 
@@ -116,7 +122,7 @@ export class EmployeeRepositoryImpl implements EmployeeRepository {
       const { data, error } = await this.datasource.getByEmail(email);
 
       if (error) throw new Error(error.message);
-      if (!data) throw new Error('Employee not found');
+      if (!data) throw new Error("Employee not found");
 
       return this.mapper.toObject(data);
     } catch (error) {

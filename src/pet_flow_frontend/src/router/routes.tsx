@@ -10,7 +10,6 @@ import Scheduling from '../pages/Scheduling/Scheduling';
 import Employees from '../pages/Employees/Employees';
 import Services from '../pages/Services/Services';
 import Products from '../pages/Products/Products';
-import Placeholder from '../pages/Placeholder/Placeholder';
 import Pets from '../pages/Pets/Pets';
 import Clinica from '../pages/Clinica/clinica';
 import Tutores from '../pages/Tutors/Tutors';

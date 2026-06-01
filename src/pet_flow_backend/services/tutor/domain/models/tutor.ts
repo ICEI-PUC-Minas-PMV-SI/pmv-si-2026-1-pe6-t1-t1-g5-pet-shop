@@ -6,8 +6,8 @@ export class Tutor {
     public address: string,
     public phone: string,
     public email: string,
-    public clinicId: string, 
+    public clinicId: string,
     public createdAt?: Date,
-    public updatedAt?: Date
+    public updatedAt?: Date,
   ) {}
 }

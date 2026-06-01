@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import styles from './registerclinic.module.css';
+import styles from '../clinica.module.css';
 
 export interface Clinic {
   id: string;
@@ -13,7 +13,7 @@ export interface Clinic {
 interface Props {
   clinic: Clinic | null;
   onClose: () => void;
-  onSave: (data: any) => Promise<void>;
+  onSave: (data: Omit<Clinic, 'id'>) => Promise<void>;
 }
 
 export default function ClinicModal({ clinic, onClose, onSave }: Props) {
@@ -22,7 +22,7 @@ export default function ClinicModal({ clinic, onClose, onSave }: Props) {
     cnpj: '',
     city: '',
     state: '',
-    phone: ''
+    phone: '',
   });
 
   useEffect(() => {
@@ -35,27 +35,30 @@ export default function ClinicModal({ clinic, onClose, onSave }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
- const handleSubmit = (e: React.FormEvent) => {
-  e.preventDefault();
-  onSave({
-    name: formData.name,
-    cnpj: formData.cnpj,
-    city: formData.city,
-    state: formData.state,
-    phone: formData.phone,
-  });
-};
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({
+      name: formData.name,
+      cnpj: formData.cnpj,
+      city: formData.city,
+      state: formData.state,
+      phone: formData.phone,
+    });
+  };
+
   return (
     <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h2>{clinic ? 'Detalhes da Unidade' : 'Nova Unidade'}</h2>
-          <button className={styles.closeBtn} onClick={onClose}>&times;</button>
+          <button className={styles.closeBtn} onClick={onClose}>
+            &times;
+          </button>
         </div>
-        
+
         <form onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.field}>
             <label>Nome</label>
@@ -84,8 +87,12 @@ export default function ClinicModal({ clinic, onClose, onSave }: Props) {
           </div>
 
           <div className={styles.actions}>
-            <button type="button" className={styles.cancelBtn} onClick={onClose}>Cancelar</button>
-            <button type="submit" className={styles.saveBtn}>Salvar</button>
+            <button type="button" className={styles.cancelBtn} onClick={onClose}>
+              Cancelar
+            </button>
+            <button type="submit" className={styles.saveBtn}>
+              Salvar
+            </button>
           </div>
         </form>
       </div>

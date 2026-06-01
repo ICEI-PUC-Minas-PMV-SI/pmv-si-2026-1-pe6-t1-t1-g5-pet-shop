@@ -2,7 +2,6 @@ import { Tutor } from "../models/tutor"; // Pode ser que o VS Code peça para ar
 import { TutorEntity } from "../../datasources/entities/tutor.entity";
 
 export class TutorMapper {
-  
   toObject(fromObject: TutorEntity): Tutor {
     return new Tutor(
       fromObject.id,
@@ -13,10 +12,11 @@ export class TutorMapper {
       fromObject.email,
       fromObject.clinic_id,
       fromObject.created_at,
-      fromObject.updated_at
+      fromObject.updated_at,
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   toReversedObject(toObject: any): TutorEntity {
     return new TutorEntity(
       toObject.id,
@@ -27,8 +27,7 @@ export class TutorMapper {
       toObject.email,
       toObject.clinic_id || toObject.clinicId,
       toObject.created_at || toObject.createdAt,
-      toObject.updated_at || toObject.updatedAt
+      toObject.updated_at || toObject.updatedAt,
     );
   }
-
 }
