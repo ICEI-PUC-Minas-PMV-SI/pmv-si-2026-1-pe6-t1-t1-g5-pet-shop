@@ -148,7 +148,68 @@ A aplicação frontend é implantada como um site estático (SPA):
      
 ## Testes
 
-Demonstração prática da aplicação apresentando o funcionamento do sistema e a execução dos testes realizados durante o desenvolvimento.
+Os testes abaixo cobrem os recursos principais da aplicação web: clínicas, tutores, pets, agendamentos, serviços, produtos/estoque, funcionários e financeiro. Além disso as imagens que comprovam os testes se encontram no caminho (pmv-si-2026-1-pe6-t1-t1-g5-pet-shop\docs\img\Evidências_Web).  
+
+
+### Ferramentas
+
+| Tipo | Ferramenta | Uso |
+|---|---|---|
+| Unitário/Integração | Vitest + React Testing Library | Testar componentes, hooks e validações |
+| Mock de API | MSW | Simular sucesso e erro da API |
+| E2E | Playwright | Validar fluxo completo no navegador |
+
+### Casos de Teste Funcionais
+
+| ID | Tipo | Cenário | Resultado esperado |
+|---|---|---|---|
+| CT-B-01 | Integração | Cadastrar clínica com dados válidos | Clínica é salva e aparece na listagem |
+| CT-B-02 | Integração | Editar dados da clínica | Dados atualizados corretamente na tela |
+| CT-B-03 | Integração | Cadastrar tutor (dono de pet) | Tutor aparece na listagem |
+| CT-B-04 | Integração | Editar tutor | Dados alterados e persistidos |
+| CT-B-05 | Integração | Cadastrar pet vinculado a tutor | Pet é salvo com vínculo correto ao tutor |
+| CT-B-06 | Integração | Editar pet | Dados do pet atualizados |
+| CT-B-07 | E2E | Criar agendamento para pet existente | Agendamento aparece na listagem |
+| CT-B-08 | E2E | Editar agendamento | Agendamento atualizado corretamente |
+| CT-B-09 | E2E | Cancelar agendamento | Status alterado para cancelado |
+| CT-B-10 | Integração | Cadastrar serviço com valor e duração | Serviço aparece na listagem com os dados corretos |
+| CT-B-11 | Integração | Editar serviço | Serviço é atualizado sem perder dados obrigatórios |
+| CT-B-12 | Integração | Cadastrar produto em estoque | Produto aparece com nome, preço e quantidade |
+| CT-B-13 | Integração | Editar quantidade em estoque | Quantidade é atualizada corretamente |
+| CT-B-14 | Integração | Excluir produto | Produto é removido da listagem após confirmação |
+| CT-B-15 | Integração | Cadastrar funcionário | Funcionário aparece na listagem |
+| CT-B-16 | Integração | Editar funcionário | Dados do funcionário atualizados corretamente |
+| CT-B-17 | Integração | Registrar entrada/saída no financeiro | Valor é refletido no resumo financeiro |
+| CT-B-18 | Integração | Demostrar o dashboard | Valor é refletido no dashboard |
+
+
+
+### Registro de Execução em imagens 
+
+| ID | Resultado | Evidência |
+|---|---|---|
+| CT-B-01 | Passou | ct-b-01-clinica-cadastro.png |
+| CT-B-02 | Passou | ct-b-02-clinica-edicao.png |
+| CT-B-03 | Passou | ct-b-03-tutor-cadastro.png |
+| CT-B-04 | Passou | ct-b-04-tutor-edicao.png |
+| CT-B-05 | Passou | ct-b-05-pet-cadastro.png |
+| CT-B-06 | Passou | ct-b-06-pet-edicao.png |
+| CT-B-07 | Passou | ct-b-07-agendamento-criar.png |
+| CT-B-08 | Passou | ct-b-08-agendamento-editar.png |
+| CT-B-09 | Passou | ct-b-09-agendamento-cancelar.png |
+| CT-B-10 | Passou | ct-b-10-servico-cadastro.png |
+| CT-B-11 | Passou | ct-b-11-servico-edicao.png |
+| CT-B-12 | Passou | ct-b-12-produto-cadastro.png |
+| CT-B-13 | Passou | ct-b-13-estoque-atualizacao.png |
+| CT-B-14 | Passou | ct-b-14-produto-exclusao.png |
+| CT-B-15 | Passou | ct-b-15-funcionario-cadastro.png |
+| CT-B-16 | Passou | ct-b-16-funcionario-edicao.png |
+| CT-B-17 | Passou | ct-b-17-financeiro-lancamento.png |
+| CT-B-18 | Passou | ct-b-18-financeiro-dashboard.png |
+
+### Registro de Execução em vídeo 
+
+Demonstração prática da aplicação apresentando o funcionamento do sistema e a execução dos testes realizados durante o desenvolvimento:
 
 🔗 **[Demonstração da Aplicação](https://vimeo.com/1191018985?share=copy&fl=sv&fe=ci)**
 
