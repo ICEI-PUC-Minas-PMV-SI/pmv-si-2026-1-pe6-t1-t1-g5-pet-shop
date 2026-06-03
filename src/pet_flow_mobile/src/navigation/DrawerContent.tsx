@@ -7,7 +7,7 @@ import { authStorage } from '../services';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AppRoutes } from './routes';
 
-const menuItems = [
+const allMenuItems = [
   { label: 'Dashboard', route: AppRoutes.DASHBOARD, icon: 'dashboard' },
   { label: 'Agendamentos', route: AppRoutes.SCHEDULING, icon: 'calendar-today' },
   { label: 'Pets', route: AppRoutes.PETS, icon: 'pets' },
@@ -26,8 +26,27 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
     await authStorage.clear();
     setSession(null);
   };
+  
+  const role = session?.role
+    ?.toLowerCase()
+    .trim();
 
-  return (
+  const canAccessEmployees =
+    role === 'dono' ||
+    role === 'admin' ||
+    role === 'administrador';
+
+  const menuItems = allMenuItems.filter((item) => {
+    if (
+      item.route === AppRoutes.EMPLOYEES &&
+      !canAccessEmployees
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+    return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.logoRow}>
