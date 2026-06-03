@@ -70,10 +70,15 @@ export function useFinancial() {
   const handleSave = async (payload: CreateTransactionPayload) => {
     try {
       if (editingTransaction) {
+        const { clinic_id: _ignoredClinicId, ...rest } = payload;
         await financialService.update({
           id: editingTransaction.id,
           clinic_id: editingTransaction.clinic_id,
-          ...payload,
+          description: rest.description,
+          amount: rest.amount,
+          payment_method: rest.payment_method,
+          scheduling_id: rest.scheduling_id ?? undefined,
+          employee_id: rest.employee_id ?? undefined,
         });
       } else {
         await financialService.create({ ...payload, clinic_id: clinicId });
