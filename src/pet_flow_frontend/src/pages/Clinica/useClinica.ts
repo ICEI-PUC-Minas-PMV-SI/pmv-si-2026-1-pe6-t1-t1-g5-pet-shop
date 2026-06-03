@@ -52,7 +52,12 @@ export function useClinica() {
     if (editingClinic) {
       await clinicsService.update(editingClinic.id, payload);
     } else {
-      await clinicsService.create(payload);
+      await clinicsService.create({
+        ...payload,
+        email: '',
+        address: '',
+        zip_code: '',
+      });
     }
     setShowModal(false);
     fetchClinics();
