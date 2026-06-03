@@ -92,15 +92,24 @@ export class SchedulingDtoMapper
       "notes",
     ]);
 
+    const clinicId: string = this.parseRequiredString(body, "clinicId");
+    const tutorId: string = this.parseRequiredString(body, "tutorId");
+    const petId: string = this.parseRequiredString(body, "petId");
+    const employeeId: string = this.parseRequiredString(body, "employeeId");
+    const dateTime = this.parseDate(body.dateTime, "dateTime");
+    const status = this.parseStatus(body.status);
+    const totalValue = this.parseTotalValue(body.totalValue);
+    const notes = this.parseNullableString(body.notes);
+
     return {
-      clinicId: this.parseRequiredString(body, "clinicId"),
-      tutorId: this.parseRequiredString(body, "tutorId"),
-      petId: this.parseRequiredString(body, "petId"),
-      employeeId: this.parseRequiredString(body, "employeeId"),
-      dateTime: this.parseDate(body.dateTime, "dateTime"),
-      status: this.parseStatus(body.status),
-      totalValue: this.parseTotalValue(body.totalValue),
-      notes: this.parseNullableString(body.notes),
+      clinicId,
+      tutorId,
+      petId,
+      employeeId,
+      dateTime,
+      status,
+      totalValue,
+      notes,
     };
   }
 

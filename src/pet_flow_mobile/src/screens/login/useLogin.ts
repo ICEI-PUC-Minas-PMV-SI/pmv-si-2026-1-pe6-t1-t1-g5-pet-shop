@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { authService, authStorage } from '../../services';
+import { authService, authStorage, authRequest } from '../../services';
+import type { Employee } from '../../types';
 import { useSession } from '../../contexts/SessionContext';
 import { AuthRoutes } from '../../navigation/routes';
 
@@ -41,10 +42,22 @@ export function useLogin() {
     try {
       const data = await authService.login(email, password);
       await authStorage.save(data);
+
+      let clinicId = data.clinic_id || '';
+
+      if (!clinicId) {
+        try {
+          const me = await authRequest<Employee>('/employee/me', { method: 'GET' });
+          clinicId = me.clinicId || '';
+        } catch {
+          clinicId = '';
+        }
+      }
+
       setSession({
         token: data.token,
         userId: data.user_id,
-        clinicId: data.clinic_id || '',
+        clinicId,
         name: 'Usuário',
         role: '',
       });

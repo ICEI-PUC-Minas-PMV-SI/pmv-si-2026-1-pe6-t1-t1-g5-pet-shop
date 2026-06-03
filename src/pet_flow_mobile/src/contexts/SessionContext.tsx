@@ -45,15 +45,14 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const employees = await authRequest<Employee[]>('/employee', { method: 'GET' });
-        const found = employees.find((e) => e.id === userId);
+        const found = await authRequest<Employee>('/employee/me', { method: 'GET' });
 
         const sessionData: SessionData = {
           token,
           userId,
-          clinicId: found?.clinicId || '',
-          name: found?.name || 'Usuário',
-          role: found?.role || '',
+          clinicId: found.clinicId || '',
+          name: found.name || 'Usuário',
+          role: found.role || '',
         };
 
         await authStorage.saveSessionData(sessionData);

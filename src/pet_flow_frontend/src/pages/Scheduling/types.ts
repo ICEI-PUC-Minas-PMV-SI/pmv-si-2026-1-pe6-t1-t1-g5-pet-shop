@@ -11,6 +11,7 @@ export interface SchedulingFormData {
   petId: string;
   serviceId: string;
   employeeId: string;
+  status: string;
   dateTime: string;
   notes: string;
 }

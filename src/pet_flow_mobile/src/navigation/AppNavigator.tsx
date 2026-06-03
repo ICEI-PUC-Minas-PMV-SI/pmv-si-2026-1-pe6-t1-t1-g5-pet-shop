@@ -7,6 +7,7 @@ import { useSession } from '../contexts/SessionContext';
 import { colors, fontSize, fontWeight } from '../theme';
 import LoginScreen from '../screens/login';
 import FinancialScreen from '../screens/financial';
+import SchedulingScreen from '../screens/scheduling';
 import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
 
@@ -46,6 +47,7 @@ function AuthenticatedDrawer() {
         drawerType: 'front',
       }}
     >
+      <Drawer.Screen name={AppRoutes.SCHEDULING} component={SchedulingScreen} options={{ headerShown: false }} />
       <Drawer.Screen name={AppRoutes.FINANCIAL} component={FinancialScreen} />
     </Drawer.Navigator>
   );

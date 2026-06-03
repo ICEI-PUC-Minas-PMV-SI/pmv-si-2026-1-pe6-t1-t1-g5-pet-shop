@@ -1,4 +1,6 @@
 export class PetEntity {
+  public tutor_id?: string;
+
   constructor(
     public id?: string,
     public name?: string,
