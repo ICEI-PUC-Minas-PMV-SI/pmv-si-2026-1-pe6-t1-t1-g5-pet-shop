@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { MdClose } from 'react-icons/md';
 import type { Pet } from '../../../services/pets.service';
+import { tutorService, type Tutor } from '../../../services/tutor.service';
 import styles from '../PetModal.module.css';
 
 export interface CreatePetPayload {
@@ -8,7 +9,7 @@ export interface CreatePetPayload {
   species: string;
   breed?: string;
   tutor_name: string;
-  tutor_id?: string;
+  tutor_id: string;
   age?: number;
   weight?: number;
   notes?: string;
@@ -27,12 +28,14 @@ function tutorKey(petId?: string) {
 }
 
 export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
+  const [tutors, setTutors] = useState<Tutor[]>([]);
   const [form, setForm] = useState({
     name: pet?.name || '',
     species: pet?.species || '',
     breed: pet?.breed || '',
     age: pet?.age || '',
     weight: pet?.weight || '',
+    tutor_id: pet?.tutorId || '',
     tutor_name: localStorage.getItem(tutorKey(pet?.id)) || pet?.tutor_name || '',
     notes: pet?.notes || '',
   });
@@ -40,6 +43,42 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
   const [photoPreview, setPhotoPreview] = useState<string | null>(pet?.photo_url || null);
   const [saving, setSaving] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadTutors() {
+      try {
+        const response = await tutorService.getAll();
+        if (!mounted) {
+          return;
+        }
+
+        const validTutors = response.filter((item) => item.id && item.id.trim() !== '');
+        setTutors(validTutors);
+
+        if (!form.tutor_id && validTutors.length > 0) {
+          const matchedByName = validTutors.find((item) => item.name === form.tutor_name);
+          if (matchedByName) {
+            setForm((current) => ({
+              ...current,
+              tutor_id: matchedByName.id,
+            }));
+          }
+        }
+      } catch {
+        if (mounted) {
+          setTutors([]);
+        }
+      }
+    }
+
+    loadTutors();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const handleChange =
     (field: string) =>
@@ -60,14 +99,17 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.species || !form.tutor_name) return;
+    if (!form.name || !form.species || !form.tutor_id) return;
+
+    const selectedTutor = tutors.find((item) => item.id === form.tutor_id);
+    const tutorName = selectedTutor?.name || form.tutor_name;
 
     setSaving(true);
     try {
       if (pet?.id) {
-        localStorage.setItem(tutorKey(pet.id), form.tutor_name);
+        localStorage.setItem(tutorKey(pet.id), tutorName);
       } else {
-        localStorage.setItem('tutor_pet_new', form.tutor_name);
+        localStorage.setItem('tutor_pet_new', tutorName);
       }
 
       await onSave({
@@ -76,7 +118,8 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
         breed: form.breed || undefined,
         age: Number(form.age) || undefined,
         weight: Number(form.weight) || undefined,
-        tutor_name: form.tutor_name,
+        tutor_name: tutorName,
+        tutor_id: form.tutor_id,
         notes: form.notes || undefined,
         photo_url: photoPreview || undefined,
         clinic_id: pet?.clinic_id || '',
@@ -162,13 +205,30 @@ export default function PetModal({ pet, onClose, onSave }: PetModalProps) {
 
             <div className={styles.formField}>
               <label>Tutor Responsável</label>
-              <input
-                type="text"
-                value={form.tutor_name}
-                onChange={handleChange('tutor_name')}
-                placeholder="Nome do tutor"
-                required
-              />
+              <div className={styles.selectWrapper}>
+                <select
+                  value={form.tutor_id}
+                  onChange={(event) => {
+                    const selectedId = event.target.value;
+                    const selectedTutor = tutors.find((item) => item.id === selectedId);
+
+                    setForm((prev) => ({
+                      ...prev,
+                      tutor_id: selectedId,
+                      tutor_name: selectedTutor?.name || '',
+                    }));
+                  }}
+                  required
+                >
+                  <option value="">Selecione o tutor</option>
+                  {tutors.map((tutor) => (
+                    <option key={tutor.id} value={tutor.id}>
+                      {tutor.name}
+                    </option>
+                  ))}
+                </select>
+                <span className={styles.selectArrow}>▾</span>
+              </div>
             </div>
           </div>
 

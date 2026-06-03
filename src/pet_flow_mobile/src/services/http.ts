@@ -6,6 +6,11 @@ function translateError(msg: string): string {
     'Invalid login credentials': 'E-mail ou senha inválidos.',
     'User already registered': 'Usuário já cadastrado.',
     'User not found': 'Usuário não encontrado.',
+    'Scheduling not found': 'Agendamento não encontrado.',
+    'id path param is required': 'O identificador do agendamento é obrigatório.',
+    'dateTime must be a valid date': 'Data e hora inválidas para o agendamento.',
+    'totalValue must be a number greater than or equal to zero':
+      'O valor total do agendamento deve ser maior ou igual a zero.',
     'fetch failed': 'Erro de conexão. Verifique sua internet.',
     'Network request failed': 'Erro de conexão. Verifique sua internet.',
   };

@@ -253,7 +253,7 @@ export function useScheduling() {
         petId: form.petId,
         employeeId: form.employeeId,
         dateTime: toIsoFromLocalDateTime(form.dateTime),
-        status: editing?.status || 'Agendado',
+        status: form.status,
         totalValue: selectedService.price,
         notes: form.notes,
       };
@@ -294,6 +294,7 @@ export function useScheduling() {
               Number(service.price.toFixed(2)) === Number(editing.totalValue.toFixed(2)),
           )?.id || '',
         employeeId: editing.employeeId,
+        status: editing.status,
         dateTime: editing.dateTime,
         notes: editing.notes || '',
       }

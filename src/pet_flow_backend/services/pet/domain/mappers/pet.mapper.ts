@@ -7,7 +7,21 @@ export class PetMapper
 {
   constructor() {}
 
+  private toStringId(value: unknown): string {
+    if (typeof value === "string") return value.trim();
+    if (typeof value === "number" && Number.isFinite(value)) return String(value);
+    return "";
+  }
+
   toObject(fromObject: PetEntity): Pet {
+    const raw = fromObject as unknown as Record<string, unknown>;
+
+    const tutorId =
+      (fromObject.tutorId as string | undefined) ||
+      (raw.tutor_id as string | undefined) ||
+      (raw.tutorid as string | undefined) ||
+      "";
+
     return new Pet(
       fromObject.id,
       fromObject.name,
@@ -15,13 +29,25 @@ export class PetMapper
       fromObject.breed,
       fromObject.age,
       fromObject.weight,
-      fromObject.tutorId,
+      tutorId,
       fromObject.created_at,
       fromObject.updated_at,
     );
   }
 
   toReversedObject(toObject: Pet): PetEntity {
+    const raw = toObject as unknown as Record<string, unknown>;
+
+    const tutorId =
+      this.toStringId(toObject.tutorId) ||
+      this.toStringId(raw.tutor_id) ||
+      this.toStringId(raw.idTutor) ||
+      this.toStringId(raw.id_tutor) ||
+      this.toStringId(raw.ownerId) ||
+      this.toStringId(raw.owner_id) ||
+      this.toStringId(raw.responsavelId) ||
+      this.toStringId(raw.responsavel_id);
+
     return new PetEntity(
       toObject.id,
       toObject.name,
@@ -29,7 +55,7 @@ export class PetMapper
       toObject.breed,
       toObject.age,
       toObject.weight,
-      toObject.tutorId,
+      tutorId,
       toObject.createdAt,
       toObject.updatedAt,
     );

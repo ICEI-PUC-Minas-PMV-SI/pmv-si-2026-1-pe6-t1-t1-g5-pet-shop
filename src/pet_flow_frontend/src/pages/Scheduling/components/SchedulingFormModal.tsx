@@ -22,6 +22,7 @@ const emptyForm: SchedulingFormData = {
   petId: '',
   serviceId: '',
   employeeId: '',
+  status: 'Agendado',
   dateTime: '',
   notes: '',
 };
@@ -30,7 +31,36 @@ function getPetTutorId(pet: Pet): string {
   const rawPet = pet as unknown as Record<string, unknown>;
 
   if (typeof rawPet.tutorId === 'string') return rawPet.tutorId;
+  if (typeof rawPet.tutorId === 'number') return String(rawPet.tutorId);
   if (typeof rawPet.tutor_id === 'string') return rawPet.tutor_id;
+  if (typeof rawPet.tutor_id === 'number') return String(rawPet.tutor_id);
+  if (typeof rawPet.idTutor === 'string') return rawPet.idTutor;
+  if (typeof rawPet.idTutor === 'number') return String(rawPet.idTutor);
+  if (typeof rawPet.id_tutor === 'string') return rawPet.id_tutor;
+  if (typeof rawPet.id_tutor === 'number') return String(rawPet.id_tutor);
+  if (typeof rawPet.tutorid === 'string') return rawPet.tutorid;
+  if (typeof rawPet.tutorid === 'number') return String(rawPet.tutorid);
+  if (typeof rawPet.tutorID === 'string') return rawPet.tutorID;
+  if (typeof rawPet.tutorID === 'number') return String(rawPet.tutorID);
+  if (typeof rawPet.ownerId === 'string') return rawPet.ownerId;
+  if (typeof rawPet.ownerId === 'number') return String(rawPet.ownerId);
+  if (typeof rawPet.owner_id === 'string') return rawPet.owner_id;
+  if (typeof rawPet.owner_id === 'number') return String(rawPet.owner_id);
+  if (typeof rawPet.responsavelId === 'string') return rawPet.responsavelId;
+  if (typeof rawPet.responsavelId === 'number') return String(rawPet.responsavelId);
+  if (typeof rawPet.responsavel_id === 'string') return rawPet.responsavel_id;
+  if (typeof rawPet.responsavel_id === 'number') return String(rawPet.responsavel_id);
+
+  if (typeof rawPet.tutor === 'object' && rawPet.tutor !== null) {
+    const tutorObject = rawPet.tutor as Record<string, unknown>;
+    if (typeof tutorObject.id === 'string' || typeof tutorObject.id === 'number') {
+      return String(tutorObject.id);
+    }
+  }
+
+  if (typeof rawPet.tutor === 'string' || typeof rawPet.tutor === 'number') {
+    return String(rawPet.tutor);
+  }
 
   return '';
 }
@@ -40,12 +70,27 @@ function getPetTutorName(pet: Pet): string {
 
   if (typeof rawPet.tutorName === 'string') return rawPet.tutorName;
   if (typeof rawPet.tutor_name === 'string') return rawPet.tutor_name;
+  if (typeof rawPet.ownerName === 'string') return rawPet.ownerName;
+  if (typeof rawPet.owner_name === 'string') return rawPet.owner_name;
+  if (typeof rawPet.responsavelNome === 'string') return rawPet.responsavelNome;
+  if (typeof rawPet.responsavel_nome === 'string') return rawPet.responsavel_nome;
+
+  if (typeof rawPet.tutor === 'object' && rawPet.tutor !== null) {
+    const tutorObject = rawPet.tutor as Record<string, unknown>;
+    if (typeof tutorObject.name === 'string') {
+      return tutorObject.name;
+    }
+  }
 
   return '';
 }
 
 function normalizeId(value: string): string {
-  return value.trim().toLowerCase();
+  return value
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .trim()
+    .toLowerCase();
 }
 
 function toLocalDatetimeValue(isoDate: string): string {
@@ -85,23 +130,22 @@ export default function SchedulingFormModal({
   }, [open, initialData]);
 
   const filteredPets = useMemo(() => {
+    if (!form.tutorId) {
+      return [];
+    }
+
     const selectedTutorName =
       tutors.find((tutor) => normalizeId(tutor.id) === normalizeId(form.tutorId))?.name || '';
     const normalizedSelectedTutorName = normalizeId(selectedTutorName);
 
     const petsByTutor = pets.filter((pet) =>
-      form.tutorId
-        ? normalizeId(getPetTutorId(pet)) === normalizeId(form.tutorId) ||
-          (normalizedSelectedTutorName !== '' &&
-            normalizeId(getPetTutorName(pet)) === normalizedSelectedTutorName)
-        : true,
+      normalizeId(getPetTutorId(pet)) === normalizeId(form.tutorId) ||
+      (normalizedSelectedTutorName !== '' &&
+        normalizeId(getPetTutorName(pet)) === normalizedSelectedTutorName),
     );
 
-    if (petsByTutor.length > 0 || !form.petId) return petsByTutor;
-
-    const selectedPet = pets.find((pet) => normalizeId(pet.id) === normalizeId(form.petId));
-    return selectedPet ? [selectedPet] : petsByTutor;
-  }, [pets, tutors, form.tutorId, form.petId]);
+    return petsByTutor;
+  }, [pets, tutors, form.tutorId]);
 
   if (!open) return null;
 
@@ -148,7 +192,9 @@ export default function SchedulingFormModal({
               required
             >
               <option value="">Selecione o tutor</option>
-              {tutors.map((tutor) => (
+              {tutors
+                .filter((tutor) => normalizeId(tutor.id) !== '')
+                .map((tutor) => (
                 <option key={tutor.id} value={tutor.id}>
                   {tutor.name}
                 </option>
@@ -161,9 +207,10 @@ export default function SchedulingFormModal({
             <select
               value={form.petId}
               onChange={(event) => handleChange('petId', event.target.value)}
+              disabled={!form.tutorId}
               required
             >
-              <option value="">Selecione o pet</option>
+              <option value="">{form.tutorId ? 'Selecione o pet' : 'Selecione o tutor primeiro'}</option>
               {filteredPets.map((pet) => (
                 <option key={pet.id} value={pet.id}>
                   {pet.name}
@@ -199,6 +246,21 @@ export default function SchedulingFormModal({
               {employees.map((employee) => (
                 <option key={employee.id} value={employee.id}>
                   {employee.name}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className={styles.field}>
+            <span>Status</span>
+            <select
+              value={form.status}
+              onChange={(event) => handleChange('status', event.target.value)}
+              required
+            >
+              {['Agendado', 'Confirmado', 'Em Andamento', 'Concluido', 'Cancelado'].map((status) => (
+                <option key={status} value={status}>
+                  {status}
                 </option>
               ))}
             </select>

@@ -17,10 +17,10 @@
 | 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ✅ | Implementação inicial da funcionalidade de agendamentos no frontend | Implementada a tela de agendamentos com visualização em quadro semanal, listagem em tabela e ações de criação, edição e exclusão |
 | 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ✅ | Refinamento visual e responsividade da tela de agendamentos | Ajustados layout e responsividade, com melhorias no posicionamento dos cards, legibilidade dos horários e alinhamento ao layout de referência |
 | 04/05 - 10/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ | Validação funcional e ajustes finais da funcionalidade de agendamentos | Aplicadas validações de horário comercial (09h às 17h), organização dos horários de teste no banco e ajustes no quadro para exibir corretamente os dados de funcionário |
-| 11/05 - 17/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ |  |  |
-| 18/05 - 24/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 1 | ✅ |  |  |
-| 25/05 - 31/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 2 | ✅ |  |  |
-| 01/06 - 07/06 |  | ✅ |  |  |
+| 11/05 - 17/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ | Implementação base da tela de agendamentos no mobile (estrutura, cards e fluxo de listagem) | Estruturada a tela de agendamentos mobile com agenda do dia, seção de próximos horários e integração inicial com dados de scheduling |
+| 18/05 - 24/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 1 | ✅ | Ajustar regras e filtros de exibição dos agendamentos no mobile | Revisadas as regras de filtro por data/status/funcionário e corrigida a lógica de próximos horários para respeitar a data selecionada |
+| 25/05 - 31/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 2 | ✅ | Melhorar usabilidade do cadastro/edição de agendamento no mobile | Melhorada a experiência de preenchimento com seleção guiada de data e hora, remoção de bloqueios desnecessários e observações definidas como campo opcional |
+| 01/06 - 07/06 | Desenvolvimento de Aplicações Móveis | ✅ | Correções finais e refinamento da feature de agendamento mobile | Aplicados refinamentos de consistência entre web e mobile, ajustes de normalização de dados e validações finais para exibição correta dos agendamentos |
 | 08/06 - 14/06 |  | ✅ |  |  |
 
 **Legenda:** ✅ Estudou | ⬜ Não estudou

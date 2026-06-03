@@ -8,6 +8,21 @@ import {
 export class PetDatasourceImpl implements PetDatasource {
   private readonly table = "pet";
 
+  private normalizePayload(pet: Partial<PetEntity>): Partial<PetEntity> {
+    const payload = { ...pet } as Record<string, unknown>;
+
+    const tutorId = payload.tutorId;
+    const tutor_id = payload.tutor_id;
+
+    if ((tutor_id === undefined || tutor_id === null || tutor_id === "") && tutorId !== undefined) {
+      payload.tutor_id = tutorId;
+    }
+
+    delete payload.tutorId;
+
+    return payload as Partial<PetEntity>;
+  }
+
   async getAll(): Promise<DbResult<PetEntity[]>> {
     return supabaseExtensions.getAll<PetEntity>(this.table);
   }
@@ -17,14 +32,14 @@ export class PetDatasourceImpl implements PetDatasource {
   }
 
   async create(pet: Partial<PetEntity>): Promise<DbResult<PetEntity>> {
-    return supabaseExtensions.create<PetEntity>(this.table, pet);
+    return supabaseExtensions.create<PetEntity>(this.table, this.normalizePayload(pet));
   }
 
   async update(
     id: string,
     pet: Partial<PetEntity>,
   ): Promise<DbResult<PetEntity>> {
-    return supabaseExtensions.update<PetEntity>(this.table, id, pet);
+    return supabaseExtensions.update<PetEntity>(this.table, id, this.normalizePayload(pet));
   }
 
   async delete(id: string): Promise<DbResult<null>> {
