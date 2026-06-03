@@ -37,12 +37,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      const cached = await authStorage.getSessionData();
-      if (cached && cached.userId === userId && cached.clinicId) {
-        setSession(cached);
-        setLoading(false);
-        return;
-      }
+     const cached = await authStorage.getSessionData();
+
+      setSession(null);
 
       try {
         const found = await authRequest<Employee>('/employee/me', { method: 'GET' });

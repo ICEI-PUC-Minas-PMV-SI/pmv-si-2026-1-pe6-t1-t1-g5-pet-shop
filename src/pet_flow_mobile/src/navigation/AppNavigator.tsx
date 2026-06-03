@@ -10,6 +10,7 @@ import FinancialScreen from '../screens/financial';
 import SchedulingScreen from '../screens/scheduling';
 import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
+import EmployeesScreen from '../screens/employees';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,6 +38,8 @@ function AuthStack() {
 }
 
 function AuthenticatedDrawer() {
+  const { session } = useSession();
+
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerContent {...props} />}
@@ -47,8 +50,28 @@ function AuthenticatedDrawer() {
         drawerType: 'front',
       }}
     >
-      <Drawer.Screen name={AppRoutes.SCHEDULING} component={SchedulingScreen} options={{ headerShown: false }} />
-      <Drawer.Screen name={AppRoutes.FINANCIAL} component={FinancialScreen} />
+      <Drawer.Screen
+        name={AppRoutes.SCHEDULING}
+        component={SchedulingScreen}
+        options={{ headerShown: false }}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.FINANCIAL}
+        component={FinancialScreen}
+      />
+
+    {(
+      session?.role?.toLowerCase().trim() === 'dono' ||
+      session?.role?.toLowerCase().trim() === 'admin' ||
+      session?.role?.toLowerCase().trim() === 'administrador'
+    ) && (
+      
+        <Drawer.Screen
+          name={AppRoutes.EMPLOYEES}
+          component={EmployeesScreen}
+        />
+      )}
     </Drawer.Navigator>
   );
 }
