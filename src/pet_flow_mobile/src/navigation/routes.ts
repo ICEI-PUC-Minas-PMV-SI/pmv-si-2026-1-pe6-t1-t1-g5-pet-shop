@@ -5,11 +5,11 @@ export const AuthRoutes = {
 
 export const AppRoutes = {
   DASHBOARD: 'Dashboard',
-  SCHEDULING: 'Agendamentos',
+  SCHEDULING: 'Scheduling',
   PETS: 'Pets',
-  TUTORS: 'Tutores',
-  SERVICES: 'Servicos',
-  PRODUCTS: 'Produtos',
-  FINANCIAL: 'Financeiro',
-  EMPLOYEES: 'Funcionarios',
+  TUTORS: 'Tutors',
+  SERVICES: 'Services',
+  PRODUCTS: 'Products',
+  FINANCIAL: 'Financial',
+  EMPLOYEES: 'Employees',
 } as const;
