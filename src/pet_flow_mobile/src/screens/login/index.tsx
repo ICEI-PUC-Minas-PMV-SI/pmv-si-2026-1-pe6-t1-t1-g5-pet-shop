@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
-  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -15,8 +14,6 @@ import { colors } from '../../theme';
 import { useLogin } from './useLogin';
 import { styles } from './styles';
 
-const dogImg = require('../../../assets/dog_register.png');
-
 export default function LoginScreen() {
   const {
     email,
@@ -25,6 +22,8 @@ export default function LoginScreen() {
     setPassword,
     showPassword,
     togglePassword,
+    rememberMe,
+    toggleRememberMe,
     error,
     loading,
     isFormValid,
@@ -34,34 +33,39 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Image source={dogImg} style={styles.bgImage} />
-
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.keyboardView}
       >
         <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
+          <View style={styles.logoContainer}>
+            <MaterialIcons name="pets" size={48} color={colors.primary} />
+            <Text style={styles.logoText}>
+              pet<Text style={styles.logoTextFlow}>flow</Text>
+            </Text>
+          </View>
+
           <View style={styles.formContainer}>
             <Text style={styles.title}>Bem vindo de volta!</Text>
             <Text style={styles.subtitle}>Faça login para acessar sua conta.</Text>
 
-            <Text style={styles.label}>E-mail</Text>
+            <Text style={styles.label}>E-mail:</Text>
             <TextInput
               style={styles.input}
-              placeholder="nome@petflow.com.br"
-              placeholderTextColor={colors.textMuted}
+              placeholder="nome@email.com"
+              placeholderTextColor={colors.textPlaceholder}
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
             />
 
-            <Text style={styles.label}>Senha</Text>
+            <Text style={styles.label}>Senha:</Text>
             <View style={styles.passwordWrapper}>
               <TextInput
                 style={styles.passwordInput}
-                placeholder="Digite sua senha..."
-                placeholderTextColor={colors.textMuted}
+                placeholder="Digite uma senha..."
+                placeholderTextColor={colors.textPlaceholder}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
@@ -70,10 +74,21 @@ export default function LoginScreen() {
                 <MaterialIcons
                   name={showPassword ? 'visibility-off' : 'visibility'}
                   size={20}
-                  color={colors.textMuted}
+                  color={colors.textPlaceholder}
                 />
               </TouchableOpacity>
             </View>
+
+            <TouchableOpacity
+              style={styles.rememberRow}
+              onPress={toggleRememberMe}
+              activeOpacity={0.7}
+            >
+              <View style={[styles.checkbox, rememberMe && styles.checkboxChecked]}>
+                {rememberMe && <MaterialIcons name="check" size={14} color={colors.textWhite} />}
+              </View>
+              <Text style={styles.rememberText}>Lembrar de mim</Text>
+            </TouchableOpacity>
 
             {error ? <Text style={styles.error}>{error}</Text> : null}
 

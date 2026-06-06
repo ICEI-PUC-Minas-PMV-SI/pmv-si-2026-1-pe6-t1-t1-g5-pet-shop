@@ -20,7 +20,6 @@ const allMenuItems = [
 
 export default function DrawerContent(props: DrawerContentComponentProps) {
   const { session, setSession } = useSession();
-  const currentRoute = props.state.routes[props.state.index]?.name;
 
   const handleLogout = async () => {
     await authStorage.clear();
@@ -59,20 +58,22 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
 
       <DrawerContentScrollView {...props} contentContainerStyle={styles.scrollContent}>
         {menuItems.map((item) => {
-          const isActive = currentRoute === item.route;
           return (
             <TouchableOpacity
               key={item.route}
-              style={[styles.menuItem, isActive && styles.menuItemActive]}
-              onPress={() => props.navigation.navigate(item.route)}
+              style={[styles.menuItem]}
+              onPress={() => {
+                props.navigation.closeDrawer();
+                props.navigation.navigate('Main', { screen: item.route });
+              }}
             >
               <MaterialIcons
                 name={item.icon as any}
                 size={20}
-                color={isActive ? colors.primary : colors.textPrimary}
+                color={colors.textPrimary}
                 style={styles.menuIcon}
               />
-              <Text style={[styles.menuLabel, isActive && styles.menuLabelActive]}>
+              <Text style={styles.menuLabel}>
                 {item.label}
               </Text>
             </TouchableOpacity>

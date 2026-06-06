@@ -4,6 +4,8 @@ import { useSession } from '../../contexts/SessionContext';
 import type { Transaction, CreateTransactionPayload } from '../../types';
 import { fetchAllTransactions, createTransaction, updateTransaction, deleteTransaction } from './api';
 
+export type FilterType = 'all' | 'revenue' | 'expense';
+
 export function useFinancial() {
   const { session } = useSession();
   const clinicId = session?.clinicId || '';
@@ -13,6 +15,8 @@ export function useFinancial() {
   const [refreshing, setRefreshing] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
+  const [deletingTransaction, setDeletingTransaction] = useState<Transaction | null>(null);
+  const [filter, setFilter] = useState<FilterType>('all');
 
   const fetchTransactions = useCallback(async () => {
     if (!clinicId) return;
@@ -39,6 +43,7 @@ export function useFinancial() {
   const revenue = transactions.filter((t) => t.amount > 0).reduce((sum, t) => sum + t.amount, 0);
   const expenses = transactions.filter((t) => t.amount < 0).reduce((sum, t) => sum + Math.abs(t.amount), 0);
   const balance = revenue - expenses;
+  const balancePercentage = revenue > 0 ? Math.round((balance / revenue) * 100) : 0;
 
   const handleEdit = (transaction: Transaction) => {
     setEditingTransaction(transaction);
@@ -46,25 +51,22 @@ export function useFinancial() {
   };
 
   const handleDelete = (transaction: Transaction) => {
-    Alert.alert(
-      'Excluir Transação',
-      `Deseja mesmo deletar "${transaction.description}"?`,
-      [
-        { text: 'Cancelar', style: 'cancel' },
-        {
-          text: 'Sim, remover',
-          style: 'destructive',
-          onPress: async () => {
-            try {
-              await deleteTransaction(transaction.id, transaction.clinic_id);
-              fetchTransactions();
-            } catch (err) {
-              Alert.alert('Erro', err instanceof Error ? err.message : 'Erro ao excluir');
-            }
-          },
-        },
-      ],
-    );
+    setDeletingTransaction(transaction);
+  };
+
+  const confirmDelete = async () => {
+    if (!deletingTransaction) return;
+    try {
+      await deleteTransaction(deletingTransaction.id, deletingTransaction.clinic_id);
+      setDeletingTransaction(null);
+      fetchTransactions();
+    } catch (err) {
+      Alert.alert('Erro', err instanceof Error ? err.message : 'Erro ao excluir');
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeletingTransaction(null);
   };
 
   const handleNew = () => {
@@ -101,14 +103,20 @@ export function useFinancial() {
     refreshing,
     showModal,
     editingTransaction,
-    revenue,
-    expenses,
-    balance,
+    deletingTransaction,
+    filter,
+    setFilter,
     onRefresh,
     handleEdit,
     handleDelete,
+    confirmDelete,
+    cancelDelete,
     handleNew,
     handleSave,
     closeModal,
+    revenue,
+    expenses,
+    balance,
+    balancePercentage,
   };
 }

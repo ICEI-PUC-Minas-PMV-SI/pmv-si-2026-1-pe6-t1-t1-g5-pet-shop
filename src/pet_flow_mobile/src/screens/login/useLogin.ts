@@ -11,12 +11,14 @@ export function useLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const isFormValid = email.length > 0 && password.length > 0;
 
   const togglePassword = () => setShowPassword(!showPassword);
+  const toggleRememberMe = () => setRememberMe(!rememberMe);
 
   const goToRegister = () => navigation.navigate(AuthRoutes.REGISTER);
 
@@ -44,23 +46,31 @@ export function useLogin() {
       await authStorage.save(data);
 
       let clinicId = data.clinic_id || '';
+      let name = 'Usuário';
+      let role = '';
 
-      if (!clinicId) {
-        try {
-          const me = await authRequest<Employee>('/employee/me', { method: 'GET' });
-          clinicId = me.clinicId || '';
-        } catch {
-          clinicId = '';
-        }
+      try {
+        const me = await authRequest<Employee>('/employee/me', { method: 'GET' });
+        clinicId = me.clinicId || clinicId;
+        name = me.name || 'Usuário';
+        role = me.role || '';
+      } catch {
+        // fallback values already set
       }
 
-      setSession({
+      const sessionData = {
         token: data.token,
         userId: data.user_id,
         clinicId,
-        name: 'Usuário',
-        role: '',
-      });
+        name,
+        role,
+      };
+
+      if (rememberMe) {
+        await authStorage.saveSessionData(sessionData);
+      }
+
+      setSession(sessionData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro ao fazer login.');
     } finally {
@@ -75,6 +85,8 @@ export function useLogin() {
     setPassword,
     showPassword,
     togglePassword,
+    rememberMe,
+    toggleRememberMe,
     error,
     loading,
     isFormValid,

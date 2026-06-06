@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSession } from '../contexts/SessionContext';
@@ -13,6 +13,7 @@ import { AuthRoutes, AppRoutes } from './routes';
 import EmployeesScreen from '../screens/employees';
 import PetsScreen from '../screens/pets/pets';
 import VaccinesScreen from '../screens/pets/vaccines';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -51,26 +52,56 @@ function PetsStack() {
 function AuthenticatedDrawer() {
   const { session } = useSession();
 
+function MainStack() {
   return (
-    <Drawer.Navigator
-      drawerContent={(props) => <DrawerContent {...props} />}
+    <Stack.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: colors.bgWhite },
+        headerShadowVisible: false,
         headerTintColor: colors.textPrimary,
-        headerTitleStyle: { fontWeight: fontWeight.semibold },
-        drawerType: 'front',
+        headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.textPrimary },
+        headerBackTitle: ' ',
+        headerTransparent: true,
+        headerBlurEffect: undefined,
       }}
     >
-      <Drawer.Screen
+      <Stack.Screen
         name={AppRoutes.SCHEDULING}
         component={SchedulingScreen}
         options={{ headerShown: false }}
       />
-
-      <Drawer.Screen
+      <Stack.Screen
         name={AppRoutes.FINANCIAL}
         component={FinancialScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Financeiro',
+          headerBackVisible: false,
+          headerTransparent: false,
+          headerStyle: { backgroundColor: colors.bgMain },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
+              <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
+            </TouchableOpacity>
+          ),
+        })}
       />
+      <Stack.Screen
+        name={AppRoutes.EMPLOYEES}
+        component={EmployeesScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Funcionários',
+          headerBackVisible: false,
+          headerTransparent: false,
+          headerStyle: { backgroundColor: colors.bgMain },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
+              <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+}
 
       <Drawer.Screen
         name={AppRoutes.PETS}
