@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSession } from '../contexts/SessionContext';
@@ -11,6 +11,7 @@ import SchedulingScreen from '../screens/scheduling';
 import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
 import EmployeesScreen from '../screens/employees';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,41 +38,87 @@ function AuthStack() {
   );
 }
 
-function AuthenticatedDrawer() {
-  const { session } = useSession();
+function MainStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShadowVisible: false,
+        headerTintColor: colors.textPrimary,
+        headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.textPrimary },
+        headerBackTitle: ' ',
+        headerTransparent: true,
+        headerBlurEffect: undefined,
+      }}
+    >
+      <Stack.Screen
+        name={AppRoutes.SCHEDULING}
+        component={SchedulingScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name={AppRoutes.FINANCIAL}
+        component={FinancialScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Financeiro',
+          headerBackVisible: false,
+          headerTransparent: false,
+          headerStyle: { backgroundColor: colors.bgMain },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
+              <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name={AppRoutes.EMPLOYEES}
+        component={EmployeesScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Funcionários',
+          headerBackVisible: false,
+          headerTransparent: false,
+          headerStyle: { backgroundColor: colors.bgMain },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
+              <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+    </Stack.Navigator>
+  );
+}
 
+function AuthenticatedDrawer() {
   return (
     <Drawer.Navigator
       drawerContent={(props) => <DrawerContent {...props} />}
       screenOptions={{
         headerStyle: { backgroundColor: colors.bgWhite },
         headerTintColor: colors.textPrimary,
-        headerTitleStyle: { fontWeight: fontWeight.semibold },
+        headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.primary },
         drawerType: 'front',
       }}
     >
       <Drawer.Screen
-        name={AppRoutes.SCHEDULING}
-        component={SchedulingScreen}
-        options={{ headerShown: false }}
+        name="Main"
+        component={MainStack}
+        options={({ route }) => {
+          const routeName = getFocusedRouteNameFromRoute(route) ?? AppRoutes.SCHEDULING;
+          // Only show drawer header (PetFlow + hamburger) on the dashboard/scheduling screen
+          if (routeName === AppRoutes.SCHEDULING) {
+            return {
+              headerShown: true,
+              headerTitle: 'PetFlow',
+              headerTitleStyle: { color: colors.primary, fontWeight: fontWeight.bold, fontSize: 20 },
+            };
+          }
+          // Hide drawer header for all inner screens (they have their own stack header with back arrow)
+          return {
+            headerShown: false,
+          };
+        }}
       />
-
-      <Drawer.Screen
-        name={AppRoutes.FINANCIAL}
-        component={FinancialScreen}
-      />
-
-    {(
-      session?.role?.toLowerCase().trim() === 'dono' ||
-      session?.role?.toLowerCase().trim() === 'admin' ||
-      session?.role?.toLowerCase().trim() === 'administrador'
-    ) && (
-      
-        <Drawer.Screen
-          name={AppRoutes.EMPLOYEES}
-          component={EmployeesScreen}
-        />
-      )}
     </Drawer.Navigator>
   );
 }
