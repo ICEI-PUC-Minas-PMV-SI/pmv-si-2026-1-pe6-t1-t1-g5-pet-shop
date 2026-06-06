@@ -8,6 +8,16 @@ export interface Tutor {
   cpf: string;
   phone: string;
   email: string;
+  address?: string;
+}
+
+export interface CreateTutorPayload {
+  name: string;
+  cpf: string;
+  email: string;
+  phone: string;
+  address: string;
+  clinic_id: string;
 }
 
 async function authRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
@@ -46,6 +56,25 @@ export const tutorService = {
       cpf: raw.cpf || '',
       phone: raw.phone || '',
       email: raw.email || '',
+      address: raw.address || '',
     })).filter(t => t.id !== '');
+  },
+
+  create(payload: CreateTutorPayload): Promise<Tutor> {
+    return authRequest<Tutor>('/tutor', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  update(id: string, payload: CreateTutorPayload): Promise<Tutor> {
+    return authRequest<Tutor>(`/tutor/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    });
+  },
+
+  delete(id: string): Promise<void> {
+    return authRequest<void>(`/tutor/${id}`, { method: 'DELETE' });
   },
 };
