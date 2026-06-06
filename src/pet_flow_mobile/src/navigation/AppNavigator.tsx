@@ -11,6 +11,8 @@ import SchedulingScreen from '../screens/scheduling';
 import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
 import EmployeesScreen from '../screens/employees';
+import PetsScreen from '../screens/pets/pets';
+import VaccinesScreen from '../screens/pets/vaccines';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,6 +39,15 @@ function AuthStack() {
   );
 }
 
+function PetsStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="PetsList" component={PetsScreen} />
+      <Stack.Screen name={AppRoutes.VACCINES} component={VaccinesScreen} />
+    </Stack.Navigator>
+  );
+}
+
 function AuthenticatedDrawer() {
   const { session } = useSession();
 
@@ -59,6 +70,12 @@ function AuthenticatedDrawer() {
       <Drawer.Screen
         name={AppRoutes.FINANCIAL}
         component={FinancialScreen}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.PETS}
+        component={PetsStack}
+        options={{ headerShown: false }}
       />
 
     {(
