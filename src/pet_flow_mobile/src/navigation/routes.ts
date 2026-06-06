@@ -7,6 +7,7 @@ export const AppRoutes = {
   DASHBOARD: 'Dashboard',
   SCHEDULING: 'Agendamentos',
   PETS: 'Pets',
+  VACCINES: 'Vacinas',
   TUTORS: 'Tutores',
   SERVICES: 'Servicos',
   PRODUCTS: 'Produtos',

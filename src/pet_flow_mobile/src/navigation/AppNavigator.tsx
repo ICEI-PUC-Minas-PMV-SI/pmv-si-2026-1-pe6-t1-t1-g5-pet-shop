@@ -11,6 +11,8 @@ import SchedulingScreen from '../screens/scheduling';
 import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
 import EmployeesScreen from '../screens/employees';
+import PetsScreen from '../screens/pets/pets';
+import VaccinesScreen from '../screens/pets/vaccines';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Drawer = createDrawerNavigator();
@@ -37,6 +39,18 @@ function AuthStack() {
     </Stack.Navigator>
   );
 }
+
+function PetsStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="PetsList" component={PetsScreen} />
+      <Stack.Screen name={AppRoutes.VACCINES} component={VaccinesScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function AuthenticatedDrawer() {
+  const { session } = useSession();
 
 function MainStack() {
   return (
@@ -89,36 +103,23 @@ function MainStack() {
   );
 }
 
-function AuthenticatedDrawer() {
-  return (
-    <Drawer.Navigator
-      drawerContent={(props) => <DrawerContent {...props} />}
-      screenOptions={{
-        headerStyle: { backgroundColor: colors.bgWhite },
-        headerTintColor: colors.textPrimary,
-        headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.primary },
-        drawerType: 'front',
-      }}
-    >
       <Drawer.Screen
-        name="Main"
-        component={MainStack}
-        options={({ route }) => {
-          const routeName = getFocusedRouteNameFromRoute(route) ?? AppRoutes.SCHEDULING;
-          // Only show drawer header (PetFlow + hamburger) on the dashboard/scheduling screen
-          if (routeName === AppRoutes.SCHEDULING) {
-            return {
-              headerShown: true,
-              headerTitle: 'PetFlow',
-              headerTitleStyle: { color: colors.primary, fontWeight: fontWeight.bold, fontSize: 20 },
-            };
-          }
-          // Hide drawer header for all inner screens (they have their own stack header with back arrow)
-          return {
-            headerShown: false,
-          };
-        }}
+        name={AppRoutes.PETS}
+        component={PetsStack}
+        options={{ headerShown: false }}
       />
+
+    {(
+      session?.role?.toLowerCase().trim() === 'dono' ||
+      session?.role?.toLowerCase().trim() === 'admin' ||
+      session?.role?.toLowerCase().trim() === 'administrador'
+    ) && (
+      
+        <Drawer.Screen
+          name={AppRoutes.EMPLOYEES}
+          component={EmployeesScreen}
+        />
+      )}
     </Drawer.Navigator>
   );
 }
