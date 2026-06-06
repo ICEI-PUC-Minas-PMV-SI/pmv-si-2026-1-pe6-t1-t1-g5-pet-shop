@@ -14,6 +14,7 @@ import EmployeesScreen from '../screens/employees';
 import PetsScreen from '../screens/pets/pets';
 import VaccinesScreen from '../screens/pets/vaccines';
 import { MaterialIcons } from '@expo/vector-icons';
+import TutorsScreen from '../screens/tutor/tutor';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -52,69 +53,86 @@ function PetsStack() {
 function AuthenticatedDrawer() {
   const { session } = useSession();
 
-function MainStack() {
+  function MainStack() {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShadowVisible: false,
+          headerTintColor: colors.textPrimary,
+          headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.textPrimary },
+          headerBackTitle: ' ',
+          headerTransparent: true,
+          headerBlurEffect: undefined,
+        }}
+      >
+        <Stack.Screen
+          name={AppRoutes.SCHEDULING}
+          component={SchedulingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={AppRoutes.FINANCIAL}
+          component={FinancialScreen}
+          options={({ navigation }) => ({
+            headerTitle: 'Financeiro',
+            headerBackVisible: false,
+            headerTransparent: false,
+            headerStyle: { backgroundColor: colors.bgMain },
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
+                <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name={AppRoutes.EMPLOYEES}
+          component={EmployeesScreen}
+          options={({ navigation }) => ({
+            headerTitle: 'Funcionários',
+            headerBackVisible: false,
+            headerTransparent: false,
+            headerStyle: { backgroundColor: colors.bgMain },
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
+                <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+        
+        {/* CORREÇÃO AQUI: Tutores dentro da MainStack */}
+        <Stack.Screen
+          name={AppRoutes.TUTORS}
+          component={TutorsScreen}
+          options={{ headerShown: false }}
+        />
+
+        {/* CORREÇÃO AQUI: Pets também movido para dentro da MainStack! */}
+        <Stack.Screen
+          name={AppRoutes.PETS}
+          component={PetsStack}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    );
+  }
+
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShadowVisible: false,
-        headerTintColor: colors.textPrimary,
-        headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.textPrimary },
-        headerBackTitle: ' ',
-        headerTransparent: true,
-        headerBlurEffect: undefined,
-      }}
-    >
-      <Stack.Screen
-        name={AppRoutes.SCHEDULING}
-        component={SchedulingScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name={AppRoutes.FINANCIAL}
-        component={FinancialScreen}
-        options={({ navigation }) => ({
-          headerTitle: 'Financeiro',
-          headerBackVisible: false,
-          headerTransparent: false,
-          headerStyle: { backgroundColor: colors.bgMain },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
-              <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
-            </TouchableOpacity>
-          ),
-        })}
-      />
-      <Stack.Screen
-        name={AppRoutes.EMPLOYEES}
-        component={EmployeesScreen}
-        options={({ navigation }) => ({
-          headerTitle: 'Funcionários',
-          headerBackVisible: false,
-          headerTransparent: false,
-          headerStyle: { backgroundColor: colors.bgMain },
-          headerLeft: () => (
-            <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
-              <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
-            </TouchableOpacity>
-          ),
-        })}
-      />
-    </Stack.Navigator>
-  );
-}
-
-      <Drawer.Screen
-        name={AppRoutes.PETS}
-        component={PetsStack}
-        options={{ headerShown: false }}
-      />
-
-    {(
-      session?.role?.toLowerCase().trim() === 'dono' ||
-      session?.role?.toLowerCase().trim() === 'admin' ||
-      session?.role?.toLowerCase().trim() === 'administrador'
-    ) && (
+    <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
       
+      {/* Esta é a gaveta 'Main' principal */}
+      <Drawer.Screen
+        name="Main"
+        component={MainStack}
+        options={{ headerShown: false }}
+      />
+
+      {(
+        session?.role?.toLowerCase().trim() === 'dono' ||
+        session?.role?.toLowerCase().trim() === 'admin' ||
+        session?.role?.toLowerCase().trim() === 'administrador'
+      ) && (
         <Drawer.Screen
           name={AppRoutes.EMPLOYEES}
           component={EmployeesScreen}
