@@ -6,15 +6,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSession } from '../contexts/SessionContext';
 import { colors, fontSize, fontWeight } from '../theme';
 import LoginScreen from '../screens/login';
+import DashboardScreen from '../screens/dashboard';
 import FinancialScreen from '../screens/financial';
 import SchedulingScreen from '../screens/scheduling';
 import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
 import EmployeesScreen from '../screens/employees';
-import PetsScreen from '../screens/pets/pets';
-import VaccinesScreen from '../screens/pets/vaccines';
-import { MaterialIcons } from '@expo/vector-icons';
-import TutorsScreen from '../screens/tutor/tutor';
+import ServiceScreen from '../screens/service';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
@@ -23,6 +21,17 @@ function RegisterPlaceholder() {
   return (
     <View style={placeholderStyles.container}>
       <Text style={placeholderStyles.text}>Tela de registro em construção...</Text>
+    </View>
+  );
+}
+
+function PagePlaceholder({ route }: { route: { params?: { title?: string } } }) {
+  const title = route.params?.title || 'Em construção';
+
+  return (
+    <View style={placeholderStyles.container}>
+      <Text style={placeholderStyles.text}>{title}</Text>
+      <Text style={[placeholderStyles.text, { marginTop: 8 }]}>Esta página ainda não foi implementada.</Text>
     </View>
   );
 }
@@ -123,9 +132,48 @@ function AuthenticatedDrawer() {
       
       {/* Esta é a gaveta 'Main' principal */}
       <Drawer.Screen
-        name="Main"
-        component={MainStack}
-        options={{ headerShown: false }}
+        name={AppRoutes.DASHBOARD}
+        component={DashboardScreen}
+        options={{ title: 'PetFlow' }}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.SCHEDULING}
+        component={SchedulingScreen}
+        options={{ headerShown: false, title: 'Agendamentos' }}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.FINANCIAL}
+        component={FinancialScreen}
+        options={{ title: 'Financeiro' }}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.PETS}
+        component={PagePlaceholder}
+        initialParams={{ title: 'Pets' }}
+        options={{ title: 'Pets' }}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.TUTORS}
+        component={PagePlaceholder}
+        initialParams={{ title: 'Tutores' }}
+        options={{ title: 'Tutores' }}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.PRODUCTS}
+        component={PagePlaceholder}
+        initialParams={{ title: 'Produtos' }}
+        options={{ title: 'Produtos' }}
+      />
+
+      <Drawer.Screen
+        name={AppRoutes.SERVICES}
+        component={ServiceScreen}
+        options={{ title: 'Serviços' }}
       />
 
       {(
@@ -136,6 +184,7 @@ function AuthenticatedDrawer() {
         <Drawer.Screen
           name={AppRoutes.EMPLOYEES}
           component={EmployeesScreen}
+          options={{ title: 'Funcionários' }}
         />
       )}
     </Drawer.Navigator>
