@@ -13,13 +13,13 @@
 | 23/03 - 29/03 | APIs e Web Services - Unidade 2 | ✅ | Criação da arquitetura do frontend (rotas, layouts, contextos) e tela de Login | Criação da arquitetura do frontend, tela de Login e Registro com autenticação JWT |
 | 30/03 - 05/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 1 | ✅ | Criação da tela de Financeiro com CRUD completo | Criação da tela de Financeiro (listagem, criação, edição de transações) e integração com API |
 | 06/04 - 12/04 | Recuperação de Informação na Web e Redes Sociais - Unidade 2 | ✅ | Validação e revisão do frontend, responsividade e gerenciador de sessão | Implementação do gerenciador global de sessão (SessionContext), menu lateral responsivo, validação geral do frontend e documentação do frontend web (docs/frontend-web.md) |
-| 13/04 - 19/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 1 | ⬜ |  |  |
-| 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ⬜ |  |  |
-| 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ⬜ |  |  |
-| 04/05 - 10/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ⬜ |  |  |
-| 11/05 - 17/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ⬜ |  |  |
-| 18/05 - 24/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 1 | ⬜ |  |  |
-| 25/05 - 31/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 2 | ⬜ |  |  |
+| 13/04 - 19/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 1 | ✅ | Início do desenvolvimento do app mobile (React Native/Expo) - estrutura de navegação e tela de Login | Criação do projeto mobile com Expo, configuração de navegação (Drawer + Stack), implementação da tela de Login com autenticação JWT |
+| 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ✅ | Desenvolvimento da tela de Agendamentos (Dashboard) no mobile | Implementação da tela de Agendamentos com listagem em tempo real via WebSocket, integração com API de scheduling |
+| 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ✅ | Desenvolvimento da tela de Financeiro no mobile | Criação da tela Financeiro com resumo (receita, despesas, saldo), listagem de transações recentes e integração com API financeira |
+| 04/05 - 10/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ | CRUD completo de transações financeiras no mobile | Implementação do modal de criação/edição de transações, modal de exclusão com confirmação, filtros por tipo (receita/despesa) e agrupamento por data |
+| 11/05 - 17/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ | Tela de funcionários no mobile e menu lateral | Desenvolvimento da tela de Funcionários, Drawer lateral com nome/role do usuário logado, e persistência de sessão com "Lembrar de mim" |
+| 18/05 - 24/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 1 | ✅ | Correções de navegação e refatoração do mobile | Reestruturação da navegação: Dashboard com menu hambúrguer, telas internas com seta de voltar, remoção de headers duplicados |
+| 25/05 - 31/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 2 | ✅ | Redesign das telas de Login e Financeiro conforme mockups | Redesign completo: Login com fundo claro, logo centralizada e checkbox; Financeiro com cards de resumo, ícones contextuais e SectionList agrupada por data |
 | 01/06 - 07/06 |  | ⬜ |  |  |
 | 08/06 - 14/06 |  | ⬜ |  |  |
 
