@@ -3,9 +3,11 @@ import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from 'rea
 import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useSession } from '../contexts/SessionContext';
 import { colors, fontSize, fontWeight } from '../theme';
 import LoginScreen from '../screens/login';
+import RegisterScreen from '../screens/register';
 import DashboardScreen from '../screens/dashboard';
 import FinancialScreen from '../screens/financial';
 import SchedulingScreen from '../screens/scheduling';
@@ -13,17 +15,13 @@ import DrawerContent from './DrawerContent';
 import { AuthRoutes, AppRoutes } from './routes';
 import EmployeesScreen from '../screens/employees';
 import ServiceScreen from '../screens/service';
+import ProductScreen from '../screens/product';
+import PetsScreen from '../screens/pets/pets';
+import VaccinesScreen from '../screens/pets/vaccines';
+import TutorsScreen from '../screens/tutor/tutor';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-
-function RegisterPlaceholder() {
-  return (
-    <View style={placeholderStyles.container}>
-      <Text style={placeholderStyles.text}>Tela de registro em construção...</Text>
-    </View>
-  );
-}
 
 function PagePlaceholder({ route }: { route: { params?: { title?: string } } }) {
   const title = route.params?.title || 'Em construção';
@@ -45,7 +43,7 @@ function AuthStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={AuthRoutes.LOGIN} component={LoginScreen} />
-      <Stack.Screen name={AuthRoutes.REGISTER} component={RegisterPlaceholder} />
+      <Stack.Screen name={AuthRoutes.REGISTER} component={RegisterScreen} />
     </Stack.Navigator>
   );
 }
@@ -165,8 +163,7 @@ function AuthenticatedDrawer() {
 
       <Drawer.Screen
         name={AppRoutes.PRODUCTS}
-        component={PagePlaceholder}
-        initialParams={{ title: 'Produtos' }}
+        component={ProductScreen}
         options={{ title: 'Produtos' }}
       />
 

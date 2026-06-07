@@ -37,13 +37,42 @@ export class AuthController {
 
   async register(req: Request, res: Response): Promise<void> {
     try {
-      const { email, password } = req.body;
+      const {
+        email,
+        password,
+        clinicName,
+        cnpj,
+        address,
+        phone,
+        ownerName,
+        cpf,
+      } = req.body;
+
       if (!email || !password) {
         res.status(400).json({ error: "Email and password are required" });
         return;
       }
 
-      const { data, error } = await this.service.register(email, password);
+      if (!clinicName) {
+        res.status(400).json({ error: "Clinic name is required" });
+        return;
+      }
+
+      if (!ownerName) {
+        res.status(400).json({ error: "Owner name is required" });
+        return;
+      }
+
+      const { data, error } = await this.service.register({
+        email,
+        password,
+        clinicName,
+        cnpj,
+        address,
+        phone,
+        ownerName,
+        cpf,
+      });
 
       if (error) {
         res.status(400).json({ error: error.message });
@@ -58,7 +87,9 @@ export class AuthController {
       res.status(201).json(this.mapper.toObject(data));
     } catch (err: unknown) {
       Logger.error("[AuthController] register error:", err);
-      res.status(500).json({ error: "Internal Server Error" });
+      const message =
+        err instanceof Error ? err.message : "Internal Server Error";
+      res.status(400).json({ error: message });
     }
   }
 

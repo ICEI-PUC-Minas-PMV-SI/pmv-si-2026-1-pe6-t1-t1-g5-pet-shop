@@ -3,5 +3,6 @@ export class Auth {
     public readonly userId: string,
     public readonly token: string,
     public readonly refreshToken: string,
+    public readonly clinicId?: string,
   ) {}
 }
