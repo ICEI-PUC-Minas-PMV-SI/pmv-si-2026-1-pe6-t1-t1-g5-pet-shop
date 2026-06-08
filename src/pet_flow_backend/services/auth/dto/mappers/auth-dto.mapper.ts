@@ -8,6 +8,7 @@ export class AuthDtoMapper implements Mapper<Auth, AuthResponseDto> {
       user_id: fromObject.userId,
       token: fromObject.token,
       refresh_token: fromObject.refreshToken,
+      ...(fromObject.clinicId ? { clinic_id: fromObject.clinicId } : {}),
     };
   }
 

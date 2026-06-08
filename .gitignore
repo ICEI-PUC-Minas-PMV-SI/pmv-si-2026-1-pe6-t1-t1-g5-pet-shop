@@ -8,3 +8,4 @@ src/pet_flow_backend/swagger_output.json
 .vscode/
 .kiro/
 .expo/
+*.zip
