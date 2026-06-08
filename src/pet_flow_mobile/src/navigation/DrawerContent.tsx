@@ -64,7 +64,7 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
               style={[styles.menuItem]}
               onPress={() => {
                 props.navigation.closeDrawer();
-                props.navigation.navigate('Main', { screen: item.route });
+                props.navigation.navigate(item.route as any);
               }}
             >
               <MaterialIcons

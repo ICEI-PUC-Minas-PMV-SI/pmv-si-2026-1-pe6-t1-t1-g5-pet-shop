@@ -17,10 +17,10 @@
 | 20/04 - 26/04 | Computação Ubíqua e Pervasiva e IoT - Unidade 2 | ✅ | Ajustes no protótipo para padronização | Ajustes no protótipo para padronização |
 | 27/04 - 03/05 | Desenvolvimento de Aplicações Móveis - Unidade 1 | ✅ | Criação da tela de "Serviço" + Modal | Criação da tela de "Serviço" + Modal |
 | 04/05 - 10/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ | Criação da tela de "Dashboard" + Documentação + Teste | Criação da tela de "Dashboard" + Documentação + Teste |
-| 11/05 - 17/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ⬜ |  |  |
-| 18/05 - 24/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 1 | ⬜ |  |  |
-| 25/05 - 31/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 2 | ⬜ |  |  |
-| 01/06 - 07/06 |  | ⬜ |  |  |
-| 08/06 - 14/06 |  | ⬜ |  |  |
+| 11/05 - 17/05 | Desenvolvimento de Aplicações Móveis - Unidade 2 | ✅ | Criação do protótipo de interface front-end mobile via Figma | Criação do protótipo de interface front-end mobile via Figma |
+| 18/05 - 24/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 1 | ✅ | Criação da tela de "Dashboard" | Criação da tela de "Dashboard" |
+| 25/05 - 31/05 | Fundamentos de Projeto e Análise de Algoritmos - Unidade 2 | ✅ | Criação da tela de "Serviços" | Criação da tela de "Serviços" |
+| 01/06 - 07/06 | -- | ⬜ | Finalização das páginas, documentação e teste | Finalização das páginas, documentação e teste |
+| 08/06 - 14/06 | -- | ⬜ |  |  |
 
 **Legenda:** ✅ Estudou | ⬜ Não estudou
