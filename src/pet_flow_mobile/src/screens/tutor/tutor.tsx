@@ -18,6 +18,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useSession } from '../../contexts/SessionContext';
 import { tutorService, type Tutor } from '../../services/tutorService';
+import { AppRoutes } from '../../navigation/routes';
 
 const PAGE_SIZE = 5;
 
@@ -268,8 +269,8 @@ export default function TutorsScreen() {
   return (
     <View style={s.root}>
       <View style={s.header}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()} style={s.backBtn}>
-          <MaterialIcons name="menu" size={24} color="#1E293B" />
+        <TouchableOpacity onPress={() => navigation.navigate(AppRoutes.DASHBOARD)} style={s.backBtn}>
+          <MaterialIcons name="arrow-back" size={24} color="#1E293B" />
         </TouchableOpacity>
         <Text style={s.headerTitle}>Tutores</Text>
       </View>

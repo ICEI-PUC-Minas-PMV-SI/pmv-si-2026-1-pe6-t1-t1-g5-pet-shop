@@ -1,6 +1,6 @@
 import React from 'react';
-import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { ActivityIndicator, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -22,22 +22,7 @@ import TutorsScreen from '../screens/tutor/tutor';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-
-function PagePlaceholder({ route }: { route: { params?: { title?: string } } }) {
-  const title = route.params?.title || 'Em construção';
-
-  return (
-    <View style={placeholderStyles.container}>
-      <Text style={placeholderStyles.text}>{title}</Text>
-      <Text style={[placeholderStyles.text, { marginTop: 8 }]}>Esta página ainda não foi implementada.</Text>
-    </View>
-  );
-}
-
-const placeholderStyles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.bgMain },
-  text: { fontSize: fontSize.lg, color: colors.textPlaceholder },
-});
+const RootStack = createNativeStackNavigator();
 
 function AuthStack() {
   return (
@@ -48,143 +33,111 @@ function AuthStack() {
   );
 }
 
-function PetsStack() {
+function DashboardWithDrawer() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="PetsList" component={PetsScreen} />
-      <Stack.Screen name={AppRoutes.VACCINES} component={VaccinesScreen} />
-    </Stack.Navigator>
+    <Drawer.Navigator
+      drawerContent={(props) => <DrawerContent {...props} />}
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.bgWhite },
+        headerTintColor: colors.textPrimary,
+        headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.primary },
+        drawerType: 'front',
+      }}
+    >
+      <Drawer.Screen
+        name="DashboardDrawer"
+        component={DashboardScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'PetFlow',
+          headerTitleStyle: { color: colors.primary, fontWeight: fontWeight.bold, fontSize: 20 },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 8 }}>
+              <MaterialIcons name="menu" size={26} color={colors.textPrimary} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+    </Drawer.Navigator>
   );
 }
 
-function AuthenticatedDrawer() {
-  const { session } = useSession();
-
-  function MainStack() {
-    return (
-      <Stack.Navigator
-        screenOptions={{
-          headerShadowVisible: false,
-          headerTintColor: colors.textPrimary,
-          headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 20, color: colors.textPrimary },
-          headerBackTitle: ' ',
-          headerTransparent: true,
-          headerBlurEffect: undefined,
-        }}
-      >
-        <Stack.Screen
-          name={AppRoutes.SCHEDULING}
-          component={SchedulingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={AppRoutes.FINANCIAL}
-          component={FinancialScreen}
-          options={({ navigation }) => ({
-            headerTitle: 'Financeiro',
-            headerBackVisible: false,
-            headerTransparent: false,
-            headerStyle: { backgroundColor: colors.bgMain },
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
-                <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name={AppRoutes.EMPLOYEES}
-          component={EmployeesScreen}
-          options={({ navigation }) => ({
-            headerTitle: 'Funcionários',
-            headerBackVisible: false,
-            headerTransparent: false,
-            headerStyle: { backgroundColor: colors.bgMain },
-            headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={8}>
-                <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        
-        {/* CORREÇÃO AQUI: Tutores dentro da MainStack */}
-        <Stack.Screen
-          name={AppRoutes.TUTORS}
-          component={TutorsScreen}
-          options={{ headerShown: false }}
-        />
-
-        {/* CORREÇÃO AQUI: Pets também movido para dentro da MainStack! */}
-        <Stack.Screen
-          name={AppRoutes.PETS}
-          component={PetsStack}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    );
-  }
-
+function backButton(navigation: any) {
   return (
-    <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-      
-      {/* Esta é a gaveta 'Main' principal */}
-      <Drawer.Screen
-        name={AppRoutes.DASHBOARD}
-        component={DashboardScreen}
-        options={{ title: 'PetFlow' }}
-      />
+    <TouchableOpacity onPress={() => navigation.navigate(AppRoutes.DASHBOARD)} hitSlop={8}>
+      <MaterialIcons name="chevron-left" size={28} color={colors.textPrimary} />
+    </TouchableOpacity>
+  );
+}
 
-      <Drawer.Screen
+function AuthenticatedStack() {
+  return (
+    <RootStack.Navigator
+      screenOptions={{
+        headerShadowVisible: false,
+        headerStyle: { backgroundColor: colors.bgWhite },
+        headerTintColor: colors.textPrimary,
+        headerTitleStyle: { fontWeight: fontWeight.bold, fontSize: 18, color: colors.textPrimary },
+        headerBackVisible: false,
+      }}
+    >
+      <RootStack.Screen
+        name={AppRoutes.DASHBOARD}
+        component={DashboardWithDrawer}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen
         name={AppRoutes.SCHEDULING}
         component={SchedulingScreen}
-        options={{ headerShown: false, title: 'Agendamentos' }}
+        options={{ headerShown: false }}
       />
-
-      <Drawer.Screen
+      <RootStack.Screen
         name={AppRoutes.FINANCIAL}
         component={FinancialScreen}
-        options={{ title: 'Financeiro' }}
+        options={({ navigation }) => ({
+          headerTitle: 'Financeiro',
+          headerLeft: () => backButton(navigation),
+        })}
       />
-
-      <Drawer.Screen
-        name={AppRoutes.PETS}
-        component={PagePlaceholder}
-        initialParams={{ title: 'Pets' }}
-        options={{ title: 'Pets' }}
+      <RootStack.Screen
+        name={AppRoutes.EMPLOYEES}
+        component={EmployeesScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Funcionários',
+          headerLeft: () => backButton(navigation),
+        })}
       />
-
-      <Drawer.Screen
-        name={AppRoutes.TUTORS}
-        component={PagePlaceholder}
-        initialParams={{ title: 'Tutores' }}
-        options={{ title: 'Tutores' }}
-      />
-
-      <Drawer.Screen
-        name={AppRoutes.PRODUCTS}
-        component={ProductScreen}
-        options={{ title: 'Produtos' }}
-      />
-
-      <Drawer.Screen
+      <RootStack.Screen
         name={AppRoutes.SERVICES}
         component={ServiceScreen}
-        options={{ title: 'Serviços' }}
+        options={({ navigation }) => ({
+          headerTitle: 'Serviços',
+          headerLeft: () => backButton(navigation),
+        })}
       />
-
-      {(
-        session?.role?.toLowerCase().trim() === 'dono' ||
-        session?.role?.toLowerCase().trim() === 'admin' ||
-        session?.role?.toLowerCase().trim() === 'administrador'
-      ) && (
-        <Drawer.Screen
-          name={AppRoutes.EMPLOYEES}
-          component={EmployeesScreen}
-          options={{ title: 'Funcionários' }}
-        />
-      )}
-    </Drawer.Navigator>
+      <RootStack.Screen
+        name={AppRoutes.PRODUCTS}
+        component={ProductScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Produtos',
+          headerLeft: () => backButton(navigation),
+        })}
+      />
+      <RootStack.Screen
+        name={AppRoutes.PETS}
+        component={PetsScreen}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen
+        name={AppRoutes.VACCINES}
+        component={VaccinesScreen}
+        options={{ headerShown: false }}
+      />
+      <RootStack.Screen
+        name={AppRoutes.TUTORS}
+        component={TutorsScreen}
+        options={{ headerShown: false }}
+      />
+    </RootStack.Navigator>
   );
 }
 
@@ -201,7 +154,7 @@ export default function AppNavigator() {
 
   return (
     <NavigationContainer>
-      {session ? <AuthenticatedDrawer /> : <AuthStack />}
+      {session ? <AuthenticatedStack /> : <AuthStack />}
     </NavigationContainer>
   );
 }

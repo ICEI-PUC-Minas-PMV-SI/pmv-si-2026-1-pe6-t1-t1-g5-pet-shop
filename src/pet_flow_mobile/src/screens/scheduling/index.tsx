@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { ActivityIndicator, FlatList, Image, RefreshControl, ScrollView, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { AppRoutes } from '../../navigation/routes';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors } from '../../theme';
@@ -180,12 +181,7 @@ export default function SchedulingScreen() {
   };
 
   const handleBack = () => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-      return;
-    }
-
-    navigation.dispatch(DrawerActions.openDrawer());
+    navigation.navigate(AppRoutes.DASHBOARD);
   };
 
   if (loading) {
@@ -199,7 +195,7 @@ export default function SchedulingScreen() {
   return (
     <View style={styles.container}>
       <ScrollView
-        contentContainerStyle={[styles.content, isLargeScreen && styles.contentLarge, { paddingTop: insets.top + 6 }]}
+        contentContainerStyle={[styles.content, isLargeScreen && styles.contentLarge, { paddingTop: 6 }]}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={refresh} colors={[colors.primary]} />}
         showsVerticalScrollIndicator={false}
       >

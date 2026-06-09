@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, type DrawerContentComponentProps } from '@react-navigation/drawer';
+import { CommonActions } from '@react-navigation/native';
 import { colors, spacing, fontSize, fontWeight, radius } from '../theme';
 import { useSession } from '../contexts/SessionContext';
 import { authStorage } from '../services';
@@ -64,7 +65,10 @@ export default function DrawerContent(props: DrawerContentComponentProps) {
               style={[styles.menuItem]}
               onPress={() => {
                 props.navigation.closeDrawer();
-                props.navigation.navigate(item.route as any);
+                const parent = props.navigation.getParent();
+                if (parent) {
+                  parent.navigate(item.route);
+                }
               }}
             >
               <MaterialIcons
