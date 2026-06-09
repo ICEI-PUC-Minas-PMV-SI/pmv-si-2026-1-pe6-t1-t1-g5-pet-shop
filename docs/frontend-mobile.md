@@ -119,6 +119,15 @@ Os cenários de teste contemplam autenticação, navegação, gerenciamento de a
 | CT-003 | Editar serviço | Serviço existente | Dados atualizados corretamente | Conforme esperado | [Demonstração](../docs/img/ct03-servico.gif) |
 | CT-004 | Excluir serviço | Serviço existente | Serviço removido da listagem | Conforme esperado | [Demonstração](../docs/img/ct04-servico.gif) |
 
+### 3. Funcionários
+
+| ID | Caso de teste | Dados | Resultado esperado | Resultado obtido | Referência |
+|----|--------------|--------|-------------------|------------------|------------|
+| CT-001 | Cadastrar funcionário | Dados válidos | Funcionário cadastrado com sucesso | Conforme esperado | [Demonstração](./img/CT01-funcionarios.mp4) |
+| CT-002 | Buscar funcionário | Nome do funcionário | Funcionário localizado corretamente | Conforme esperado | [Demonstração](./img/CT02-funcionarios.mp4) |
+| CT-003 | Editar funcionário | Funcionário existente | Dados atualizados corretamente | Conforme esperado | [Demonstração](./img/CT03-funcionarios.mp4) |
+| CT-004 | Excluir funcionário | Funcionário existente | Funcionário removido da listagem | Conforme esperado | [Demonstração](./img/CT04-funcionarios.mp4) |
+
 # Referências
 - [React Native Documentation](https://reactnative.dev/docs/getting-started)
 - [Expo Documentation](https://docs.expo.dev/)
